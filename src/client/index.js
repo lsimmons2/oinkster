@@ -15,7 +15,7 @@ let initialState = {
         id: 1
       },
       {
-        user: 'maria',
+        user: 'maaaria',
         text: 'supp?',
         id: 2
       },

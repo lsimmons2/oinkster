@@ -8,10 +8,10 @@ module.exports = {
     'whatwg-fetch',
     'webpack-dev-server/client?http://localhost:8080/',
     'webpack/hot/dev-server',
-    './client/index.js'
+    './src/client/index.js'
   ],
   output: {
-    path: path.join(__dirname, './client'),
+    path: path.join(__dirname, 'src/client'),
     filename: 'bundle.js',
     publicPath: '/'
   },
@@ -20,12 +20,12 @@ module.exports = {
       {
         test: [/\.js$/],
         loaders: ['react-hot'],
-        include: path.join(__dirname, 'client')
+        include: path.join(__dirname, 'src/client')
       },
       {
         test: [/\.js$/],
         loader: 'babel-loader',
-        include: path.join(__dirname, 'client'),
+        include: path.join(__dirname, 'src/client'),
         query: {
           presets: ['react', 'es2015']
         }

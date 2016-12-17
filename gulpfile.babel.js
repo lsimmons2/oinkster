@@ -25,4 +25,17 @@ gulp.task('server', () => {
   })
 });
 
+gulp.task('server:debug', ['build:watch'], () => {
+  nodemon({
+    watch: [
+      'dist/server/*'
+    ],
+    env: {
+      NODE_ENV: 'dev'
+    },
+    script: 'dist/server/index.js',
+    exec: 'node --inspect'
+  })
+});
+
 gulp.task('default', ['build:watch', 'server']);

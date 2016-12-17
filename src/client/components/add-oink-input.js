@@ -3,10 +3,11 @@ import React from 'react'
 
 class AddOinkInput extends React.Component {
 
-  submitOink(){
+  submitOink(event){
     event.preventDefault();
     let oink = {
-      text: this.refs.oinkInputValue.value
+      text: this.refs.oinkInputValue.value,
+      user: 'bob sah'
     }
     console.log('oink to submit: ', oink);
     this.props.actions.submitOink(oink);

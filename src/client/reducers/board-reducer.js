@@ -30,11 +30,10 @@ let boardReduer = function(board = defBoard, action){
       })
 
     case 'SUBMIT_OINK_SUCCESS':
-      let newOinks = board.oinks.push(action.oink)
       return Object.assign({}, board, {
         isFetching: false,
-        oinks: newOinks
-      })
+        oinks: [...board['oinks'], action.oink]
+      });
 
     case 'SUBMIT_OINK_ERROR':
       return Object.assign({}, board, {

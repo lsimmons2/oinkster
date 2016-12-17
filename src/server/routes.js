@@ -12,16 +12,14 @@ const db = pgp(cn);
 
 
 function insertOink(req, res){
-  let queryString = 'INSERT INTO oinks("id", "text", "asset", "user") values($1, $2, $3, $4) returning text;';
-  let id = req.body.id || 4;
+  let queryString = 'INSERT INTO oinks("text", "asset", "user") values($1, $2, $3) returning id, text, asset, "user";';
   let asset = req.body.asset || null;
   let query = {
     text: queryString,
-    values: [id, req.body.text, asset, req.body.user]
+    values: [req.body.text, asset, req.body.user]
   };
   db.one(query)
     .then( data => {
-      console.log('inserted? ', data);
       res.status(200).send(data);
     })
     .catch( err => {

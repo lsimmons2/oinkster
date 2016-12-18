@@ -22,7 +22,12 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../../src/client/index.html'));
 });
 
+
 app.use('/', routes);
+
+app.all('*', (req, res) => {
+  res.redirect('/');
+})
 
 if (env !== 'test'){
   app.listen(port, () => {

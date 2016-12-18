@@ -1,6 +1,6 @@
 
 import React from 'react'
-import { Router, Route, hashHistory } from 'react-router'
+import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 
 import Nav from './nav'
 import Board from './board'
@@ -17,16 +17,17 @@ class App extends React.Component {
       <div>
         <Router
           key={Math.random()}
-          history={hashHistory}
+          history={browserHistory}
         >
           <Route path='/' component={Nav}>
-            <Route path='/home' component={Home}/>
+            <Route name='home' path='/home' component={Home}/>
             <Route
+              name='board'
               path='/board'
               component={Board}
             />
-            <Route path='/signup' component={SignUp}/>
-            <Route path='*' component={Home}/>
+            <Route name='signup' path='/signup' component={SignUp}/>
+            <IndexRoute component={Home} />
           </Route>
         </Router>
       </div>

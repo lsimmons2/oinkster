@@ -2,38 +2,15 @@
 import React from 'react'
 import { Router, Route, IndexRoute } from 'react-router'
 
+import initialState from '../initial-state'
 import history from '../history'
+
 import Nav from './nav'
 import Board from './board'
 import Home from './home'
 import SignUp from './sign-up'
 import '../style/main.scss'
 
-
-let initialState = {
-  board: {
-    oinks: [
-      {
-        user: 'bob',
-        text: 'sahh?',
-        id: 1
-      },
-      {
-        user: 'maaaria',
-        text: 'supp?',
-        id: 2
-      },
-      {
-        user: 'francis',
-        text: 'waddupp?',
-        id: 3
-      }
-    ],
-    isFetching: false,
-    error: false,
-    count: 0
-  }
-};
 
 
 class App extends React.Component {

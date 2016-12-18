@@ -1,7 +1,6 @@
 
 import React from 'react'
 import { Link } from 'react-router'
-import { bindActionCreators } from 'redux'
 
 
 class Nav extends React.Component {

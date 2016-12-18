@@ -4,33 +4,9 @@ import logger from 'redux-logger'
 import thunk from 'redux-thunk'
 
 import rootReducer from './reducers'
-import storeObserver from './store-observer'
+import initialState from './initial-state'
 
 
-let defInitialState = {
-  board: {
-    oinks: [
-      {
-        user: 'bob',
-        text: 'sahh?',
-        id: 1
-      },
-      {
-        user: 'maaaria',
-        text: 'supp?',
-        id: 2
-      },
-      {
-        user: 'francis',
-        text: 'waddupp?',
-        id: 3
-      }
-    ],
-    isFetching: false,
-    error: false,
-    count: 0
-  }
-};
 
 
 let finalCreateStore = compose(
@@ -41,6 +17,6 @@ let finalCreateStore = compose(
 )(createStore)
 
 
-const store = finalCreateStore(rootReducer, defInitialState);
+const store = finalCreateStore(rootReducer, initialState);
 
 export default store

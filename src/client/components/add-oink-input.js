@@ -9,8 +9,12 @@ class AddOinkInput extends React.Component {
       text: this.refs.oinkInputValue.value,
       user: 'bob sah'
     }
-    console.log('oink to submit: ', oink);
-    this.props.actions.submitOink(oink);
+    this.props.submitOink(oink);
+  }
+
+  fetchOinks(event){
+    event.preventDefault();
+    this.props.fetchOinks();
   }
 
   render(){
@@ -19,6 +23,13 @@ class AddOinkInput extends React.Component {
       <div id="add-oink-input-container">
         <form onSubmit={this.submitOink.bind(this)}>
           <input type="text" ref="oinkInputValue"/>
+          <input type="submit" value="Add Oink"/>
+        </form>
+        <form>
+          {/* temporary solution before I set up fetching actions based on url */}
+          <input type="submit" value="Fetch all oinks"
+            onClick={this.fetchOinks.bind(this)}
+          />
         </form>
       </div>
     )

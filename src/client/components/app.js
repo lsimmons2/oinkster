@@ -1,10 +1,7 @@
 
 import React from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import { Router, Route, hashHistory } from 'react-router'
 
-import * as actions from '../actions'
 import Nav from './nav'
 import Board from './board'
 import Home from './home'
@@ -27,8 +24,6 @@ class App extends React.Component {
             <Route
               path='/board'
               component={Board}
-              actions={this.props.actions}
-              board={this.props.board}
             />
             <Route path='/signup' component={SignUp}/>
             <Route path='*' component={Home}/>
@@ -41,14 +36,5 @@ class App extends React.Component {
 
 }
 
-function mapStateToProps(state){
-  return state;
-}
 
-function mapDispatchToProps(dispatch){
-  return {
-    actions: bindActionCreators(actions, dispatch)
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default App

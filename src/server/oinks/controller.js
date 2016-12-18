@@ -11,7 +11,7 @@ let cn = {
 const db = pgp(cn);
 
 function getOinks(req, res){
-  let queryString = 'SELECT * FROM oinks;';
+  let queryString = 'SELECT * FROM "Oinks";';
   db.any(queryString)
     .then( oinks => {
       dbLogger.info('Oinks retrieved', {oinks: oinks});
@@ -25,7 +25,7 @@ function getOinks(req, res){
 
 
 function insertOink(req, res){
-  let queryString = 'INSERT INTO oinks("text", "asset", "user") values($1, $2, $3) returning id, text, asset, "user";';
+  let queryString = 'INSERT INTO "Oinks"("text", "asset", "user") values($1, $2, $3) returning id, text, asset, "user";';
   let asset = req.body.asset || null;
   let query = {
     text: queryString,

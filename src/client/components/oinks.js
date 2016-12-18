@@ -7,8 +7,8 @@ class Oinks extends React.Component {
   render(){
 
     let oinks;
-    if (this.props.board.oinks.length){
-      oinks = this.props.board.oinks.map( oink => {
+    if (this.props.oinks.length){
+      oinks = this.props.oinks.map( oink => {
         return (
           <li key={oink.id}>
             <h4>{oink.user}</h4>

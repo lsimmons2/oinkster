@@ -12,6 +12,11 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }))
 
+app.use((req, res, next) => {
+  console.log(req.method, req.url);
+  next();
+});
+
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../../src/client/index.html'));
 });

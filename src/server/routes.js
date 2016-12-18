@@ -1,7 +1,7 @@
 
-import express from 'express';
-
-
+import express from 'express'
+import util from 'util'
+import dbLogger from './loggers/db-logger'
 const pgp = require('pg-promise')();
 
 let cn = {
@@ -20,10 +20,16 @@ function insertOink(req, res){
   };
   db.one(query)
     .then( data => {
+      dbLogger.info('Oink saved', {oink: data});
       res.status(200).send(data);
     })
     .catch( err => {
-      console.error('error inserting into db: ', err.message || err);
+      let failedOink = {
+        user: req.body.user,
+        text: req.body.text,
+        asset: asset
+      };
+      dbLogger.error('Error saving oink', {error: err.message, oink: failedOink})
       res.status(500).send(err)
     })
 }
@@ -32,7 +38,6 @@ const router = express.Router();
 
 router.route('/')
   .post((req, res) => {
-    console.log(req.method, req.url);
     return insertOink(req, res);
   })
 

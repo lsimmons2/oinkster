@@ -4,16 +4,16 @@ import nodemon from 'gulp-nodemon'
 import babel from 'gulp-babel'
 
 gulp.task('build', () => {
-  return gulp.src('src/server/*.js')
+  return gulp.src('src/server/**/*')
     .pipe(babel())
     .pipe(gulp.dest('dist/server'));
 });
 
-gulp.task('build:watch', () => {
-  gulp.watch('src/server/*', ['build']);
+gulp.task('build:watch', ['build'], () => {
+  gulp.watch('src/server/**/*', ['build']);
 })
 
-gulp.task('server', () => {
+gulp.task('server', ['build:watch'], () => {
   nodemon({
     watch: [
       'dist/server/*'
@@ -38,4 +38,4 @@ gulp.task('server:debug', ['build:watch'], () => {
   })
 });
 
-gulp.task('default', ['build:watch', 'server']);
+gulp.task('default', ['server']);

@@ -6,20 +6,16 @@ import Oinks from './oinks'
 
 class Board extends React.Component {
 
-  constructor(props){
-    super(props);
-    this.props.actions.fetchOinks();
-  }
-
   render(){
 
     return (
       <div>
+        <h1>Board</h1>
         < AddOinkInput
-          actions={this.props.actions}
+          actions={this.props.route.actions}
         />
         < Oinks
-          board={this.props.board}
+          board={this.props.route.board}
         />
       </div>
     )

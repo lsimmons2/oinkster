@@ -6,6 +6,11 @@ import Oinks from './oinks'
 
 class Board extends React.Component {
 
+  constructor(props){
+    super(props);
+    this.props.actions.fetchOinks();
+  }
+
   render(){
 
     return (

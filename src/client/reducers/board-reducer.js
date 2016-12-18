@@ -41,6 +41,23 @@ let boardReduer = function(board = defBoard, action){
         error: action.error
       })
 
+    case 'FETCH_OINKS_REQUEST':
+      return Object.assign({}, board, {
+        isFetching: true
+      })
+
+    case 'FETCH_OINKS_SUCCESS':
+      return Object.assign({}, board, {
+        isFetching: false,
+        oinks: board['oinks'].concat(action.oinks)
+      });
+
+    case 'FETCH_OINKS_ERROR':
+      return Object.assign({}, board, {
+        isFetching: false,
+        error: action.error
+      })
+
     default:
       return board;
   }

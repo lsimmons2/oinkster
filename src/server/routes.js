@@ -10,6 +10,19 @@ let cn = {
 
 const db = pgp(cn);
 
+function getOinks(req, res){
+  let queryString = 'SELECT * FROM oinks;';
+  db.any(queryString)
+    .then( oinks => {
+      dbLogger.info('Oinks retrieved', {oinks: oinks});
+      res.status(200).send(oinks);
+    })
+    .catch( err => {
+      dbLogger.error('Error retrieving oinks', {error: err.message})
+      res.status(500).send(err)
+    })
+}
+
 
 function insertOink(req, res){
   let queryString = 'INSERT INTO oinks("text", "asset", "user") values($1, $2, $3) returning id, text, asset, "user";';
@@ -37,6 +50,9 @@ function insertOink(req, res){
 const router = express.Router();
 
 router.route('/')
+  .get((req, res) => {
+    return getOinks(req, res);
+  })
   .post((req, res) => {
     return insertOink(req, res);
   })

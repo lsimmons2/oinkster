@@ -25,7 +25,7 @@ class Oinks extends React.Component {
         )
       })
     } else {
-      oinks = <h2>No oinks could be loaded!</h2>
+      oinks = <li key="0"><h2>No oinks could be loaded!</h2></li>
     }
 
     return (

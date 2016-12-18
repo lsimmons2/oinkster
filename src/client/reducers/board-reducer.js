@@ -3,15 +3,18 @@ const defBoard = {
   oinks: [
     {
       user: 'bob',
-      text: 'sahh?'
+      text: 'sahh?',
+      id: 1
     },
     {
-      user: 'maria',
-      text: 'supp?'
+      user: 'maaaria',
+      text: 'supp?',
+      id: 2
     },
     {
       user: 'francis',
-      text: 'waddupp?'
+      text: 'waddupp?',
+      id: 3
     }
   ],
   isFetching: false,

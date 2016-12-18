@@ -12,11 +12,6 @@ class AddOinkInput extends React.Component {
     this.props.submitOink(oink);
   }
 
-  fetchOinks(event){
-    event.preventDefault();
-    this.props.fetchOinks();
-  }
-
   render(){
 
     return (
@@ -24,12 +19,6 @@ class AddOinkInput extends React.Component {
         <form onSubmit={this.submitOink.bind(this)}>
           <input type="text" ref="oinkInputValue"/>
           <input type="submit" value="Add Oink"/>
-        </form>
-        <form>
-          {/* temporary solution before I set up fetching actions based on url */}
-          <input type="submit" value="Fetch all oinks"
-            onClick={this.fetchOinks.bind(this)}
-          />
         </form>
       </div>
     )

@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-import configureStore from './configure-store'
+import store from './store'
 import App from './components/app'
 
 
@@ -29,8 +29,6 @@ let initialState = {
     count: 0
   }
 };
-
-let store = configureStore(initialState);
 
 
 render(

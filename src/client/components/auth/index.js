@@ -1,7 +1,10 @@
 
 import React from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 
 import AuthForm from './auth-form'
+import * as actions from '../../actions/auth-actions'
 
 
 class Auth extends React.Component {
@@ -9,10 +12,23 @@ class Auth extends React.Component {
     return (
       <div>
         <h2>Sign Up / Log In</h2>
-        < AuthForm />
+        < AuthForm
+          actions={this.props.actions}
+          auth={this.props.auth}
+        />
       </div>
     )
   }
 }
 
-export default Auth
+function mapStateToProps(state){
+  return state;
+}
+
+function mapDispatchToProps(dispatch){
+  return {
+    actions: bindActionCreators(actions, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Auth)

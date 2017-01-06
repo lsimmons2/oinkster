@@ -2,7 +2,7 @@
 import initialState from '../initial-state'
 
 
-let boardReduer = function(board = initialState.board, action){
+let boardReducer = function(board = initialState.board, action){
 
   switch(action.type){
 
@@ -46,4 +46,4 @@ let boardReduer = function(board = initialState.board, action){
 
 }
 
-export default boardReduer
+export default boardReducer

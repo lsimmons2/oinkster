@@ -1,4 +1,8 @@
 export default {
+  auth: {
+    authenticated: false,
+    showSignUp: true
+  },
   board: {
     oinks: [],
     isFetching: false,

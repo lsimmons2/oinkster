@@ -5,6 +5,7 @@ const pgp = require('pg-promise')();
 import db from '../db'
 
 
+
 function hashPass(password){
   return new Promise((resolve, reject) => {
     bcrypt.genSalt(10, (err, salt) => {
@@ -22,18 +23,44 @@ function hashPass(password){
 }
 
 
-function findUser(username, email){
+function comparePass(password, correctHash, salt){
   return new Promise((resolve, reject) => {
-    let queryString = 'SELECT * from "Users" WHERE username=$1 OR email=$2';
-    db.oneOrNone(queryString, [username, email])
-      .then( user => {
-        return resolve(user);
-      })
-      .catch( err => {
+    bcrypt.compare(password, correctHash, (err, res) => {
+      if (err){
         return reject(err);
-      });
+      }
+      return resolve(res);
+    })
   })
 }
+
+
+function findUser(username, email){
+  return new Promise((resolve, reject) => {
+    if (!email){
+      // only one identifier passed in, so don't know if it's username or email
+      let usernameEmail = username;
+      let queryString = 'SELECT * from "Users" WHERE username=$1 OR email=$1';
+      db.oneOrNone(queryString, [usernameEmail])
+        .then( user => {
+          return resolve(user);
+        })
+        .catch( err => {
+          return reject(err);
+        });
+    } else {
+      let queryString = 'SELECT * from "Users" WHERE username=$1 OR email=$2';
+      db.oneOrNone(queryString, [username, email])
+        .then( user => {
+          return resolve(user);
+        })
+        .catch( err => {
+          return reject(err);
+        });
+    }
+  })
+}
+
 
 function createUser(req, res){
   let username = req.body.username;
@@ -68,7 +95,10 @@ function signUp(req, res, next){
       if (user){
         // user already exists - check password and
         // either log in or prompt for password again
-        return res.status(302).send('User exists already');
+        return res.status(302).json({
+          message: 'User already exists',
+          user
+        });
       }
       return createUser(req, res);
     })
@@ -79,7 +109,25 @@ function signUp(req, res, next){
 
 
 function logIn(req, res, next){
-  return res.status(200).send('tryna log in?');
+  let usernameEmail = req.body.usernameEmail;
+  let password = req.body.password;
+  findUser(usernameEmail)
+    .then( user => {
+      if (!user){
+        return res.status(302).redirect('/signup');
+      }
+      comparePass(password, user.password, user.salt)
+        .then( validated => {
+          if (validated){
+            return res.status(200).send('logged in!');
+          }
+          return res.status(403).send('you exist but wrong password');
+        })
+        .catch (err => {
+          return res.status(500).send(err);
+        })
+    })
 }
+
 
 export { signUp, logIn }

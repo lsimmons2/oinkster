@@ -2,13 +2,8 @@
 import express from 'express'
 import util from 'util'
 import dbLogger from '../loggers/db-logger'
-const pgp = require('pg-promise')();
+import db from '../db'
 
-let cn = {
-    database: 'oinkster'
-};
-
-const db = pgp(cn);
 
 function getOinks(req, res){
   let queryString = 'SELECT * FROM "Oinks";';

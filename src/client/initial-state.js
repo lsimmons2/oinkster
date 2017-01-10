@@ -2,7 +2,8 @@ export default {
   auth: {
     authenticated: false,
     showSignUp: true,
-    signUpConflict: false
+    signUpUsernameConflict: false,
+    signUpEmailConflict: false
   },
   board: {
     oinks: [],

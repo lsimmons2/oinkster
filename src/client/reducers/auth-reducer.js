@@ -18,7 +18,7 @@ let authReducer = function(auth = initialState.auth, action){
 
     case 'REDIRECT_TO_LOGIN':
       return { ...auth,
-        signUpConflict: true
+        signUpConflict: action.user
       }
 
     default:

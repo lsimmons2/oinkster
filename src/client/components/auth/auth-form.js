@@ -87,11 +87,19 @@ class AuthForm extends React.Component {
   }
 
   renderSignUpConflict(){
-    return (
-      <div>
-        This username or email already exists, would you like to <a href='login'>log in?</a>
-      </div>
-    )
+    if (this.props.auth.signUpConflict.conflictType === 'username'){
+      return (
+        <div>
+          The username {this.props.auth.signUpConflict.username} already exists.
+        </div>
+      )
+    } else {
+      return (
+        <div>
+          This email {this.props.auth.signUpConflict.email} already exists. Would you like to <a href='login'>log in?</a>
+        </div>
+      )
+    }
   }
 
   render(){

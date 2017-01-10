@@ -43,7 +43,7 @@ function findUser(username, email){
       let queryString = 'SELECT * from "Users" WHERE username=$1 OR email=$1';
       db.oneOrNone(queryString, [usernameEmail])
         .then( user => {
-          return resolve(user);
+          return resolve(usernameEmail);
         })
         .catch( err => {
           return reject(err);
@@ -52,7 +52,18 @@ function findUser(username, email){
       let queryString = 'SELECT * from "Users" WHERE username=$1 OR email=$2';
       db.oneOrNone(queryString, [username, email])
         .then( user => {
-          return resolve(user);
+          if (user.username === username){
+            return resolve({
+              conflictType: 'username',
+              username
+            });
+          }
+          if (user.email === email){
+            return resolve({
+              conflictType: 'email',
+              email
+            });
+          }
         })
         .catch( err => {
           return reject(err);

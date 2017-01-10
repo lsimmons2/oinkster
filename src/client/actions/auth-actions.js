@@ -14,9 +14,10 @@ function showLogIn(){
   }
 }
 
-function redirectToLogin(){
+function redirectToLogin(user){
   return {
-    type: 'REDIRECT_TO_LOGIN'
+    type: 'REDIRECT_TO_LOGIN',
+    user
   }
 }
 
@@ -46,7 +47,7 @@ function signUp(userInfo){
       .then(parseStream)
       .then( resp => {
         if (resp.status === 409 && resp.data.message === 'User already exists'){
-          return dispatch(redirectToLogin());
+          return dispatch(redirectToLogin(resp.data.user));
         }
       })
       .catch( err => {

@@ -21,6 +21,12 @@ function redirectToLogin(user){
   }
 }
 
+function logInSuccess(){
+  return {
+    type: 'LOG_IN_SUCCESS'
+  }
+}
+
 function parseStream(resp){
   return new Promise((resolve) => resp.json()
     .then(json => resolve({
@@ -61,4 +67,34 @@ function signUp(userInfo){
   }
 }
 
-export { showSignUp, showLogIn, signUp }
+function logIn(userInfo){
+  return function(dispatch){
+
+    let url = `/auth/login`;
+    if(process.env.NODE_ENV === 'test'){
+      url = 'http://localhost:8080' + url;
+    }
+
+    let req = {
+      method: 'POST',
+      body: JSON.stringify(userInfo),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    fetch(url, req)
+      .then(parseStream)
+      .then( resp => {
+        if (resp.status === 200){
+          console.log('token: ', resp.data.token);
+          sessionStorage.setItem('jwt', resp.data.token);
+          dispatch(logInSuccess());
+        }
+      })
+
+
+  }
+}
+
+export { showSignUp, showLogIn, signUp, logIn }

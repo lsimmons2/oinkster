@@ -11,10 +11,23 @@ import submitOink from '../actions/submit-oink-actions'
 
 class Board extends React.Component {
 
+  getStyle(){
+    let color;
+    if (this.props.auth.authenticated){
+      color = 'green';
+    } else {
+      color = 'red'
+    }
+    return {
+      'backgroundColor': color
+    }
+  }
+
+
   render(){
 
     return (
-      <div>
+      <div style={this.getStyle()}>
         <h1>Board</h1>
         < AddOinkInput
           submitOink={this.props.submitOink}

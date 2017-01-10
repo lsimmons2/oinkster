@@ -29,7 +29,12 @@ class AuthForm extends React.Component {
 
   logIn(e){
     e.preventDefault();
-    console.log('time to log in');
+    let userInfo = {
+      usernameEmail: this.refs.logInEmailUsername.value,
+      password: this.refs.logInPassword.value
+    };
+    console.log(userInfo);
+    this.props.actions.logIn(userInfo);
   }
 
   renderLogIn(){
@@ -102,6 +107,18 @@ class AuthForm extends React.Component {
     }
   }
 
+  getStyle(){
+    let color;
+    if (this.props.auth.authenticated){
+      color = 'green';
+    } else {
+      color = 'red'
+    }
+    return {
+      'backgroundColor': color
+    }
+  }
+
   render(){
 
     let authForm;
@@ -118,7 +135,7 @@ class AuthForm extends React.Component {
     }
 
     return (
-      <div>
+      <div style={this.getStyle()}>
         {signUpConflict}
         {authForm}
       </div>

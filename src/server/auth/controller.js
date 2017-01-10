@@ -43,7 +43,7 @@ function findUser(username, email){
       let queryString = 'SELECT * from "Users" WHERE username=$1 OR email=$1';
       db.oneOrNone(queryString, [usernameEmail])
         .then( user => {
-          return resolve(usernameEmail);
+          return resolve(user);
         })
         .catch( err => {
           return reject(err);
@@ -147,27 +147,33 @@ function signUp(req, res, next){
 
 
 function logIn(req, res, next){
+
   let usernameEmail = req.body.usernameEmail;
   let password = req.body.password;
+
+  if (typeof usernameEmail !== 'string' || typeof password !== 'string'){
+    return res.status(400).json({
+      message: 'Missing required field for logging up'
+    });
+  }
+
   findUser(usernameEmail)
     .then( user => {
       if (!user){
-        return res.status(302).redirect('/signup');
+        return res.status(404).json({
+          message: 'User not found'
+        });
       }
-      comparePass(password, user.password, user.salt)
-        .then( validated => {
-          if (validated){
-            return res.status(200).send('logged in!');
-          }
-          return res.status(403).send('you exist but wrong password');
-        })
-        .catch (err => {
-          return res.status(500).send(err);
-        })
+      return comparePass(password, user.password, user.salt);
     })
-    .catch( err => {
-      console.log('no user:');
-      console.log(err);
+    .then( validated => {
+      if (validated){
+        return res.status(200).send('logged in!');
+      }
+      return res.status(403).send('you exist but wrong password');
+    })
+    .catch (err => {
+      return res.status(500).send(err);
     })
 }
 

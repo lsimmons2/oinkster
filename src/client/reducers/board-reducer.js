@@ -31,7 +31,7 @@ let boardReducer = function(board = initialState.board, action){
     case 'FETCH_OINKS_SUCCESS':
       return Object.assign({}, board, {
         isFetching: false,
-        oinks: board['oinks'].concat(action.oinks)
+        oinks: action.oinks
       });
 
     case 'FETCH_OINKS_ERROR':

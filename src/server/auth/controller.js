@@ -2,6 +2,7 @@
 import express from 'express'
 import bcrypt from 'bcryptjs'
 const pgp = require('pg-promise')();
+import jwt from 'jsonwebtoken'
 import db from '../db'
 
 
@@ -157,24 +158,42 @@ function logIn(req, res, next){
     });
   }
 
-  findUser(usernameEmail)
+  let userProm = findUser(usernameEmail);
+  let validatedProm = userProm
     .then( user => {
+      if (!user){
+        return new Promise(resolve => resolve(null))
+      }
+      return comparePass(password, user.password, user.salt);
+    });
+
+  Promise.all([userProm, validatedProm])
+    .then( data => {
+      let user = data[0];
+      let validated = data[1];
       if (!user){
         return res.status(404).json({
           message: 'User not found'
-        });
+        })
       }
-      return comparePass(password, user.password, user.salt);
-    })
-    .then( validated => {
       if (validated){
-        return res.status(200).send('logged in!');
+        let token = jwt.sign(user, 'sah', {
+          expiresIn: 864
+        });
+        return res.status(200).json({
+          'sah': 'sah',
+          token
+        });
+      } else {
+        return res.status(403).json({
+          message: 'Authentication failed'
+        })
       }
-      return res.status(403).send('you exist but wrong password');
     })
-    .catch (err => {
-      return res.status(500).send(err);
+    .catch( err => {
+      return res.status(500).send();
     })
+
 }
 
 

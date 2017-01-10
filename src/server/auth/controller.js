@@ -97,10 +97,37 @@ function createUser(req, res){
   })
 }
 
+function checkSignUpData(data){
+  if (typeof data.firstName !== 'string'){
+    return false;
+  }
+  if (typeof data.lastName !== 'string'){
+    return false;
+  }
+  if (typeof data.username !== 'string'){
+    return false;
+  }
+  if (typeof data.email !== 'string'){
+    return false;
+  }
+  if (typeof data.password !== 'string'){
+    return false;
+  }
+  return true;
+}
+
 
 function signUp(req, res, next){
+
+  if (!checkSignUpData(req.body)){
+    return res.status(400).json({
+      message: 'Missing required field for signing up.'
+    });
+  }
+
   let username = req.body.username;
   let email = req.body.email;
+
   findUser(username, email)
     .then( user => {
       if (user){

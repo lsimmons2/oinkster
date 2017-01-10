@@ -49,6 +49,9 @@ function signUp(userInfo){
         if (resp.status === 409 && resp.data.message === 'User already exists'){
           return dispatch(redirectToLogin(resp.data.user));
         }
+        if (resp.status === 400){
+          console.log(resp.data);
+        }
       })
       .catch( err => {
         console.log('err..');

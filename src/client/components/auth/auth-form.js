@@ -9,6 +9,7 @@ class AuthForm extends React.Component {
   }
 
   signUp(e){
+
     e.preventDefault();
     let userInfo = {
       firstName: this.refs.signUpFirstName.value,
@@ -17,6 +18,8 @@ class AuthForm extends React.Component {
       email: this.refs.signUpEmail.value,
       password: this.refs.signUpPassword.value
     };
+    this.props.actions.signUp(userInfo);
+
   }
 
   showLogIn(e){
@@ -83,16 +86,32 @@ class AuthForm extends React.Component {
     )
   }
 
+  renderSignUpConflict(){
+    return (
+      <div>
+        This username or email already exists, would you like to <a href='login'>log in?</a>
+      </div>
+    )
+  }
+
   render(){
 
     let authForm;
+    let signUpConflict = null;
+
+    if (this.props.auth.signUpConflict){
+      signUpConflict = this.renderSignUpConflict();
+    }
+
     if (this.props.auth.showSignUp){
       authForm = this.renderSignUp();
     } else {
       authForm = this.renderLogIn();
     }
+
     return (
       <div>
+        {signUpConflict}
         {authForm}
       </div>
     )

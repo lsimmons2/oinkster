@@ -95,7 +95,7 @@ function signUp(req, res, next){
       if (user){
         // user already exists - check password and
         // either log in or prompt for password again
-        return res.status(302).json({
+        return res.status(409).json({
           message: 'User already exists',
           user
         });
@@ -126,6 +126,10 @@ function logIn(req, res, next){
         .catch (err => {
           return res.status(500).send(err);
         })
+    })
+    .catch( err => {
+      console.log('no user:');
+      console.log(err);
     })
 }
 

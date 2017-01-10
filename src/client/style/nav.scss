@@ -1,44 +1,46 @@
 
 #nav {
 
+  margin-top: 3px;
+
   #inner-nav-container {
 
-    border: 1px solid black;
     height: 45px;
 
     #nav-logo {
 
       float: left;
-      margin-right: 5px;
+      margin: 5px 0 0 15px;
 
       img {
-        margin-top: 5px;
         height: 75%;
       }
 
     }
 
     #inkster {
-      color: #f7bdd1;
-      margin-left: 0;
+      color: #efacc3;
+      margin-right: 10px;
+      margin-top: 12px;
       border: none;
-      margin-top: 9px;
       font-size: 20px;
+      text-decoration: none;
+      float: left;
     }
 
     .nav-item {
-      margin: 0 15px;
+      margin: 16px 15px 0;
       text-decoration: none;
+      font-size: 14px;
+      color: #4c4c4c;
     }
 
-    .nav-other {
+    .nav-left {
       float: left;
-      margin-top: 12px;
     }
 
     .nav-auth {
       float: right;
-      margin-top: 12px;
     }
 
   }

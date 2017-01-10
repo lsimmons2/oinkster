@@ -27,7 +27,6 @@ class Nav extends React.Component {
         id='nav-logo'
         key='home'
         to='/home'
-        className='nav-item'
       >
         <img src='thick-logo'/>
       </Link>,
@@ -36,17 +35,16 @@ class Nav extends React.Component {
         id='inkster'
         key='inkster'
         to='/home'
-        className='nav-item nav-other'
       >
-        inkster
+        INKSTER
       </Link>,
 
       <Link
         key='board'
         to='/board'
-        className='nav-item nav-other'
+        className='nav-item nav-left'
       >
-        Board
+        BOARD
       </Link>
 
     ];
@@ -58,7 +56,7 @@ class Nav extends React.Component {
           to='/signup'
           className='nav-item nav-auth'
         >
-          Sign Up / Log In
+          SIGN UP / LOG IN
         </Link>
       )
     } else {

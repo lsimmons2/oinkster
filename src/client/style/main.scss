@@ -2,6 +2,7 @@
 @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700);
 
 @import './nav.scss';
+@import './home.scss';
 @import './board.scss';
 
 #app {
@@ -10,6 +11,7 @@
   bottom: 0;
   left: 0;
   right: 0;
+  background-color: #d4d2d2;
 }
 
 html, body {

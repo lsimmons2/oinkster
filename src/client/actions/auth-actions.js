@@ -64,6 +64,10 @@ function signUp(userInfo){
         if (resp.status === 400){
           console.log(resp.data);
         }
+        if (resp.status === 200){
+          localStorage.setItem('jwt', resp.data.token);
+          return dispatch(loggedIn())
+        }
       })
       .catch( err => {
         console.log('err..');
@@ -93,8 +97,6 @@ function logIn(userInfo){
       .then(parseStream)
       .then( resp => {
         if (resp.status === 200){
-          console.log('token: ', resp.data.token);
-          // sessionStorage.setItem('jwt', resp.data.token);
           localStorage.setItem('jwt', resp.data.token);
           dispatch(loggedIn());
         }

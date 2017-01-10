@@ -80,8 +80,8 @@ function findUser(username, email){
 function createUser(req, res){
   let username = req.body.username;
   let email = req.body.email;
-  let firstname = req.body.firstname;
-  let lastname = req.body.lastname;
+  let firstname = req.body.firstName;
+  let lastname = req.body.lastName;
   let password = req.body.password;
   hashPass(password)
   .then( passData => {

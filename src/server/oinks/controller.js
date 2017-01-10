@@ -21,10 +21,12 @@ function getOinks(req, res){
 
 function insertOink(req, res){
   let queryString = 'INSERT INTO "Oinks"("text", "asset", "user") values($1, $2, $3) returning id, text, asset, "user";';
+  let text = req.body.text;
   let asset = req.body.asset || null;
+  let user = req.user.username;
   let query = {
     text: queryString,
-    values: [req.body.text, asset, req.body.user]
+    values: [text, asset, user]
   };
   db.one(query)
     .then( data => {

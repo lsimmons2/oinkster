@@ -184,9 +184,7 @@ function logIn(req, res, next){
         })
       }
       if (validated){
-        let token = jwt.sign(user, 'sah', {
-          expiresIn: 864
-        });
+        let token = jwt.sign(user, 'sah');
         return res.status(200).json({
           'sah': 'sah',
           token

@@ -53,6 +53,9 @@ function findUser(username, email){
       let queryString = 'SELECT * from "Users" WHERE username=$1 OR email=$2';
       db.oneOrNone(queryString, [username, email])
         .then( user => {
+          if (!user){
+            return resolve(null);
+          }
           if (user.username === username){
             return resolve({
               conflictType: 'username',
@@ -84,13 +87,17 @@ function createUser(req, res){
   .then( passData => {
     let salt = passData.salt;
     let hash = passData.hash;
-    let queryString = 'INSERT INTO "Users"(firstname, lastname, username, email, salt, password) values($1, $2, $3, $4, $5, $6) returning id';
+    let queryString = 'INSERT INTO "Users"(firstname, lastname, username, email, salt, password) values($1, $2, $3, $4, $5, $6) returning id, firstname, lastname, username, email, salt, password';
     return db.one(queryString, [firstname, lastname, username, email, salt, hash])
   })
-  .then( data => {
+  .then( user => {
+    let token = jwt.sign(user, 'sah', {
+      expiresIn: 864
+    });
     return res.status(200).json({
       message: 'User created',
-      id: data.id
+      user,
+      token
     });
   })
   .catch( err => {

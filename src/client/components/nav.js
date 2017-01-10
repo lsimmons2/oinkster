@@ -19,36 +19,68 @@ class Nav extends React.Component {
     this.props.actions.logOut();
   }
 
-  getStyle(){
-    let color;
-    if (this.props.auth.authenticated){
-      color = 'green';
-    } else {
-      color = 'red'
-    }
-    return {
-      'backgroundColor': color
-    }
-  }
-
   render(){
+
     let navItems = [
-      <Link key='home' to='/home' activeClassName='active-nav-item'>Home</Link>,
-      <Link key='board' to='/board' activeClassName='active-nav-item'>Board</Link>
+
+      <Link
+        id='nav-logo'
+        key='home'
+        to='/home'
+        className='nav-item'
+      >
+        <img src='thick-logo'/>
+      </Link>,
+
+      <Link
+        id='inkster'
+        key='inkster'
+        to='/home'
+        className='nav-item nav-other'
+      >
+        inkster
+      </Link>,
+
+      <Link
+        key='board'
+        to='/board'
+        className='nav-item nav-other'
+      >
+        Board
+      </Link>
+
     ];
+
     if (!this.props.auth.authenticated){
       navItems.push(
-        <Link key='auth' to='/signup' activeClassName='active-nav-item'>Sign Up / Log In</Link>
+        <Link
+          key='auth'
+          to='/signup'
+          className='nav-item nav-auth'
+        >
+          Sign Up / Log In
+        </Link>
       )
     } else {
       navItems.push(
-        <Link key='auth' onClick={this.logOut.bind(this)} activeClassName='active-nav-item'>Log Out</Link>
+        <Link
+          key='auth'
+          className='nav-item nav-auth'
+          onClick={this.logOut.bind(this)}
+        >
+          Log Out
+        </Link>
       )
     }
+
     return (
-      <div style={this.getStyle()}>
-        {navItems}
-        {this.props.children}
+      <div>
+        <nav id='nav'>
+          <div id='inner-nav-container'>
+            {navItems}
+          </div>
+        </nav>
+          {this.props.children}
       </div>
     )
   }

@@ -17,6 +17,10 @@ app.use((req, res, next) => {
   next();
 });
 
+app.get('/thick-logo', (req, res, next) => {
+  res.sendFile(path.join(__dirname, '../../images/thick-logo.png'))
+})
+
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../../src/client/index.html'));

@@ -1,0 +1,46 @@
+
+#nav {
+
+  #inner-nav-container {
+
+    border: 1px solid black;
+    height: 45px;
+
+    #nav-logo {
+
+      float: left;
+      margin-right: 5px;
+
+      img {
+        margin-top: 5px;
+        height: 75%;
+      }
+
+    }
+
+    #inkster {
+      color: #f7bdd1;
+      margin-left: 0;
+      border: none;
+      margin-top: 9px;
+      font-size: 20px;
+    }
+
+    .nav-item {
+      margin: 0 15px;
+      text-decoration: none;
+    }
+
+    .nav-other {
+      float: left;
+      margin-top: 12px;
+    }
+
+    .nav-auth {
+      float: right;
+      margin-top: 12px;
+    }
+
+  }
+
+}

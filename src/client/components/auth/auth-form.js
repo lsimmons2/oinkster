@@ -107,17 +107,7 @@ class AuthForm extends React.Component {
     }
   }
 
-  getStyle(){
-    let color;
-    if (this.props.auth.authenticated){
-      color = 'green';
-    } else {
-      color = 'red'
-    }
-    return {
-      'backgroundColor': color
-    }
-  }
+
 
   render(){
 
@@ -135,7 +125,7 @@ class AuthForm extends React.Component {
     }
 
     return (
-      <div style={this.getStyle()}>
+      <div>
         {signUpConflict}
         {authForm}
       </div>

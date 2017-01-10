@@ -21,9 +21,14 @@ let authReducer = function(auth = initialState.auth, action){
         signUpConflict: action.user
       }
 
-    case 'LOG_IN_SUCCESS':
+    case 'LOGGED_IN':
       return { ...auth,
         authenticated: true
+      }
+
+    case 'LOG_OUT':
+      return { ...auth,
+        authenticated: false
       }
 
     default:

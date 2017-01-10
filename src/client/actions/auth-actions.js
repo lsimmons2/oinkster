@@ -21,9 +21,15 @@ function redirectToLogin(user){
   }
 }
 
-function logInSuccess(){
+function loggedIn(){
   return {
-    type: 'LOG_IN_SUCCESS'
+    type: 'LOGGED_IN'
+  }
+}
+
+function logOut(){
+  return {
+    type: 'LOG_OUT'
   }
 }
 
@@ -88,8 +94,9 @@ function logIn(userInfo){
       .then( resp => {
         if (resp.status === 200){
           console.log('token: ', resp.data.token);
-          sessionStorage.setItem('jwt', resp.data.token);
-          dispatch(logInSuccess());
+          // sessionStorage.setItem('jwt', resp.data.token);
+          localStorage.setItem('jwt', resp.data.token);
+          dispatch(loggedIn());
         }
       })
 
@@ -97,4 +104,4 @@ function logIn(userInfo){
   }
 }
 
-export { showSignUp, showLogIn, signUp, logIn }
+export { showSignUp, showLogIn, signUp, logIn, loggedIn, logOut }

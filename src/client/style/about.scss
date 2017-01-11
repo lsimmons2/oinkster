@@ -1,7 +1,7 @@
 
 #about {
 
-  color: #4c4c4c;
+  color: $primary-grey;
   h2, h4, p {
     text-align: center;
   }
@@ -34,18 +34,18 @@
     }
 
     ::-webkit-input-placeholder {
-      color: #4c4c4c;
+      color: $primary-grey;
     }
     :-moz-placeholder {
-       color: #4c4c4c;
+       color: $primary-grey;
        opacity: 1;
     }
     ::-moz-placeholder {
-       color: #4c4c4c;
+       color: $primary-grey;
        opacity: 1;
     }
     :-ms-input-placeholder {
-      color: #4c4c4c;
+      color: $primary-grey;
     }
 
   }
@@ -58,7 +58,7 @@
 
 
 .feedback-waiting {
-  color: #4c4c4c;
+  color: $primary-grey;
   font-size: 5px;
   margin: 45px auto;
   width: 1em;

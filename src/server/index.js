@@ -12,9 +12,11 @@ const app = express();
 
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use((req, res, next) => {
-  console.log(req.method, req.url);
+  if (env === 'dev'){
+    console.log(req.method, req.url);
+  }
   next();
 });
 
@@ -43,7 +45,7 @@ app.all('*', (req, res) => {
 
 if (env !== 'test'){
   app.listen(port, () => {
-   console.log('listening on port ' + port);
+   console.log(`listening on port ${port} in ${env} environment`);
   })
 } else {
   module.exports = app;

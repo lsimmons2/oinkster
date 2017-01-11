@@ -24,6 +24,9 @@ app.get('/thick-logo', (req, res, next) => {
 app.get('/generic-avatar', (req, res, next) => {
   res.sendFile(path.join(__dirname, '../../images/generic-avatar.png'))
 });
+app.get('/pig', (req, res, next) => {
+  res.sendFile(path.join(__dirname, '../../images/pig.jpg'))
+});
 
 app.use('/feedback', feedback);
 

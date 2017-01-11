@@ -1,31 +1,21 @@
 
 import React from 'react'
+import { Link } from 'react-router'
 
 class BoardProfileUnauthenticated extends React.Component {
 
   render(){
 
-    let boardProfileAvatar;
-    if (this.props.auth.authenticated){
-      boardProfileAvatar = null;
-    } else {
-      boardProfileAvatar = '/generic-avatar';
-    }
-
-    let boardProfileTitle;
-    if (this.props.auth.authenticated){
-      boardProfileTitle = null;
-    } else {
-      boardProfileTitle = 'Really Cool Person';
-    }
-
     return (
       <div id='board-profile'>
-        <div id='board-profile-avatar-container'>
-          <img id='board-profile-avatar' src={boardProfileAvatar}/>
+        <div id='board-profile-top'>
+          <img src='/pig'/>
+          <h4>Really Cool User</h4>
         </div>
-        <div id='board-profile-avatar-container'>
-          <h4>{boardProfileTitle}</h4>
+        <div id='board-profile-bottom'>
+          <p>
+            This could be you! <Link to='/signup'>Sign up now</Link> so you can join the fun and oink with the other oinksters!
+          </p>
         </div>
       </div>
     )

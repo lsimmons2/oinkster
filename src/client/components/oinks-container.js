@@ -1,7 +1,6 @@
 
 import React from 'react'
 import AddOinkInput from './add-oink-input'
-import BoardSignUp from './board-sign-up'
 
 class Oinks extends React.Component {
 
@@ -9,7 +8,6 @@ class Oinks extends React.Component {
 
     let oinksHeader;
     if (!this.props.auth.authenticated){
-      // oinksHeader = < BoardSignUp />
       oinksHeader = null;
     } else {
       oinksHeader = (

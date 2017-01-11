@@ -2,17 +2,6 @@
 require('es6-promise').polyfill();
 import 'whatwg-fetch'
 
-function showSignUp(){
-  return {
-    type: 'SHOW_SIGN_UP'
-  }
-}
-
-function showLogIn(){
-  return {
-    type: 'SHOW_LOG_IN'
-  }
-}
 
 function redirectToLogin(user){
   return {
@@ -106,4 +95,4 @@ function logIn(userInfo){
   }
 }
 
-export { showSignUp, showLogIn, signUp, logIn, loggedIn, logOut }
+export { signUp, logIn, loggedIn, logOut }

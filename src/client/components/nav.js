@@ -62,13 +62,22 @@ class Nav extends React.Component {
     if (!this.props.auth.authenticated){
       navItems.push(
         <Link
-          key='auth'
+          key='login'
+          to='/login'
+          className='nav-item nav-auth'
+        >
+          LOG IN
+        </Link>
+      );
+      navItems.push(
+        <Link
+          key='signup'
           to='/signup'
           className='nav-item nav-auth'
         >
-          SIGN UP / LOG IN
+          SIGN UP
         </Link>
-      )
+      );
     } else {
       navItems.push(
         <Link

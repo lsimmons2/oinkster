@@ -9,7 +9,9 @@ import Nav from './nav'
 import Home from './home'
 import About from './about'
 import Board from './board'
-import Auth from './auth/'
+// import Auth from './auth/'
+import SignUp from './sign-up'
+import LogIn from './log-in'
 import '../style/main.scss'
 
 
@@ -26,11 +28,12 @@ class App extends React.Component {
           history={history}
         >
           <Route path='/' component={Nav}>
-            <IndexRedirect to='/board' />
+            <IndexRedirect to='/signup' />
             <Route name='home' path='/home' component={Home}/>
             <Route name='about' path='/about' component={About}/>
             <Route name='board' path='/board' component={Board}/>
-            <Route name='auth' path='/signup' component={Auth}/>
+            <Route name='signup' path='/signup' component={SignUp}/>
+            <Route name='login' path='login' component={LogIn}/>
             <Redirect from='*' to='/home'/>
           </Route>
         </Router>

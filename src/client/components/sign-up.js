@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import * as actions from '../actions/auth-actions'
 
 
-class SignUp extends React.Component {
+export class SignUp extends React.Component {
 
   signUp(e){
     e.preventDefault();

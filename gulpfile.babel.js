@@ -9,17 +9,31 @@ import gutil from 'gulp-util'
 
 // ============ TEST ============
 
-gulp.task('test:back', ['build'], () => {
+gulp.task('test:client:components', () => {
+  process.env.NODE_ENV = 'test';
+  gulp.src('test/client/components/**/*.spec.js')
+    .pipe(babel())
+    .pipe(mocha())
+    .on('error', gutil.log)
+});
+
+gulp.task('test:client', ['test:client:components']);
+
+gulp.task('test:client:watch', () => {
+  gulp.watch(['test/client/**/*.js', 'src/client/**/*.js'], ['test:client']);
+});
+
+gulp.task('test:server', ['build'], () => {
   process.env.NODE_ENV = 'test';
   gulp.src('test/server/**/*.js')
     .pipe(babel())
     .pipe(mocha())
     .on('error', gutil.log)
-})
+});
 
-gulp.task('test:back:watch', () => {
-  gulp.watch(['test/server/**/*.js', 'src/server/**/*.js'], ['test:back']);
-})
+gulp.task('test:server:watch', () => {
+  gulp.watch(['test/server/**/*.js', 'src/server/**/*.js'], ['test:server']);
+});
 
 
 

@@ -64,6 +64,7 @@ class Nav extends React.Component {
         <Link
           key='login'
           to='/login'
+          activeClassName='active-nav-item'
           className='nav-item nav-auth'
         >
           LOG IN
@@ -73,6 +74,7 @@ class Nav extends React.Component {
         <Link
           key='signup'
           to='/signup'
+          activeClassName='active-nav-item'
           className='nav-item nav-auth'
         >
           SIGN UP
@@ -82,6 +84,7 @@ class Nav extends React.Component {
       navItems.push(
         <Link
           key='auth'
+          activeClassName='active-nav-item'
           className='nav-item nav-auth'
           onClick={this.logOut.bind(this)}
         >

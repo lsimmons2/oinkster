@@ -1,0 +1,23 @@
+
+#log-in {
+
+  width: 100%;
+  max-width: 300px;
+  margin: 60px auto 30px;
+
+  h3 {
+    text-align: center;
+    color: $primary-grey;
+  }
+
+  form {
+
+    input[type='submit'] {
+      width: 140px;
+      margin: 0 auto;
+      color: $primary-pink;
+    }
+
+  }
+
+}

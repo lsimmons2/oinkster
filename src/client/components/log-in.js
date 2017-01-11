@@ -20,18 +20,20 @@ class LogIn extends React.Component {
 
   render(){
     return (
-      <form>
-        <label htmlFor='log-in-email-username'>Email or Username</label>
-        <br/>
-        <input name='log-in-email-username' ref='logInEmailUsername' type='text'/>
-        <br/>
-        <label htmlFor='log-in-password'>Password</label>
-        <br/>
-        <input name='log-in-password' ref='logInPassword' type='text'/>
-        <br/>
-        {/* <input type='submit' value='Show Sign Up' onClick={this.showSignUp.bind(this)}/> */}
-        <input type='submit' value='Log In' onClick={this.logIn.bind(this)}/>
-      </form>
+      <div id='log-in'>
+        <h3>Log In</h3>
+        <form onSubmit={this.logIn.bind(this)}>
+          <div className='form-group'>
+            <input className='form-control' name='log-in-email-username' ref='logInEmailUsername' type='text' placeholder='Username / Email'/>
+          </div>
+          <div className='form-group'>
+            <input className='form-control' name='log-in-password' ref='logInPassword' type='password' placeholder='Password'/>
+          </div>
+          <div className='form-group'>
+            <input className='form-control' type='submit' value='Log In To Oinkster'/>
+          </div>
+        </form>
+      </div>
     )
   }
 

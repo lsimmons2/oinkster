@@ -48,38 +48,37 @@ class SignUp extends React.Component {
     }
 
     return (
-      <div>
+      <div id='sign-up'>
 
         {signUpConflict}
 
-        <form>
+        <h3>Sign Up</h3>
 
-          <label htmlFor='sign-up-username'>First Name</label>
-          <br/>
-          <input name='sign-up-first-name' ref='signUpFirstName' type='text'/>
-          <br/>
+        <form onSubmit={this.signUp.bind(this)}>
 
-          <label htmlFor='sign-up-username'>Last Name</label>
-          <br/>
-          <input name='sign-up-last-name' ref='signUpLastName' type='text'/>
-          <br/>
+          <div className='form-group'>
+            <input className='form-control' name='sign-up-first-name' ref='signUpFirstName' type='text' placeholder='First Name'/>
+          </div>
 
-          <label htmlFor='sign-up-username'>Username</label>
-          <br/>
-          <input name='sign-up-username' ref='signUpUsername' type='text'/>
-          <br/>
+          <div className='form-group'>
+            <input className='form-control' name='sign-up-last-name' ref='signUpLastName' type='text' placeholder='Last Name'/>
+          </div>
 
-          <label htmlFor='sign-up-email'>Email</label>
-          <br/>
-          <input name='sign-up-email' ref='signUpEmail' type='text'/>
-          <br/>
+          <div className='form-group'>
+            <input className='form-control' name='sign-up-username' ref='signUpUsername' type='text' placeholder='Username'/>
+          </div>
 
-          <label htmlFor='sign-up-password'>Password</label>
-          <br/>
-          <input name='sign-up-password' ref='signUpPassword' type='text'/>
-          <br/>
+          <div className='form-group'>
+            <input className='form-control' name='sign-up-email' ref='signUpEmail' type='text' placeholder='Email'/>
+          </div>
 
-          <input type='submit' value='Sign Up' onClick={this.signUp.bind(this)}/>
+          <div className='form-group'>
+            <input className='form-control' name='sign-up-password' ref='signUpPassword' type='text' placeholder='Password'/>
+          </div>
+
+          <div className='form-group'>
+            <input className='form-control' type='submit' value='Sign Up'/>
+          </div>
 
         </form>
 

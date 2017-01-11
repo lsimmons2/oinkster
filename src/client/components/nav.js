@@ -40,6 +40,14 @@ class Nav extends React.Component {
       </Link>,
 
       <Link
+        key='about'
+        to='/about'
+        className='nav-item nav-left'
+      >
+        ABOUT
+      </Link>,
+
+      <Link
         key='board'
         to='/board'
         className='nav-item nav-left'

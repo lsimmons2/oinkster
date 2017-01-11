@@ -1,0 +1,46 @@
+
+#about {
+
+  color: #4c4c4c;
+  h2, h4, p {
+    text-align: center;
+  }
+
+  #about-description {
+
+    width: 100%;
+    max-width: 500px;
+    margin: 60px auto 30px;
+
+  }
+
+  #feedback {
+
+    width: 100%;
+    max-width: 400px;
+    margin: 60px auto;
+
+    input, textarea {
+      color: red;
+      border-color: #9e9e9e;
+      background-color: #d4d2d2;
+    }
+
+    ::-webkit-input-placeholder {
+      color: #4c4c4c;
+    }
+    :-moz-placeholder {
+       color: #4c4c4c;
+       opacity: 1;
+    }
+    ::-moz-placeholder {
+       color: #4c4c4c;
+       opacity: 1;
+    }
+    :-ms-input-placeholder {
+      color: #4c4c4c;
+    }
+
+  }
+
+}

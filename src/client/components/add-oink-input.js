@@ -17,8 +17,10 @@ class AddOinkInput extends React.Component {
     return (
       <div id="add-oink-input-container">
         <form onSubmit={this.submitOink.bind(this)}>
-          <input type="text" ref="oinkInputValue"/>
-          <input type="submit" value="Add Oink"/>
+          <div className='form-group'>
+            <input className='form-control' type="text" ref="oinkInputValue"/>
+            <input className='form-control' type="submit" value="Add Oink"/>
+          </div>
         </form>
       </div>
     )

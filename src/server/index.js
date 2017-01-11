@@ -20,7 +20,10 @@ app.use((req, res, next) => {
 
 app.get('/thick-logo', (req, res, next) => {
   res.sendFile(path.join(__dirname, '../../images/thick-logo.png'))
-})
+});
+app.get('/generic-avatar', (req, res, next) => {
+  res.sendFile(path.join(__dirname, '../../images/generic-avatar.png'))
+});
 
 app.use('/feedback', feedback);
 

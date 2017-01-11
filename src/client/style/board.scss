@@ -1,10 +1,62 @@
 
-* {
-  font-family: 'Source Sans Pro', sans-serif;
-}
+#board {
 
-.container {
+  h1 {
+    color: $primary-grey;
+  }
 
-  color: #e450c9
+  #board-profile {
+    border: solid 2px $primary-pink;
+    border-radius: 4px;
+    margin-left: 20px;
+    width: 22%;
+    height: 250px;
+    float: left;
+
+    #board-profile-avatar-container {
+      float: left;
+      #board-profile-avatar {
+        height: 70px;
+      }
+
+    }
+
+  }
+
+  #oinks-container {
+
+    width: 80%;
+    max-width: 600px;
+    margin: 0 auto;
+
+    #board-sign-up {
+      h3 {
+        text-align: center;
+        #board-sign-up-link {
+          color: $primary-grey;
+        }
+      }
+    }
+
+    width: 80%;
+    max-width: 500px;
+    margin: 0 auto;
+
+    .oink {
+      border: 2px solid $primary-pink;
+      border-radius: 4px;
+      margin: 10px 0;
+      height: 75px;
+      .avatar-container {
+        padding: 4px;
+        float: left;
+        .avatar {
+          height: 65px;
+        }
+      }
+    }
+
+
+  }
 
 }

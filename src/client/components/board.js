@@ -3,10 +3,10 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import AddOinkInput from './add-oink-input'
-import Oinks from './oinks'
+import BoardProfileAuthenticated from './board-profile-authenticated'
+import BoardProfileUnauthenticated from './board-profile-unauthenticated'
+import OinksContainer from './oinks-container'
 import submitOink from '../actions/submit-oink-actions'
-
 
 
 class Board extends React.Component {
@@ -14,13 +14,26 @@ class Board extends React.Component {
 
   render(){
 
-    return (
-      <div>
-        <h1>Board</h1>
-        < AddOinkInput
-          submitOink={this.props.submitOink}
+    let boardProfile;
+    if (this.props.auth.authenticated){
+      boardProfile = (
+        <BoardProfileAuthenticated
+          auth={this.props.auth}
         />
-        < Oinks
+      )
+    } else {
+      boardProfile = (
+        <BoardProfileUnauthenticated
+          auth={this.props.auth}
+        />
+      )
+    }
+
+    return (
+      <div id='board'>
+        {boardProfile}
+        < OinksContainer
+          auth={this.props.auth}
           oinks={this.props.board.oinks}
         />
       </div>

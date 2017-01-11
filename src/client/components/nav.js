@@ -42,6 +42,7 @@ class Nav extends React.Component {
       <Link
         key='about'
         to='/about'
+        activeClassName='active-nav-item'
         className='nav-item nav-left'
       >
         ABOUT
@@ -50,6 +51,7 @@ class Nav extends React.Component {
       <Link
         key='board'
         to='/board'
+        activeClassName='active-nav-item'
         className='nav-item nav-left'
       >
         BOARD

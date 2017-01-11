@@ -3,6 +3,10 @@
 
   margin-top: 3px;
 
+  .active-nav-item {
+    border-bottom: 3px solid $primary-pink;
+  }
+
   #inner-nav-container {
 
     height: 45px;

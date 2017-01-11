@@ -26,7 +26,7 @@ class App extends React.Component {
           history={history}
         >
           <Route path='/' component={Nav}>
-            <IndexRedirect to='/home' />
+            <IndexRedirect to='/about' />
             <Route name='home' path='/home' component={Home}/>
             <Route name='about' path='/about' component={About}/>
             <Route name='board' path='/board' component={Board}/>

@@ -10,5 +10,12 @@ export default {
     isFetching: false,
     error: false,
     count: 0
+  },
+  feedback: {
+    isFetching: false,
+    success: false,
+    error: false,
+    contact: '',
+    feedback: ''
   }
 }

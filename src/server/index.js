@@ -4,6 +4,7 @@ import path from 'path'
 import bodyParser from 'body-parser'
 
 import routes from './routes'
+import feedback from './feedback'
 
 const port = process.env.PORT || 3000;
 const env = process.env.NODE_ENV || 'dev';
@@ -21,6 +22,7 @@ app.get('/thick-logo', (req, res, next) => {
   res.sendFile(path.join(__dirname, '../../images/thick-logo.png'))
 })
 
+app.use('/feedback', feedback);
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../../src/client/index.html'));

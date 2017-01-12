@@ -20,18 +20,11 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/thick-logo', (req, res, next) => {
-  res.sendFile(path.join(__dirname, '../../images/thick-logo.png'))
-});
-app.get('/generic-avatar', (req, res, next) => {
-  res.sendFile(path.join(__dirname, '../../images/generic-avatar.png'))
-});
-app.get('/pig', (req, res, next) => {
-  res.sendFile(path.join(__dirname, '../../images/pig.jpg'))
-});
-app.get('/profile-pic-pig', (req, res, next) => {
-  res.sendFile(path.join(__dirname, '../../images/profile-pic-pig.jpg'))
-});
+if (env !== 'production'){
+  let imagesPath = path.join(__dirname, '../../images');
+  console.log(imagesPath);
+  app.use('/images', express.static(imagesPath));
+}
 
 app.use('/feedback', feedback);
 

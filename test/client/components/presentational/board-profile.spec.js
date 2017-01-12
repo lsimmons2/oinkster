@@ -15,7 +15,7 @@ describe('<BoardProfile/>', () => {
     let profileBottom = <BoardProfileSignUp/>;
     const wrapper = shallow(
       <BoardProfile
-        avatar='pig'
+        avatar='images/pig.png'
         username='lsimmons'
         profileBottom={profileBottom}
       />

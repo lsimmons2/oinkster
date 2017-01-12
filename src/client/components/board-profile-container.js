@@ -17,11 +17,11 @@ class BoardProfileContainer extends React.Component {
     let profileBottom;
 
     if (this.props.auth.authenticated){
-      avatar = this.props.auth.user.avatar || 'profile-pic-pig';
+      avatar = this.props.auth.user.avatar || 'images/profile-pic-pig.jpg';
       username = this.props.auth.user.username;
       profileBottom = <AddOinkInput submitOink={this.props.submitOink}/>;
     } else {
-      avatar = 'pig';
+      avatar = 'images/pig.jpg';
       username = 'Really Cool User';
       profileBottom = <BoardProfileSignUp/>;
     }

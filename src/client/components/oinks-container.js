@@ -24,7 +24,7 @@ class Oinks extends React.Component {
         if (oink.avatar){
           avatar = oink.avatar;
         } else {
-          avatar = '/generic-avatar'
+          avatar = 'images/generic-avatar.png'
         }
 
         id = oink.id;

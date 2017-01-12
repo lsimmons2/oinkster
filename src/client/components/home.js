@@ -8,7 +8,7 @@ class Home extends React.Component {
       <div id="home">
         <div id='home-container'>
           <div id='home-logo-container'>
-            <img src='thick-logo'/>
+            <img src='images/thick-logo.png'/>
           </div>
           <div id="home-description-container">
             <h2>

@@ -2,11 +2,11 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
 
 import BoardProfile from './board-profile'
 import submitOink from '../actions/submit-oink-actions'
 import AddOinkInput from './add-oink-input'
+import BoardProfileSignUp from './board-profile-sign-up'
 
 class BoardProfileContainer extends React.Component {
 
@@ -23,11 +23,7 @@ class BoardProfileContainer extends React.Component {
     } else {
       avatar = 'pig';
       username = 'Really Cool User';
-      profileBottom = (
-        <p>
-          This could be you! <Link to='/signup'>Sign up now</Link> so you can join the fun and oink with the other oinksters!
-        </p>
-      );
+      profileBottom = <BoardProfileSignUp/>;
     }
 
     return (

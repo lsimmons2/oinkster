@@ -15,13 +15,14 @@ const knex = require('knex')(knexConfig);
 
 
 
+// ======== GET /oinks ========
 describe('getOinks()', function(done) {
 
   before( function(done) {
     knex.seed.run({
       directory: './db/seeds/test'
     })
-      .then( () => {
+      .then( function() {
         done();
       })
   })
@@ -55,6 +56,47 @@ describe('getOinks()', function(done) {
           }
           oink.user.should.be.a('string');
         })
+        done();
+      })
+  })
+
+  after( function(done) {
+    knex('Oinks').truncate()
+      .then( function() {
+        done();
+      })
+  })
+
+})
+
+
+// ======== POST /oinks ========
+describe('insertOink()', function() {
+
+  before( function(done) {
+    knex('Oinks').truncate()
+      .then( function() {
+        done();
+      })
+  })
+
+  it('should get 403 if has invalid jwt header', function(done) {
+    agent
+      .post('/oinks')
+      .set('Authorization', 'Bearer not_a_valid_jwt')
+      .end(function(err, res) {
+        res.status.should.equal(403);
+        res.body.message.should.equal('Invalid JWT')
+        done();
+      })
+  })
+
+  it('should get 400 if has no jwt header', function(done) {
+    agent
+      .post('/oinks')
+      .end(function(err, res) {
+        res.status.should.equal(400);
+        res.body.message.should.equal('nah')
         done();
       })
   })

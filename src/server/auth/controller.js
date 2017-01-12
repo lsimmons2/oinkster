@@ -203,4 +203,12 @@ function logIn(req, res, next){
 }
 
 
-export { signUp, logIn }
+export {
+  hashPass,
+  comparePass,
+  findUser,
+  createUser,
+  checkSignUpData,
+  signUp,
+  logIn
+}

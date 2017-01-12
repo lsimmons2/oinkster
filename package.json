@@ -43,6 +43,7 @@
     "gulp-mocha": "^3.0.1",
     "gulp-nodemon": "^2.2.1",
     "gulp-util": "^3.0.8",
+    "jsdom": "^9.9.1",
     "knex": "^0.12.6",
     "pg": "^6.1.2",
     "react-addons-test-utils": "^15.4.2",

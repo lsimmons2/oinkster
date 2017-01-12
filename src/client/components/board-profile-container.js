@@ -6,6 +6,7 @@ import { Link } from 'react-router'
 
 import BoardProfile from './board-profile'
 import submitOink from '../actions/submit-oink-actions'
+import AddOinkInput from './add-oink-input'
 
 class BoardProfileContainer extends React.Component {
 
@@ -18,14 +19,7 @@ class BoardProfileContainer extends React.Component {
     if (this.props.auth.authenticated){
       avatar = this.props.auth.user.avatar || 'profile-pic-pig';
       username = this.props.auth.user.username;
-      profileBottom = (
-        <form>
-          <div className='form-group'>
-            <h5 id='board-profile-input'>Oink something!</h5>
-            <textarea className='form-control' placeholder="What's on your mind?"></textarea>
-          </div>
-        </form>
-      );
+      profileBottom = <AddOinkInput submitOink={this.props.submitOink}/>;
     } else {
       avatar = 'pig';
       username = 'Really Cool User';

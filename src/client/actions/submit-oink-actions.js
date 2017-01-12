@@ -34,11 +34,14 @@ export default function submitOink(oink){
       url = 'http://localhost:8080' + url;
     }
 
+    let token = 'Bearer ' + localStorage.getItem('jwt');
+
     let req = {
       method: 'POST',
       body: JSON.stringify(oink),
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': token
       }
     };
 

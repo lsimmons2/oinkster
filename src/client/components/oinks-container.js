@@ -1,56 +1,53 @@
 
 import React from 'react'
-import AddOinkInput from './add-oink-input'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { Link } from 'react-router'
+
+import Oink from './oink'
+
 
 class Oinks extends React.Component {
 
   render(){
 
-    let oinksHeader;
-    if (!this.props.auth.authenticated){
-      oinksHeader = null;
-    } else {
-      oinksHeader = (
-        < AddOinkInput
-          submitOink={this.props.submitOink}
-        />
-      )
-    }
-
-
     let oinks;
+    let id;
     let avatar;
-    if (this.props.oinks.length){
-      oinks = this.props.oinks.map( oink => {
+    let user;
+    let text;
+
+    if (this.props.board.oinks.length){
+
+      oinks = this.props.board.oinks.map( oink => {
+
         if (oink.avatar){
           avatar = oink.avatar;
         } else {
           avatar = '/generic-avatar'
         }
+
+        id = oink.id;
+        user = oink.user;
+        text = oink.text;
+
         return (
-          <div key={oink.id} className='oink'>
-
-            <div className='avatar-container'>
-              <img className='avatar' src={avatar}/>
-            </div>
-
-            <div className='right-container'>
-              <h4>{oink.user}</h4>
-              <div className="oink-field">
-                <span>{oink.text}</span>
-              </div>
-            </div>
-
-          </div>
+          < Oink
+            avatar={avatar}
+            key={id}
+            user={user}
+            text={text}
+          />
         )
+
       })
+
     } else {
-      oinks = <li key="0"><h2>No oinks could be loaded!</h2></li>
+      oinks = <div><h2>No oinks could be loaded!</h2></div>
     }
 
     return (
       <div id="oinks-container">
-        {oinksHeader}
         {oinks}
       </div>
     )
@@ -58,4 +55,9 @@ class Oinks extends React.Component {
 
 }
 
-export default Oinks
+
+function mapStateToProps(state){
+  return state;
+}
+
+export default connect(mapStateToProps)(Oinks)

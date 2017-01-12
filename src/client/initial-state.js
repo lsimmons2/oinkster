@@ -1,6 +1,6 @@
 export default {
   auth: {
-    authenticated: false,
+    authenticated: true,
     showSignUp: true,
     signUpUsernameConflict: false,
     signUpEmailConflict: false

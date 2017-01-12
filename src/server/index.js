@@ -29,6 +29,9 @@ app.get('/generic-avatar', (req, res, next) => {
 app.get('/pig', (req, res, next) => {
   res.sendFile(path.join(__dirname, '../../images/pig.jpg'))
 });
+app.get('/profile-pic-pig', (req, res, next) => {
+  res.sendFile(path.join(__dirname, '../../images/profile-pic-pig.jpg'))
+});
 
 app.use('/feedback', feedback);
 

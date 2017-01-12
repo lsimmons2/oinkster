@@ -3,7 +3,8 @@ export default {
     authenticated: false,
     showSignUp: true,
     signUpUsernameConflict: false,
-    signUpEmailConflict: false
+    signUpEmailConflict: false,
+    user: null
   },
   board: {
     oinks: [],

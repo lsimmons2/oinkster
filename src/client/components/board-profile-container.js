@@ -16,8 +16,8 @@ class BoardProfileContainer extends React.Component {
     let profileBottom;
 
     if (this.props.auth.authenticated){
-      avatar = 'pig';
-      username = 'Really Cool User';
+      avatar = this.props.auth.user.avatar || 'profile-pic-pig';
+      username = this.props.auth.user.username;
       profileBottom = (
         <form>
           <div className='form-group'>

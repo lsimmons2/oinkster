@@ -9,8 +9,10 @@ import * as actions from '../actions/auth-actions'
 class Nav extends React.Component {
 
   componentWillMount(){
-    if (localStorage.jwt){
-      this.props.actions.loggedIn();
+    if (localStorage.jwt && localStorage.user){
+      this.props.actions.loggedIn(JSON.parse(localStorage.user));
+    } else {
+      this.props.actions.logOut();
     }
   }
 

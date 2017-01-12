@@ -9,7 +9,7 @@ function getOinks(req, res){
   let queryString = 'SELECT * FROM "Oinks";';
   db.any(queryString)
     .then( oinks => {
-      dbLogger.info('Oinks retrieved', {oinks: oinks});
+      // dbLogger.info('Oinks retrieved', {oinks: oinks});
       res.status(200).send(oinks);
     })
     .catch( err => {

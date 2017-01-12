@@ -13,12 +13,14 @@ let authReducer = function(auth = initialState.auth, action){
 
     case 'LOGGED_IN':
       return { ...auth,
-        authenticated: true
+        authenticated: true,
+        user: action.user
       }
 
     case 'LOG_OUT':
       return { ...auth,
-        authenticated: false
+        authenticated: false,
+        user: null
       }
 
     default:

@@ -10,14 +10,16 @@ function redirectToLogin(user){
   }
 }
 
-function loggedIn(){
+function loggedIn(user){
   return {
-    type: 'LOGGED_IN'
+    type: 'LOGGED_IN',
+    user
   }
 }
 
 function logOut(){
   localStorage.removeItem('jwt');
+  localStorage.removeItem('user');
   history.push('/home');
   return {
     type: 'LOG_OUT'
@@ -89,7 +91,8 @@ function logIn(userInfo){
       .then( resp => {
         if (resp.status === 200){
           localStorage.setItem('jwt', resp.data.token);
-          dispatch(loggedIn());
+          localStorage.setItem('user', JSON.stringify(resp.data.user));
+          dispatch(loggedIn(resp.data.user));
           history.push('/board');
         }
       })

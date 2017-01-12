@@ -1,7 +1,7 @@
 
 require('es6-promise').polyfill();
 import 'whatwg-fetch'
-
+import history from '../history'
 
 function redirectToLogin(user){
   return {
@@ -17,6 +17,8 @@ function loggedIn(){
 }
 
 function logOut(){
+  localStorage.removeItem('jwt');
+  history.push('/home');
   return {
     type: 'LOG_OUT'
   }
@@ -88,6 +90,7 @@ function logIn(userInfo){
         if (resp.status === 200){
           localStorage.setItem('jwt', resp.data.token);
           dispatch(loggedIn());
+          history.push('/board');
         }
       })
 

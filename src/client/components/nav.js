@@ -15,7 +15,6 @@ class Nav extends React.Component {
   }
 
   logOut(){
-    localStorage.removeItem('jwt')
     this.props.actions.logOut();
   }
 
@@ -83,12 +82,12 @@ class Nav extends React.Component {
     } else {
       navItems.push(
         <Link
-          key='auth'
+          key='logout'
           activeClassName='active-nav-item'
           className='nav-item nav-auth'
           onClick={this.logOut.bind(this)}
         >
-          Log Out
+          LOG OUT
         </Link>
       )
     }

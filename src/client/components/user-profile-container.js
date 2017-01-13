@@ -15,11 +15,13 @@ class UserProfileContainer extends React.Component {
     let profileBottom = <p>sah?</p>;
 
     return (
-      < Profile
-        avatar={avatar}
-        username='lsimmons'
-        profileBottom='sup?'
-      />
+      <div id='user-profile'>
+        < Profile
+          avatar={avatar}
+          username='lsimmons'
+          profileBottom='sup?'
+        />
+      </div>
     )
   }
 

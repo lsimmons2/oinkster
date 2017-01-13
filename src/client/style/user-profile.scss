@@ -1,14 +1,7 @@
 
-#board {
-
-  h1 {
-    color: $primary-grey;
-  }
-
-  margin-top: 40px;
+#user-profile {
 
   .profile {
-
     border: solid 2px $primary-pink;
     border-radius: 4px;
     margin-left: 20px;
@@ -38,25 +31,12 @@
         text-align: center;
       }
     }
-
   }
 
-  #oinks-container {
+  #profile-feed {
 
-    width: 80%;
+    width: 70%;
     max-width: 600px;
-    margin: 0 auto;
-
-    #recent-oinks {
-      // border: 2px solid $primary-pink;
-      // border-radius: 4px;
-      h3 {
-        color: $primary-grey;
-      }
-    }
-
-    width: 80%;
-    max-width: 500px;
     margin: 0 auto;
 
     .oink {
@@ -72,8 +52,6 @@
         }
       }
     }
-
-
   }
 
 }

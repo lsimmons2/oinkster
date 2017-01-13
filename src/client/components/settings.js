@@ -9,24 +9,15 @@ import * as actions from '../actions/settings-actions'
 
 class Settings extends React.Component {
 
-  updateFirstName(e){
+  updateSettings(e){
     e.preventDefault();
-    this.props.actions.updateFirstName(this.refs.firstName.value);
-  }
-
-  updateLastName(e){
-    e.preventDefault();
-    this.props.actions.updateLastName(this.refs.lastName.value);
-  }
-
-  updateUsername(e){
-    e.preventDefault();
-    this.props.actions.updateUsername(this.refs.username.value);
-  }
-
-  updateEmail(e){
-    e.preventDefault();
-    this.props.actions.updateEmail(this.refs.email.value);
+    let settings = {
+      firstname: this.refs.firstName.value,
+      lastname: this.refs.lastName.value,
+      username: this.refs.username.value,
+      email: this.refs.email.value
+    };
+    this.props.actions.updateSettings(settings);
   }
 
   saveSettings(e){
@@ -44,6 +35,42 @@ class Settings extends React.Component {
 
   render(){
 
+    let fetchingStatus = null;
+    if (this.props.settings.isFetching){
+      fetchingStatus = (
+        <p>Retrieving your settings...</p>
+      );
+    } else if (this.props.settings.fetchingError){
+      fetchingStatus = (
+        <p>Woops! There was an error fetching your settings.</p>
+      );
+    }
+
+    let savingStatus = null;
+    if (this.props.settings.modified){
+      savingStatus = (
+        <div className='form-group'>
+          <input
+            type='submit'
+            className='form-control'
+            value='Save Settings'
+            onClick={this.saveSettings.bind(this)}/>
+        </div>
+      )
+    }  else if (this.props.settings.isSaving){
+      savingStatus = (
+        <p>Saving your settings...</p>
+      );
+    } else if (this.props.settings.savingError){
+      savingStatus = (
+        <p>Woops! There was an error saving your settings.</p>
+      );
+    } else if (this.props.settings.savingSuccess){
+      savingStatus = (
+        <p>Settings successfully saved.</p>
+      );
+    }
+
     return (
       <div id='settings'>
         <h1>Settings</h1>
@@ -56,8 +83,8 @@ class Settings extends React.Component {
               ref='firstName'
               type='text'
               className='form-control'
-              value={this.props.settings.data.firstname}
-              onChange={this.updateFirstName.bind(this)}/>
+              value={this.props.settings.current.firstname}
+              onChange={this.updateSettings.bind(this)}/>
           </div>
 
           <div className='form-group'>
@@ -67,8 +94,8 @@ class Settings extends React.Component {
               ref='lastName'
               type='text'
               className='form-control'
-              value={this.props.settings.data.lastname}
-              onChange={this.updateLastName.bind(this)}/>
+              value={this.props.settings.current.lastname}
+              onChange={this.updateSettings.bind(this)}/>
           </div>
 
           <div className='form-group'>
@@ -78,8 +105,8 @@ class Settings extends React.Component {
               ref='username'
               type='text'
               className='form-control'
-              value={this.props.settings.data.username}
-              onChange={this.updateUsername.bind(this)}/>
+              value={this.props.settings.current.username}
+              onChange={this.updateSettings.bind(this)}/>
           </div>
 
           <div className='form-group'>
@@ -89,17 +116,12 @@ class Settings extends React.Component {
               ref='email'
               type='text'
               className='form-control'
-              value={this.props.settings.data.email}
-              onChange={this.updateEmail.bind(this)}/>
+              value={this.props.settings.current.email}
+              onChange={this.updateSettings.bind(this)}/>
           </div>
 
-          <div className='form-group'>
-            <input
-              type='submit'
-              className='form-control'
-              value='Save Settings'
-              onClick={this.saveSettings.bind(this)}/>
-          </div>
+          {fetchingStatus}
+          {savingStatus}
 
         </form>
       </div>

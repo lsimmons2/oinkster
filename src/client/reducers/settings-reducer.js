@@ -9,53 +9,60 @@ let settingsReducer = function(settings = initialState.settings, action){
     case 'FETCH_SETTINGS_REQUEST':
       return { ...settings,
         isFetching: true,
-        success: false,
-        error: false,
-        data: {}
+        fetchingSuccess: false,
+        fetchingError: false
       }
 
     case 'FETCH_SETTINGS_SUCCESS':
       return { ...settings,
         isFetching: false,
-        success: true,
-        error: false,
-        data: action.settings
+        fetchingSuccess: true,
+        fetchingError: false,
+        savingSuccess: false,
+        savingError: false,
+        modified: false,
+        initial: action.settings,
+        current: action.settings
       }
 
     case 'FETCH_SETTINGS_ERROR':
       return { ...settings,
         isFetching: false,
         success: false,
-        error: true,
-        data: {}
+        fetchingError: true
       }
 
-    case 'UPDATE_FIRST_NAME':
+    case 'UPDATE_SETTINGS':
+      let oldSettings = JSON.stringify(settings.initial);
+      let newSettings = JSON.stringify(action.settings);
+      let isModified = oldSettings !== newSettings;
       return { ...settings,
-        data: { ...settings.data,
-          firstname: action.firstName
-        }
+        current: action.settings,
+        modified: isModified
       }
 
-    case 'UPDATE_LAST_NAME':
+    case 'SAVE_SETTINGS_REQUEST':
       return { ...settings,
-        data: { ...settings.data,
-          lastname: action.lastName
-        }
+        isSaving: true,
+        savingSuccess: false,
+        savingError: false
       }
 
-    case 'UPDATE_USERNAME':
+    case 'SAVE_SETTINGS_SUCCESS':
       return { ...settings,
-        data: { ...settings.data,
-          username: action.username
-        }
+        isSaving: false,
+        savingSuccess: true,
+        savingError: false,
+        initial: action.settings,
+        current: action.settings,
+        modified: false
       }
 
-    case 'UPDATE_EMAIL':
+    case 'SAVE_SETTINGS_ERROR':
       return { ...settings,
-        data: { ...settings.data,
-          email: action.email
-        }
+        isSaving: false,
+        savingSuccess: false,
+        savingError: true
       }
 
     default:

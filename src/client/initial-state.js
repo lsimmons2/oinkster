@@ -14,9 +14,19 @@ export default {
   },
   settings: {
     isFetching: false,
-    success: false,
-    error: false,
-    data: {
+    fetchingSuccess: false,
+    fetchingError: false,
+    isSaving: false,
+    savingSuccess: false,
+    savingError: false,
+    modified: false,
+    initial: {
+      firstname: '',
+      lastname: '',
+      username: '',
+      email: ''
+    },
+    current: {
       firstname: '',
       lastname: '',
       username: '',

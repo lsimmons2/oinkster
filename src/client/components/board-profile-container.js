@@ -10,6 +10,10 @@ import BoardProfileSignUp from './board-profile-sign-up'
 
 class BoardProfileContainer extends React.Component {
 
+  componentWillMount(){
+    console.log(this.props.settings);
+  }
+
   render(){
 
     let avatar;

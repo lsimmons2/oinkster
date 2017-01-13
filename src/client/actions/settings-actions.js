@@ -40,8 +40,8 @@ function fetchSettings(id){
           }
           return resp.json();
       })
-      .then( setttings => {
-        dispatch(fetchSettingsSuccess(setttings));
+      .then( settings => {
+        dispatch(fetchSettingsSuccess(settings));
       })
       .catch( error => {
         dispatch(fetchSettingsError(error));
@@ -79,15 +79,23 @@ function updateEmail(email){
   }
 }
 
+function updateSettings(settings){
+  return {
+    type: 'UPDATE_SETTINGS',
+    settings
+  }
+}
+
 function saveSettingsRequest() {
   return {
     type: 'SAVE_SETTINGS_REQUEST'
   }
 }
 
-function saveSettingsSuccess() {
+function saveSettingsSuccess(settings) {
   return {
-    type: 'SAVE_SETTINGS_SUCCESS'
+    type: 'SAVE_SETTINGS_SUCCESS',
+    settings
   }
 }
 
@@ -123,11 +131,11 @@ function saveSettings(id, settings){
           }
           return resp.json();
       })
-      .then( setttings => {
-        dispatch(fetchSettingsSuccess(setttings));
+      .then( settings => {
+        dispatch(saveSettingsSuccess(settings));
       })
       .catch( error => {
-        dispatch(fetchSettingsError(error));
+        dispatch(saveSettingsError(error));
       })
 
   }
@@ -139,5 +147,6 @@ export {
   updateLastName,
   updateUsername,
   updateEmail,
-  saveSettings
+  saveSettings,
+  updateSettings
 }

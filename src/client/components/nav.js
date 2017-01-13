@@ -102,6 +102,16 @@ class Nav extends React.Component {
           PROFILE
         </Link>
       );
+      navItems.push(
+        <Link
+          key='settings'
+          activeClassName='active-nav-item'
+          className='nav-item nav-auth'
+          to={'/settings/' + JSON.parse(localStorage.getItem('user')).id}
+        >
+          SETTINGS
+        </Link>
+      );
     }
 
     return (

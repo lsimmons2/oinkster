@@ -21,6 +21,26 @@ function getUser(req, res){
     })
 }
 
+function getUserSettings(req, res){
+  let queryString = `
+  SELECT firstname, lastname, username, email
+  FROM "Users"
+  WHERE id='${req.params.id}'
+  `;
+  db.oneOrNone(queryString)
+    .then( user => {
+      if (!user){
+        return res.status(404).json({message: 'User not found'});
+      }
+      dbLogger.info('User retrieved', {user});
+      res.status(200).send(user);
+    })
+    .catch( err => {
+      dbLogger.error('Error retrieving user', {error: err.message})
+      res.status(500).send(err);
+    })
+}
+
 function getUserSummary(req, res){
   let oinksQuery = `
   SELECT id, text, asset
@@ -53,4 +73,19 @@ function getUserSummary(req, res){
     })
 }
 
-export { getUser, getUserSummary }
+function updateUserSettings(req, res){
+  let queryString = `
+  UPDATE "Users"
+  SET firstname='${req.body.firstName}', lastname='${req.body.lastName}', username='${req.body.username}', email='${req.body.email}'
+  WHERE id='${req.params.id}'
+  `;
+  db.none(queryString)
+    .then( () => {
+      res.status(200).json({});
+    })
+    .catch( err => {
+      res.status(500).json({});
+    })
+}
+
+export { getUser, getUserSettings, getUserSummary, updateUserSettings }

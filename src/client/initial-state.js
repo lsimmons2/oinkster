@@ -12,6 +12,17 @@ export default {
     error: false,
     summary: {}
   },
+  settings: {
+    isFetching: false,
+    success: false,
+    error: false,
+    data: {
+      firstname: '',
+      lastname: '',
+      username: '',
+      email: ''
+    }
+  },
   board: {
     oinks: [],
     isFetching: false,

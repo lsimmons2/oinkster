@@ -12,6 +12,7 @@ import Board from './board'
 import SignUp from './sign-up'
 import LogIn from './log-in'
 import UserProfile from './user-profile'
+import Settings from './settings'
 import '../style/main.scss'
 
 
@@ -28,13 +29,14 @@ class App extends React.Component {
           history={history}
         >
           <Route path='/' component={Nav}>
-            <IndexRedirect to='/home' />
+            <IndexRedirect to='/settings/1ee8de56-7668-4ded-939c-92642ca24a3a' />
             <Route name='home' path='/home' component={Home}/>
             <Route name='about' path='/about' component={About}/>
             <Route name='board' path='/board' component={Board}/>
             <Route name='signup' path='/signup' component={SignUp}/>
             <Route name='login' path='/login' component={LogIn}/>
             <Route name='profile' path='/user/:id' component={UserProfile}/>
+            <Route name='settings' path='/settings/:id' component={Settings}/>
             <Redirect from='*' to='/home'/>
           </Route>
         </Router>

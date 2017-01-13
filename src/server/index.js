@@ -22,7 +22,6 @@ app.use((req, res, next) => {
 
 if (env !== 'production'){
   let imagesPath = path.join(__dirname, '../../images');
-  console.log(imagesPath);
   app.use('/images', express.static(imagesPath));
 }
 

@@ -11,6 +11,7 @@ import About from './about'
 import Board from './board'
 import SignUp from './sign-up'
 import LogIn from './log-in'
+import Profile from './profile'
 import '../style/main.scss'
 
 
@@ -27,12 +28,13 @@ class App extends React.Component {
           history={history}
         >
           <Route path='/' component={Nav}>
-            <IndexRedirect to='/board' />
+            <IndexRedirect to='/home' />
             <Route name='home' path='/home' component={Home}/>
             <Route name='about' path='/about' component={About}/>
             <Route name='board' path='/board' component={Board}/>
             <Route name='signup' path='/signup' component={SignUp}/>
-            <Route name='login' path='login' component={LogIn}/>
+            <Route name='login' path='/login' component={LogIn}/>
+            <Route name='profile' path='/user/:id' component={Profile}/>
             <Redirect from='*' to='/home'/>
           </Route>
         </Router>

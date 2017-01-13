@@ -91,7 +91,17 @@ class Nav extends React.Component {
         >
           LOG OUT
         </Link>
-      )
+      );
+      navItems.push(
+        <Link
+          key='profile'
+          activeClassName='active-nav-item'
+          className='nav-item nav-auth'
+          to={'/user/' + JSON.parse(localStorage.getItem('user')).id}
+        >
+          PROFILE
+        </Link>
+      );
     }
 
     return (

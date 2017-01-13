@@ -6,6 +6,12 @@ export default {
     signUpEmailConflict: false,
     user: null
   },
+  profile: {
+    isFetching: false,
+    success: false,
+    error: false,
+    summary: {}
+  },
   board: {
     oinks: [],
     isFetching: false,

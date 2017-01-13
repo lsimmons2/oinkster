@@ -1,17 +1,30 @@
 
 import React from 'react'
-
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as actions from '../actions/auth-actions'
+
+import Oink from './oink'
 
 
 class ProfileFeed extends React.Component {
 
   render(){
-    let userOinks = <p>User's oinks</p>
+    let userOinks = null;
+    if (this.props.profile.summary.oinks){
+      userOinks = this.props.profile.summary.oinks.map( oink => {
+        return (
+          < Oink
+            key={oink.id}
+            avatar = '/images/pig.jpg'
+            user = {this.props.profile.summary.user.username}
+            text = {oink.text}
+          />
+        )
+      })
+    }
     return (
-      <div>
+      <div id='profile-feed'>
         {userOinks}
       </div>
     )

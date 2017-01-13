@@ -29,7 +29,7 @@ class Nav extends React.Component {
         key='home'
         to='/home'
       >
-        <img src='images/thick-logo.png'/>
+        <img src='/images/thick-logo.png'/>
       </Link>,
 
       <Link

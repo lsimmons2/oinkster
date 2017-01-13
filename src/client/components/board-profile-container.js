@@ -3,7 +3,7 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import BoardProfile from './board-profile'
+import Profile from './profile'
 import submitOink from '../actions/submit-oink-actions'
 import AddOinkInput from './add-oink-input'
 import BoardProfileSignUp from './board-profile-sign-up'
@@ -27,7 +27,7 @@ class BoardProfileContainer extends React.Component {
     }
 
     return (
-      < BoardProfile
+      < Profile
         avatar={avatar}
         username={username}
         profileBottom={profileBottom}

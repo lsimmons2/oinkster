@@ -11,7 +11,7 @@ import About from './about'
 import Board from './board'
 import SignUp from './sign-up'
 import LogIn from './log-in'
-import Profile from './profile'
+import UserProfile from './user-profile'
 import '../style/main.scss'
 
 
@@ -34,7 +34,7 @@ class App extends React.Component {
             <Route name='board' path='/board' component={Board}/>
             <Route name='signup' path='/signup' component={SignUp}/>
             <Route name='login' path='/login' component={LogIn}/>
-            <Route name='profile' path='/user/:id' component={Profile}/>
+            <Route name='profile' path='/user/:id' component={UserProfile}/>
             <Redirect from='*' to='/home'/>
           </Route>
         </Router>

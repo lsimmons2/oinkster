@@ -1,12 +1,12 @@
 
 import React from 'react'
 import { connect } from 'react-redux'
-import ProfileUser from './profile-user'
+import Profile from './profile'
 
 import Oink from './oink'
 
 
-class ProfileUserContainer extends React.Component {
+class UserProfileContainer extends React.Component {
 
   render(){
 
@@ -15,7 +15,7 @@ class ProfileUserContainer extends React.Component {
     let profileBottom = <p>sah?</p>;
 
     return (
-      < ProfileUser
+      < Profile
         avatar={avatar}
         username='lsimmons'
         profileBottom='sup?'
@@ -29,4 +29,4 @@ function mapStateToProps(state){
   return state;
 }
 
-export default connect(mapStateToProps)(ProfileUserContainer)
+export default connect(mapStateToProps)(UserProfileContainer)

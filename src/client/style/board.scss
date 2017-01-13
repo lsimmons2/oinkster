@@ -7,7 +7,7 @@
 
   margin-top: 40px;
 
-  #board-profile {
+  #profile {
 
     border: solid 2px $primary-pink;
     border-radius: 4px;
@@ -17,7 +17,7 @@
     float: left;
     padding-top: 15px;
 
-    #board-profile-top {
+    #profile-top {
       img {
         height: 70px;
         margin: 8px;
@@ -28,7 +28,7 @@
       }
     }
 
-    #board-profile-bottom {
+    #profile-bottom {
       margin-top: 5px;
       padding: 0 20px;
       p {

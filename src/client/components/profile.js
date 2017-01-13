@@ -1,17 +1,19 @@
 
 import React from 'react'
 
-import ProfileFeed from './profile-feed'
-import ProfileUserContainer from './profile-user-container'
-
 class Profile extends React.Component {
 
   render(){
+
     return (
       <div id='profile'>
-        <div>Profile</div>
-        < ProfileUserContainer />
-        < ProfileFeed />
+        <div id='profile-top'>
+          <img src={this.props.avatar}/>
+          <h4>{this.props.username}</h4>
+        </div>
+        <div id='profile-bottom'>
+          {this.props.profileBottom}
+        </div>
       </div>
     )
   }

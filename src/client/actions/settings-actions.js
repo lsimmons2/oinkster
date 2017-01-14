@@ -51,34 +51,6 @@ function fetchSettings(id){
 
 }
 
-function updateFirstName(firstName){
-  return {
-    type: 'UPDATE_FIRST_NAME',
-    firstName
-  }
-}
-
-function updateLastName(lastName){
-  return {
-    type: 'UPDATE_LAST_NAME',
-    lastName
-  }
-}
-
-function updateUsername(username){
-  return {
-    type: 'UPDATE_USERNAME',
-    username
-  }
-}
-
-function updateEmail(email){
-  return {
-    type: 'UPDATE_EMAIL',
-    email
-  }
-}
-
 function updateSettings(settings){
   return {
     type: 'UPDATE_SETTINGS',
@@ -143,10 +115,6 @@ function saveSettings(id, settings){
 }
 export {
   fetchSettings,
-  updateFirstName,
-  updateLastName,
-  updateUsername,
-  updateEmail,
   saveSettings,
   updateSettings
 }

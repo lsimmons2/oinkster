@@ -23,7 +23,7 @@ function getUser(req, res){
 
 function getUserSettings(req, res){
   let queryString = `
-  SELECT firstname, lastname, username, email
+  SELECT firstname, lastname, username, email, bio
   FROM "Users"
   WHERE id='${req.params.id}'
   `;
@@ -76,7 +76,7 @@ function getUserSummary(req, res){
 function updateUserSettings(req, res){
   let queryString = `
   UPDATE "Users"
-  SET firstname='${req.body.firstName}', lastname='${req.body.lastName}', username='${req.body.username}', email='${req.body.email}'
+  SET firstname='${req.body.firstName}', lastname='${req.body.lastName}', username='${req.body.username}', email='${req.body.email}', bio='${req.body.bio}'
   WHERE id='${req.params.id}'
   `;
   db.none(queryString)

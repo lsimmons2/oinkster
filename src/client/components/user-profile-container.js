@@ -10,16 +10,19 @@ class UserProfileContainer extends React.Component {
 
   render(){
 
-    let user = this.props.profile.summary.user;
+    let username = this.props.profile.summary.user.username;
     let avatar = '/images/profile-pic-pig.jpg';
-    let profileBottom = <p>sah?</p>;
+    let profileBottom = (
+      <p>{this.props.profile.summary.user.bio}</p>
+    );
 
     return (
       <div id='user-profile'>
+        <p>sah?</p>
         < Profile
           avatar={avatar}
-          username='lsimmons'
-          profileBottom='sup?'
+          username={username}
+          profileBottom={profileBottom}
         />
       </div>
     )

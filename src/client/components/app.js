@@ -29,7 +29,7 @@ class App extends React.Component {
           history={history}
         >
           <Route path='/' component={Nav}>
-            <IndexRedirect to='/settings/1ee8de56-7668-4ded-939c-92642ca24a3a' />
+            <IndexRedirect to='/user/1ee8de56-7668-4ded-939c-92642ca24a3a' />
             <Route name='home' path='/home' component={Home}/>
             <Route name='about' path='/about' component={About}/>
             <Route name='board' path='/board' component={Board}/>

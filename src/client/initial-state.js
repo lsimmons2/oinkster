@@ -10,7 +10,12 @@ export default {
     isFetching: false,
     success: false,
     error: false,
-    summary: {}
+    summary: {
+      user: {
+        username: '',
+        bio: ''
+      }
+    }
   },
   settings: {
     isFetching: false,
@@ -24,13 +29,15 @@ export default {
       firstname: '',
       lastname: '',
       username: '',
-      email: ''
+      email: '',
+      bio: ''
     },
     current: {
       firstname: '',
       lastname: '',
       username: '',
-      email: ''
+      email: '',
+      bio: ''
     }
   },
   board: {

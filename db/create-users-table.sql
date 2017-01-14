@@ -4,6 +4,7 @@ CREATE TABLE "Users"(
   lastname VARCHAR(255),
   username VARCHAR(255),
   email VARCHAR(255),
+  bio VARCHAR(255),
   salt VARCHAR(255),
   password VARCHAR(255)
 );

@@ -15,7 +15,8 @@ class Settings extends React.Component {
       firstname: this.refs.firstName.value,
       lastname: this.refs.lastName.value,
       username: this.refs.username.value,
-      email: this.refs.email.value
+      email: this.refs.email.value,
+      bio: this.refs.bio.value
     };
     this.props.actions.updateSettings(settings);
   }
@@ -26,7 +27,8 @@ class Settings extends React.Component {
       firstName: this.refs.firstName.value,
       lastName: this.refs.lastName.value,
       username: this.refs.username.value,
-      email: this.refs.email.value
+      email: this.refs.email.value,
+      bio: this.refs.bio.value
     };
     let user = JSON.parse(localStorage.getItem('user'));
     let id = user.id;
@@ -118,6 +120,18 @@ class Settings extends React.Component {
               className='form-control'
               value={this.props.settings.current.email}
               onChange={this.updateSettings.bind(this)}/>
+          </div>
+
+          <div className='form-group'>
+            <label htmlFor='settings-bio'>Bio</label>
+            <textarea
+              id='settings-bio'
+              ref='bio'
+              type='text'
+              className='form-control'
+              value={this.props.settings.current.bio}
+              onChange={this.updateSettings.bind(this)}>
+            </textarea>
           </div>
 
           {fetchingStatus}

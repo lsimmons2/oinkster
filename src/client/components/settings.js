@@ -18,7 +18,7 @@ class Settings extends React.Component {
       username: this.refs.username.value,
       email: this.refs.email.value,
       bio: this.refs.bio.value,
-      picture: []
+      picture: this.props.settings.current.picture
     };
     this.props.actions.updateSettings(settings);
   }
@@ -31,7 +31,7 @@ class Settings extends React.Component {
       username: this.refs.username.value,
       email: this.refs.email.value,
       bio: this.refs.bio.value,
-      picture: []
+      picture: this.props.settings.current.picture
     };
     let user = JSON.parse(localStorage.getItem('user'));
     let id = user.id;
@@ -39,9 +39,8 @@ class Settings extends React.Component {
   }
 
   onDrop(files){
-    console.log('from onDrop');
-    console.log(files);
-    this.props.actions.uploadPicture(files[0]);
+    let id = JSON.parse(localStorage.getItem('user')).id;
+    this.props.actions.uploadPicture(files[0], id);
   }
 
   render(){
@@ -82,13 +81,11 @@ class Settings extends React.Component {
       );
     }
 
-    let picture;
-    if (this.props.settings.current.picture instanceof File){
-      console.log('its a file');
-      picture = this.props.settings.current.picture.preview;
-    } else {
-      console.log('its not a file');
-      picture = this.props.settings.current.picture;
+    let picture = null;
+    if (this.props.settings.current.picture){
+      let base = 'https://s3.amazonaws.com/oinkster/'
+      picture = base + this.props.settings.current.picture;
+      console.log(picture);
     }
 
     return (
@@ -97,25 +94,14 @@ class Settings extends React.Component {
 
         <div className='form-group'>
 
-          {/* <img src={this.props.settings.current.picture}/> */}
-
           <Dropzone
             ref={(node) => { this.dropzone = node; }}
             onDrop={this.onDrop.bind(this)}
             className='settings-picture'
             multiple={false}
           >
-            {/* {this.props.settings.current.picture.length > 0 ? <div>
-            <h2>Uploading {this.props.settings.current.picture.length} files...</h2>
-            </div> : null} */}
             <div><img src={picture}/></div>
-
-
           </Dropzone>
-
-          {/* <button type="button" onClick={this.onOpenClick}>
-            Open Dropzone
-          </button> */}
 
         </div>
 

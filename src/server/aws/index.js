@@ -5,7 +5,7 @@ import * as ctrl from './controller'
 const router = express.Router();
 
 
-router.route('/upload')
+router.route('/upload/:id')
   .post( (req, res) => {
     return ctrl.upload(req, res);
   })

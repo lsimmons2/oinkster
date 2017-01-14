@@ -24,6 +24,8 @@ export default {
     isSaving: false,
     savingSuccess: false,
     savingError: false,
+    isUploadingPicture: false,
+    uploadingPictureError: false,
     modified: false,
     initial: {
       firstname: '',

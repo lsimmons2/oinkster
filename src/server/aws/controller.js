@@ -26,24 +26,27 @@ function upload(req, res){
   buffer(req, res, (err) => {
 
     if (err){
-      console.log('err here first');
-      console.log(err);
       return res.status(500).send(err);
     }
 
+    let now = new Date();
+    let key = req.params.id + '_' + now.getTime();
+
     let params = {
       Bucket: 'oinkster',
-      Key: req.file.originalname,
-      Body: req.file.buffer
+      Key: key,
+      Body: req.file.buffer,
+      ContentType: 'image/jpeg'
     };
 
     s3.putObject(params, (err, data) => {
       if(err){
-        console.log(err);
         return res.status(500).send(err);
       }
-      console.log('success');
-      res.status(200).send(data);
+      res.status(200).json({
+        message: 'Image successfully uploaded to S3',
+        key
+      });
     })
 
   })

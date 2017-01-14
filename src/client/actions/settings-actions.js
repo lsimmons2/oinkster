@@ -58,10 +58,31 @@ function updateSettings(settings){
   }
 }
 
-function uploadPicture(file){
+function uploadPictureRequest(){
+  return {
+    type: 'UPLOAD_PICTURE_REQUEST'
+  }
+}
+
+function uploadPictureSuccess(picture){
+  return {
+    type: 'UPLOAD_PICTURE_SUCCESS',
+    picture
+  }
+}
+
+function uploadPictureError(){
+  return {
+    type: 'UPLOAD_PICTURE_ERROR'
+  }
+}
+
+function uploadPicture(file, id){
   return function(dispatch){
 
-    let url = '/aws/upload';
+    dispatch(uploadPictureRequest());
+
+    let url = `/aws/upload/${id}`;
     if(process.env.NODE_ENV === 'test'){
       url = 'http://localhost:8080' + url;
     }
@@ -82,11 +103,11 @@ function uploadPicture(file){
           }
           return resp.json();
       })
-      .then( settings => {
-        dispatch(saveSettingsSuccess(settings));
+      .then( data => {
+        dispatch(uploadPictureSuccess(data.key));
       })
       .catch( error => {
-        dispatch(saveSettingsError(error));
+        dispatch(uploadPictureError());
       })
 
   }
@@ -137,7 +158,7 @@ function saveSettings(id, settings){
           }
           return resp.json();
       })
-      .then( settings => {
+      .then( () => {
         dispatch(saveSettingsSuccess(settings));
       })
       .catch( error => {

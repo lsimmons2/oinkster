@@ -113,6 +113,12 @@ function uploadPicture(file, id){
   }
 }
 
+function resetPicture(){
+  return {
+    type: 'RESET_PICTURE'
+  }
+}
+
 function saveSettingsRequest() {
   return {
     type: 'SAVE_SETTINGS_REQUEST'
@@ -173,5 +179,6 @@ export {
   fetchSettings,
   saveSettings,
   updateSettings,
-  uploadPicture
+  uploadPicture,
+  resetPicture
 }

@@ -27,6 +27,7 @@ export default {
     isUploadingPicture: false,
     uploadingPictureError: false,
     modified: false,
+    pictureModified: false,
     initial: {
       firstname: '',
       lastname: '',

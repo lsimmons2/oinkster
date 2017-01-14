@@ -50,7 +50,7 @@ let settingsReducer = function(settings = initialState.settings, action){
     case 'UPLOAD_PICTURE_SUCCESS':
       return { ...settings,
         isUploadingImage: false,
-        modified: true,
+        pictureModified: true,
         current: { ...settings.current,
           picture: action.picture
         }
@@ -60,6 +60,14 @@ let settingsReducer = function(settings = initialState.settings, action){
       return { ...settings,
         isUploadingImage: false,
         uploadingPictureError: true
+      }
+
+    case 'RESET_PICTURE':
+      return { ...settings,
+        pictureModified: false,
+        current: { ...settings.current,
+          picture: settings.initial.picture
+        }
       }
 
     case 'SAVE_SETTINGS_REQUEST':

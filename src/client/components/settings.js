@@ -46,12 +46,16 @@ class Settings extends React.Component {
       return;
     }
     let ext = parts[parts.length - 1];
-    if (ext !== 'png' || ext !== 'jpg' || ext !== 'jpeg'){
+    if (ext !== 'png' && ext !== 'jpg' && ext !== 'jpeg'){
       alert('Only JPEGs or PNGs please.');
       return;
     }
     let id = JSON.parse(localStorage.getItem('user')).id;
     this.props.actions.uploadPicture(picture, id);
+  }
+
+  resetPicture(){
+    this.props.actions.resetPicture();
   }
 
   render(){
@@ -68,7 +72,7 @@ class Settings extends React.Component {
     }
 
     let savingStatus = null;
-    if (this.props.settings.modified || this.props.settings.current.picture instanceof File){
+    if (this.props.settings.modified || this.props.settings.pictureModified){
       savingStatus = (
         <div className='form-group'>
           <input
@@ -96,25 +100,38 @@ class Settings extends React.Component {
     if (this.props.settings.current.picture){
       let base = 'https://s3.amazonaws.com/oinkster/'
       picture = base + this.props.settings.current.picture;
-      console.log(picture);
+    }
+
+    let resetImage = null;
+    if (this.props.settings.pictureModified){
+      resetImage = (
+        <div className='form-group'>
+          <input
+            type='submit'
+            className='form-control'
+            value='Reset picture'
+            onClick={this.resetPicture.bind(this)}/>
+        </div>
+      )
     }
 
     return (
       <div id='settings'>
+
         <h1>Settings</h1>
 
-        <div className='form-group'>
+        <Dropzone
+          ref={(node) => { this.dropzone = node; }}
+          onDrop={this.onDrop.bind(this)}
+          className='settings-picture'
+          multiple={false}
+        >
+          {/* <div> */}
+            <img src={picture}/>
+          {/* </div> */}
+        </Dropzone>
 
-          <Dropzone
-            ref={(node) => { this.dropzone = node; }}
-            onDrop={this.onDrop.bind(this)}
-            className='settings-picture'
-            multiple={false}
-          >
-            <div><img src={picture}/></div>
-          </Dropzone>
-
-        </div>
+        {resetImage}
 
         <form>
 

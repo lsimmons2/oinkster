@@ -30,14 +30,16 @@ export default {
       lastname: '',
       username: '',
       email: '',
-      bio: ''
+      bio: '',
+      picture: ''
     },
     current: {
       firstname: '',
       lastname: '',
       username: '',
       email: '',
-      bio: ''
+      bio: '',
+      picture: ''
     }
   },
   board: {

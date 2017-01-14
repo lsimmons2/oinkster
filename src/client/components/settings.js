@@ -2,6 +2,7 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import Dropzone from 'react-dropzone'
 
 import * as actions from '../actions/settings-actions'
 
@@ -16,7 +17,8 @@ class Settings extends React.Component {
       lastname: this.refs.lastName.value,
       username: this.refs.username.value,
       email: this.refs.email.value,
-      bio: this.refs.bio.value
+      bio: this.refs.bio.value,
+      picture: []
     };
     this.props.actions.updateSettings(settings);
   }
@@ -28,11 +30,18 @@ class Settings extends React.Component {
       lastName: this.refs.lastName.value,
       username: this.refs.username.value,
       email: this.refs.email.value,
-      bio: this.refs.bio.value
+      bio: this.refs.bio.value,
+      picture: []
     };
     let user = JSON.parse(localStorage.getItem('user'));
     let id = user.id;
     this.props.actions.saveSettings(id, settings);
+  }
+
+  onDrop(files){
+    console.log('from onDrop');
+    console.log(files);
+    this.props.actions.uploadPicture(files[0]);
   }
 
   render(){
@@ -49,7 +58,7 @@ class Settings extends React.Component {
     }
 
     let savingStatus = null;
-    if (this.props.settings.modified){
+    if (this.props.settings.modified || this.props.settings.current.picture instanceof File){
       savingStatus = (
         <div className='form-group'>
           <input
@@ -73,9 +82,43 @@ class Settings extends React.Component {
       );
     }
 
+    let picture;
+    if (this.props.settings.current.picture instanceof File){
+      console.log('its a file');
+      picture = this.props.settings.current.picture.preview;
+    } else {
+      console.log('its not a file');
+      picture = this.props.settings.current.picture;
+    }
+
     return (
       <div id='settings'>
         <h1>Settings</h1>
+
+        <div className='form-group'>
+
+          {/* <img src={this.props.settings.current.picture}/> */}
+
+          <Dropzone
+            ref={(node) => { this.dropzone = node; }}
+            onDrop={this.onDrop.bind(this)}
+            className='settings-picture'
+            multiple={false}
+          >
+            {/* {this.props.settings.current.picture.length > 0 ? <div>
+            <h2>Uploading {this.props.settings.current.picture.length} files...</h2>
+            </div> : null} */}
+            <div><img src={picture}/></div>
+
+
+          </Dropzone>
+
+          {/* <button type="button" onClick={this.onOpenClick}>
+            Open Dropzone
+          </button> */}
+
+        </div>
+
         <form>
 
           <div className='form-group'>

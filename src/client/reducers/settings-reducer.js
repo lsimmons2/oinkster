@@ -41,6 +41,16 @@ let settingsReducer = function(settings = initialState.settings, action){
         modified: isModified
       }
 
+    case 'UPLOAD_PICTURE':
+      return { ...settings,
+        current: { ...settings.current,
+          picture: action.file
+        }
+      }
+
+    // case 'UPLOAD_PICTURE':
+    //   return settings
+
     case 'SAVE_SETTINGS_REQUEST':
       return { ...settings,
         isSaving: true,

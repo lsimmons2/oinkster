@@ -58,6 +58,40 @@ function updateSettings(settings){
   }
 }
 
+function uploadPicture(file){
+  return function(dispatch){
+
+    let url = '/aws/upload';
+    if(process.env.NODE_ENV === 'test'){
+      url = 'http://localhost:8080' + url;
+    }
+
+    let fileData = new FormData();
+    fileData.append('file', file)
+    fileData.append('user', 'me')
+
+    let req = {
+      method: 'POST',
+      body: fileData
+    };
+
+    return fetch(url, req)
+      .then( resp => {
+          if(!resp.ok){
+            throw new Error(resp.statusText)
+          }
+          return resp.json();
+      })
+      .then( settings => {
+        dispatch(saveSettingsSuccess(settings));
+      })
+      .catch( error => {
+        dispatch(saveSettingsError(error));
+      })
+
+  }
+}
+
 function saveSettingsRequest() {
   return {
     type: 'SAVE_SETTINGS_REQUEST'
@@ -113,8 +147,10 @@ function saveSettings(id, settings){
   }
 
 }
+
 export {
   fetchSettings,
   saveSettings,
-  updateSettings
+  updateSettings,
+  uploadPicture
 }

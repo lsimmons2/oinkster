@@ -39,8 +39,19 @@ class Settings extends React.Component {
   }
 
   onDrop(files){
+    let picture = files[0];
+    let parts = picture.name.split('.');
+    if (parts.length < 2){
+      alert('Please make sure your image file has the proper extension.');
+      return;
+    }
+    let ext = parts[parts.length - 1];
+    if (ext !== 'png' || ext !== 'jpg' || ext !== 'jpeg'){
+      alert('Only JPEGs or PNGs please.');
+      return;
+    }
     let id = JSON.parse(localStorage.getItem('user')).id;
-    this.props.actions.uploadPicture(files[0], id);
+    this.props.actions.uploadPicture(picture, id);
   }
 
   render(){

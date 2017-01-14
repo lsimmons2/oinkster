@@ -36,7 +36,7 @@ function upload(req, res){
       Bucket: 'oinkster',
       Key: key,
       Body: req.file.buffer,
-      ContentType: 'image/jpeg'
+      ContentType: req.file.mimetype
     };
 
     s3.putObject(params, (err, data) => {

@@ -29,16 +29,16 @@ export default {
     modified: false,
     pictureModified: false,
     initial: {
-      firstname: '',
-      lastname: '',
+      firstName: '',
+      lastName: '',
       username: '',
       email: '',
       bio: '',
       picture: ''
     },
     current: {
-      firstname: '',
-      lastname: '',
+      firstName: '',
+      lastName: '',
       username: '',
       email: '',
       bio: '',

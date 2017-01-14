@@ -13,8 +13,8 @@ class Settings extends React.Component {
   updateSettings(e){
     e.preventDefault();
     let settings = {
-      firstname: this.refs.firstName.value,
-      lastname: this.refs.lastName.value,
+      firstName: this.refs.firstName.value,
+      lastName: this.refs.lastName.value,
       username: this.refs.username.value,
       email: this.refs.email.value,
       bio: this.refs.bio.value,
@@ -142,7 +142,7 @@ class Settings extends React.Component {
               ref='firstName'
               type='text'
               className='form-control'
-              value={this.props.settings.current.firstname}
+              value={this.props.settings.current.firstName}
               onChange={this.updateSettings.bind(this)}/>
           </div>
 
@@ -153,7 +153,7 @@ class Settings extends React.Component {
               ref='lastName'
               type='text'
               className='form-control'
-              value={this.props.settings.current.lastname}
+              value={this.props.settings.current.lastName}
               onChange={this.updateSettings.bind(this)}/>
           </div>
 

@@ -80,15 +80,15 @@ function findUser(username, email){
 function createUser(req, res){
   let username = req.body.username;
   let email = req.body.email;
-  let firstname = req.body.firstName;
-  let lastname = req.body.lastName;
+  let firstName = req.body.firstName;
+  let lastName = req.body.lastName;
   let password = req.body.password;
   hashPass(password)
   .then( passData => {
     let salt = passData.salt;
     let hash = passData.hash;
-    let queryString = 'INSERT INTO "Users"(firstname, lastname, username, email, salt, password) values($1, $2, $3, $4, $5, $6) returning id, firstname, lastname, username, email, salt, password';
-    return db.one(queryString, [firstname, lastname, username, email, salt, hash])
+    let queryString = 'INSERT INTO "Users"(firstName, lastName, username, email, salt, password) values($1, $2, $3, $4, $5, $6) returning id, firstName, lastName, username, email, salt, password';
+    return db.one(queryString, [firstName, lastName, username, email, salt, hash])
   })
   .then( user => {
     let token = jwt.sign(user, 'sah', {

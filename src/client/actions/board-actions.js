@@ -22,7 +22,7 @@ function fetchOinksError(error) {
   }
 }
 
-export default function fetchOinks(){
+function fetchOinks(){
 
   return function(dispatch){
 
@@ -50,3 +50,5 @@ export default function fetchOinks(){
   }
 
 }
+
+export { fetchOinks }

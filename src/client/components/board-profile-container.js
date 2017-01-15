@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import Profile from './profile'
-import submitOink from '../actions/submit-oink-actions'
+import { submitOink } from '../actions/profile-actions'
 import AddOinkInput from './add-oink-input'
 import BoardProfileSignUp from './board-profile-sign-up'
 

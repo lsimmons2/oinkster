@@ -53,8 +53,8 @@ export default {
   },
   feedback: {
     isFetching: false,
-    success: false,
-    error: false,
+    fetchingSuccess: false,
+    fetchingError: false,
     contact: '',
     feedback: ''
   }

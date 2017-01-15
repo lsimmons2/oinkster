@@ -8,11 +8,7 @@ import { submitOink } from '../actions/profile-actions'
 import AddOinkInput from './add-oink-input'
 import BoardProfileSignUp from './board-profile-sign-up'
 
-class BoardProfileContainer extends React.Component {
-
-  componentWillMount(){
-    console.log(this.props.settings);
-  }
+export class BoardProfileContainer extends React.Component {
 
   render(){
 

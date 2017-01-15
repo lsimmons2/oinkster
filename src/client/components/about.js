@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 import * as actions from '../actions/feedback-actions'
 
-class About extends React.Component {
+export class About extends React.Component {
 
   sendFeedback(e){
     e.preventDefault();
@@ -31,13 +31,13 @@ class About extends React.Component {
     let feedbackStatus = null;
     if (this.props.feedback.isFetching){
       feedbackStatus = <div className="feedback-waiting"/>
-    } else if (this.props.feedback.success){
+    } else if (this.props.feedback.fetchingSuccess){
       feedbackStatus = (
         <p className='feedback-status'>
           Feedback sent successfully. Thanks!
         </p>
       )
-    } else if (this.props.feedback.error){
+    } else if (this.props.feedback.fetchingError){
       feedbackStatus = (
         <p className='feedback-status'>
           Woops! There was an error submitting your feedback. Would appreciate it if you could email me at leooscar.simmons@gmail.com. Thanks!
@@ -53,13 +53,13 @@ class About extends React.Component {
           <h2>
             About Oinkster
           </h2>
-          <p>
+          <p className='about-description-text'>
             This is a portfolio project I've made to showcase my web development skills. The app isn't meant to be original, but to demonstrate good web development code and architecture.
           </p>
-          <p>
+          <p className='about-description-text'>
             The app currently consists of a front end made with React.js/Redux, authentication with JSON web tokens, a RESTful API built with Express, and a PostgreSQL database. I will try to push improvements and new features to production daily (with pm2).
           </p>
-          <p>
+          <p className='about-description-text'>
             Source code <a href='https://github.com/lsimmons2/oinkster'>here</a>, my personal website <a href='http://leosimmons.me'>here</a>.
           </p>
         </div>

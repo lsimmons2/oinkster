@@ -1,7 +1,10 @@
 
 require('es6-promise').polyfill();
 import 'whatwg-fetch'
-import history from '../history'
+
+if (process.env.NODE_ENV !== 'test'){
+  let history = require('../history');
+}
 
 function redirectToLogin(user){
   return {
@@ -63,7 +66,6 @@ function signUp(userInfo){
         }
       })
       .catch( err => {
-        console.log('err..');
         console.log(err);
       })
 
@@ -101,4 +103,11 @@ function logIn(userInfo){
   }
 }
 
-export { signUp, logIn, loggedIn, logOut }
+export {
+  redirectToLogin,
+  loggedIn,
+  logOut,
+  parseStream,
+  signUp,
+  logIn
+}

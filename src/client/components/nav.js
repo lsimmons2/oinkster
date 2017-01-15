@@ -17,6 +17,8 @@ class Nav extends React.Component {
   }
 
   logOut(){
+    localStorage.removeItem('jwt');
+    localStorage.removeItem('user');
     this.props.actions.logOut();
   }
 

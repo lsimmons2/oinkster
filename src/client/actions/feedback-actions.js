@@ -67,4 +67,11 @@ function sendFeedback(feedbackData){
   }
 }
 
-export { updateContact, updateFeedback, sendFeedback }
+export {
+  updateContact,
+  updateFeedback,
+  feedbackRequest,
+  feedbackSuccess,
+  feedbackError,
+  sendFeedback
+}

@@ -112,4 +112,13 @@ function submitOink(oink){
 
 }
 
-export { fetchUserSummary, submitOink }
+export {
+  fetchUserSummaryRequest,
+  fetchUserSummarySuccess,
+  fetchUserSummaryError,
+  fetchUserSummary,
+  submitOinkRequest,
+  submitOinkSuccess,
+  submitOinkError,
+  submitOink
+}

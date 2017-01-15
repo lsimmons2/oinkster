@@ -3,7 +3,7 @@ import { browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 
 import { fetchOinks } from './actions/board-actions'
-import { fetchUserSummary } from './actions/fetch-user-summary'
+import { fetchUserSummary } from './actions/profile-actions'
 import { fetchSettings } from './actions/settings-actions'
 import store from './store'
 

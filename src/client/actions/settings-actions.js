@@ -176,9 +176,18 @@ function saveSettings(id, settings){
 }
 
 export {
-  fetchSettings,
-  saveSettings,
+  fetchSettingsRequest,
+  fetchSettingsSuccess,
+  fetchSettingsError,
   updateSettings,
+  uploadPictureRequest,
+  uploadPictureSuccess,
+  uploadPictureError,
+  resetPicture,
+  saveSettingsRequest,
+  saveSettingsSuccess,
+  saveSettingsError,
+  fetchSettings,
   uploadPicture,
-  resetPicture
+  saveSettings
 }

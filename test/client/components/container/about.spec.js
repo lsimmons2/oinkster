@@ -1,6 +1,6 @@
 
 // jsdom for DOM APIs, lifecycle methods, use of mount()
-require('./dom')('<html><body></body></html>');
+require('../../dom')('<html><body></body></html>');
 
 import React from 'react'
 import { Provider } from 'react-redux';

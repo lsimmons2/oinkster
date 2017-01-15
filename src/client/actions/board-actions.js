@@ -51,4 +51,9 @@ function fetchOinks(){
 
 }
 
-export { fetchOinks }
+export {
+  fetchOinksRequest,
+  fetchOinksSuccess,
+  fetchOinksError,
+  fetchOinks
+}

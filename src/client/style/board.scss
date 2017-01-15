@@ -11,26 +11,42 @@
 
     border: solid 2px $primary-pink;
     border-radius: 4px;
-    margin-left: 20px;
-    width: 22%;
+    width: 85%;
     height: 200px;
-    float: left;
-    padding-top: 15px;
+    margin: 0 0 0 40px;
+    padding: 15px;
+    box-shadow: 0px 5px 10px #b7b7b7;
+    color: $primary-grey;
 
     .profile-top {
-      img {
-        height: 70px;
-        margin: 8px;
-        border-radius: 4px;
+
+      height: 50%;
+
+      .profile-avatar-wrapper {
+        display: inline-block;
+        width: 35%;
+
+        img {
+          max-width: 100%;
+          vertical-align: bottom;
+          border-radius: 4px;
+        }
       }
-      h4 {
-        display: inline;
+
+      .profile-username-wrapper {
+        display: inline-block;
+        width: 65%;
+        position: relative;
+        bottom: 15px;
+        h3, h4 {
+          text-align: center;
+        }
       }
+
     }
 
     .profile-bottom {
-      margin-top: 5px;
-      padding: 0 20px;
+      margin-top: 15px;
       p {
         text-align: center;
       }
@@ -43,27 +59,52 @@
 
   #oinks-container {
 
-    width: 80%;
-    max-width: 600px;
-    margin: 0 auto;
+    #submit-oink {
+
+      border: 2px solid $primary-pink;
+      box-shadow: 0px 5px 10px #b7b7b7;
+      border-radius: 4px;
+      margin: 0px 20px 20px 0;
+      width: 85%;
+      overflow: auto;
+
+      #submit-oink-input {
+        width: 95%;
+        margin: 10px auto;
+
+        .submit-oink-button-wrapper {
+          display: inline-block;
+          width: 50%;
+        }
+
+        input {
+          width: 95%;
+          color: $primary-grey;
+          margin: 5px auto 0;
+        }
+
+      }
+
+    }
+
+    #oinks-feed {
+
+    }
 
     #recent-oinks {
-      // border: 2px solid $primary-pink;
-      // border-radius: 4px;
       h3 {
         color: $primary-grey;
       }
     }
 
-    width: 80%;
-    max-width: 500px;
-    margin: 0 auto;
-
     .oink {
+      box-shadow: 0px 5px 10px #b7b7b7;
+      color: $primary-grey;
       border: 2px solid $primary-pink;
       border-radius: 4px;
-      margin: 10px 0;
-      height: 75px;
+      margin: 0px 20px 20px 0;
+      width: 85%;
+      height: 80px;
       .avatar-container {
         padding: 4px;
         float: left;

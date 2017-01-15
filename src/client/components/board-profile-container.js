@@ -13,13 +13,19 @@ export class BoardProfileContainer extends React.Component {
   render(){
 
     let avatar;
+    let fullName;
     let username;
     let profileBottom;
 
     if (this.props.auth.authenticated){
       avatar = this.props.auth.user.avatar || 'images/profile-pic-pig.jpg';
+      fullName = this.props.auth.user.firstname + ' ' + this.props.auth.user.lastname; 
       username = this.props.auth.user.username;
-      profileBottom = <AddOinkInput submitOink={this.props.submitOink}/>;
+      profileBottom = (
+        <p>
+          User info
+        </p>
+      );
     } else {
       avatar = 'images/pig.jpg';
       username = 'Really Cool User';
@@ -29,6 +35,7 @@ export class BoardProfileContainer extends React.Component {
     return (
       < Profile
         avatar={avatar}
+        fullName={fullName}
         username={username}
         profileBottom={profileBottom}
       />

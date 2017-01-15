@@ -9,7 +9,7 @@ class Board extends React.Component {
 
   render(){
     return (
-      <div id='board'>
+      <div id='board' className='row'>
         < BoardProfileContainer />
         < OinksContainer />
       </div>

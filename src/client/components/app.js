@@ -30,7 +30,8 @@ class App extends React.Component {
         >
           <Route path='/' component={Nav}>
             {/* <IndexRedirect to='/user/1ee8de56-7668-4ded-939c-92642ca24a3a' /> */}
-            <IndexRedirect to='/settings/1ee8de56-7668-4ded-939c-92642ca24a3a' />
+            {/* <IndexRedirect to='/settings/1ee8de56-7668-4ded-939c-92642ca24a3a' /> */}
+            <IndexRedirect to='/board'/>
             <Route name='home' path='/home' component={Home}/>
             <Route name='about' path='/about' component={About}/>
             <Route name='board' path='/board' component={Board}/>

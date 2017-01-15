@@ -126,9 +126,7 @@ class Settings extends React.Component {
           className='settings-picture'
           multiple={false}
         >
-          {/* <div> */}
-            <img src={picture}/>
-          {/* </div> */}
+          <img src={picture}/>
         </Dropzone>
 
         {resetImage}

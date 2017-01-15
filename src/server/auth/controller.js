@@ -82,13 +82,15 @@ function createUser(req, res){
   let email = req.body.email;
   let firstName = req.body.firstName;
   let lastName = req.body.lastName;
+  let bio = req.body.bio;
+  let picture = req.body.picture;
   let password = req.body.password;
   hashPass(password)
   .then( passData => {
     let salt = passData.salt;
     let hash = passData.hash;
-    let queryString = 'INSERT INTO "Users"(firstName, lastName, username, email, salt, password) values($1, $2, $3, $4, $5, $6) returning id, firstName, lastName, username, email, salt, password';
-    return db.one(queryString, [firstName, lastName, username, email, salt, hash])
+    let queryString = 'INSERT INTO "Users"("firstName", "lastName", username, email, bio, picture, salt, password) values($1, $2, $3, $4, $5, $6, $7, $8) returning id, "firstName", "lastName", username, email, bio, picture, salt, password';
+    return db.one(queryString, [firstName, lastName, username, email, bio, picture, salt, hash])
   })
   .then( user => {
     let token = jwt.sign(user, 'sah', {
@@ -101,7 +103,7 @@ function createUser(req, res){
     });
   })
   .catch( err => {
-    return res.status(500).send(err);
+    return res.status(500).send({err});
   })
 }
 
@@ -118,7 +120,13 @@ function checkSignUpData(data){
   if (typeof data.email !== 'string'){
     return false;
   }
+  if (typeof data.bio !== 'string'){
+    return false;
+  }
   if (typeof data.password !== 'string'){
+    return false;
+  }
+  if (typeof data.picture !== 'string'){
     return false;
   }
   return true;
@@ -161,7 +169,7 @@ function logIn(req, res, next){
 
   if (typeof usernameEmail !== 'string' || typeof password !== 'string'){
     return res.status(400).json({
-      message: 'Missing required field for logging up'
+      message: 'Missing required field for logging in'
     });
   }
 
@@ -186,7 +194,7 @@ function logIn(req, res, next){
       if (validated){
         let token = jwt.sign(user, 'sah');
         return res.status(200).json({
-          'sah': 'sah',
+          'message': 'User successfully authenticated',
           user,
           token
         });

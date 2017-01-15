@@ -9,23 +9,21 @@ let profileReducer = function(profile = initialState.profile, action){
     case 'FETCH_USER_SUMMARY_REQUEST':
       return { ...profile,
         isFetching: true,
-        success: false,
-        error: false
+        fetchingSuccess: false,
+        fetchingError: false
       }
 
     case 'FETCH_USER_SUMMARY_SUCCESS':
       return { ...profile,
         isFetching: false,
-        success: true,
-        error: false,
+        fetchingSuccess: true,
         summary: action.userSummary
       }
 
     case 'FETCH_USER_SUMMARY_ERROR':
       return { ...profile,
         isFetching: false,
-        success: false,
-        error: true
+        fetchingError: true
       }
 
     default:

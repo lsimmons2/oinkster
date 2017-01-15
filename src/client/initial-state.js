@@ -4,12 +4,12 @@ export default {
     showSignUp: true,
     signUpUsernameConflict: false,
     signUpEmailConflict: false,
-    user: null
+    user: undefined
   },
   profile: {
     isFetching: false,
-    success: false,
-    error: false,
+    fetchingSuccess: false,
+    fetchingError: false,
     summary: {
       user: {
         username: '',
@@ -48,7 +48,7 @@ export default {
   board: {
     oinks: [],
     isFetching: false,
-    error: false,
+    fetchingError: false,
     count: 0
   },
   feedback: {

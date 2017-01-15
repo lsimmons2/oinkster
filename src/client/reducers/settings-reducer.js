@@ -8,9 +8,7 @@ let settingsReducer = function(settings = initialState.settings, action){
 
     case 'FETCH_SETTINGS_REQUEST':
       return { ...settings,
-        isFetching: true,
-        fetchingSuccess: false,
-        fetchingError: false
+        isFetching: true
       }
 
     case 'FETCH_SETTINGS_SUCCESS':
@@ -18,9 +16,6 @@ let settingsReducer = function(settings = initialState.settings, action){
         isFetching: false,
         fetchingSuccess: true,
         fetchingError: false,
-        savingSuccess: false,
-        savingError: false,
-        modified: false,
         initial: action.settings,
         current: action.settings
       }
@@ -28,7 +23,7 @@ let settingsReducer = function(settings = initialState.settings, action){
     case 'FETCH_SETTINGS_ERROR':
       return { ...settings,
         isFetching: false,
-        success: false,
+        fetchingSuccess: false,
         fetchingError: true
       }
 
@@ -49,7 +44,7 @@ let settingsReducer = function(settings = initialState.settings, action){
 
     case 'UPLOAD_PICTURE_SUCCESS':
       return { ...settings,
-        isUploadingImage: false,
+        isUploadingPicture: false,
         pictureModified: true,
         current: { ...settings.current,
           picture: action.picture
@@ -58,7 +53,7 @@ let settingsReducer = function(settings = initialState.settings, action){
 
     case 'UPLOAD_PICTURE_ERROR':
       return { ...settings,
-        isUploadingImage: false,
+        isUploadingPicture: false,
         uploadingPictureError: true
       }
 

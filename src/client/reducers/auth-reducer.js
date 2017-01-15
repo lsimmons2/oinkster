@@ -20,7 +20,7 @@ let authReducer = function(auth = initialState.auth, action){
     case 'LOG_OUT':
       return { ...auth,
         authenticated: false,
-        user: null
+        user: undefined
       }
 
     default:

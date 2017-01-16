@@ -78,18 +78,18 @@ function findUser(username, email){
 
 
 function createUser(req, res){
-  let username = req.body.username;
-  let email = req.body.email;
   let firstName = req.body.firstName;
   let lastName = req.body.lastName;
+  let username = req.body.username;
+  let email = req.body.email;
+  let password = req.body.password;
   let bio = req.body.bio;
   let picture = req.body.picture;
-  let password = req.body.password;
   hashPass(password)
   .then( passData => {
     let salt = passData.salt;
     let hash = passData.hash;
-    let queryString = 'INSERT INTO "Users"("firstName", "lastName", username, email, bio, picture, salt, password) values($1, $2, $3, $4, $5, $6, $7, $8) returning id, "firstName", "lastName", username, email, bio, picture, salt, password';
+    let queryString = 'INSERT INTO "Users"("firstName", "lastName", username, email, bio, picture, salt, password) values($1, $2, $3, $4, $5, $6, $7, $8) returning id, "firstName", "lastName", username, email, bio, picture';
     return db.one(queryString, [firstName, lastName, username, email, bio, picture, salt, hash])
   })
   .then( user => {

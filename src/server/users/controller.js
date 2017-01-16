@@ -23,7 +23,7 @@ function getUser(req, res){
 
 function getUserSettings(req, res){
   let queryString = `
-  SELECT firstName, lastName, username, email, bio, picture
+  SELECT "firstName", "lastName", username, email, bio, picture
   FROM "Users"
   WHERE id='${req.params.id}'
   `;

@@ -5,9 +5,17 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
 import Oink from './oink'
+import { submitOink } from '../actions/board-actions'
 
+class OinksContainer extends React.Component {
 
-class Oinks extends React.Component {
+  submitOinka(e){
+    e.preventDefault();
+    let oink = {
+      text: this.refs.text.value
+    };
+    this.props.submitOink(oink);
+  }
 
   render(){
 
@@ -17,12 +25,12 @@ class Oinks extends React.Component {
         <div id='submit-oink'>
 
           <div className="form-group" id='submit-oink-input'>
-            <textarea className="form-control" placeholder="What's poppin?"></textarea>
+            <textarea className="form-control" ref='text' placeholder="What's poppin?"></textarea>
             <div className='submit-oink-button-wrapper'>
               <input id='upload-image-button' type='submit' className='form-control' value='Upload Image'/>
             </div>
             <div className='submit-oink-button-wrapper'>
-              <input id='submit-oink-button' type='submit' className='form-control' value='Oink!'/>
+              <input id='submit-oink-button' type='submit' onClick={this.submitOinka.bind(this)} className='form-control' value='Oink!'/>
             </div>
           </div>
         </div>
@@ -73,9 +81,15 @@ class Oinks extends React.Component {
 
 }
 
-
 function mapStateToProps(state){
   return state;
 }
 
-export default connect(mapStateToProps)(Oinks)
+
+function mapDispatchToProps(dispatch){
+  return {
+    submitOink: bindActionCreators(submitOink, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(OinksContainer)

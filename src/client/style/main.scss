@@ -4,21 +4,16 @@
 @import url(https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css);
 @import './variables';
 @import './nav.scss';
-// @import './home.scss';
-// @import './about.scss';
+@import './home.scss';
+@import './about.scss';
 @import './board.scss';
-// @import './log-in.scss';
-// @import './sign-up.scss';
-// @import './user-profile.scss';
-// @import './settings.scss';
+@import './log-in.scss';
+@import './sign-up.scss';
+@import './user-profile.scss';
+@import './settings.scss';
 
 
 #app {
-  // position: absolute;
-  // top: 0;
-  // left: 0;
-  // right: 0;
-  // bottom: 0;
   background-color: #d4d2d2;
   font-family: 'Source Sans Pro', sans-serif;
 }

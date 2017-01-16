@@ -1,11 +1,9 @@
 
 import multer from 'multer'
-import multerS3 from 'multer-s3'
 import AWS from 'aws-sdk'
 import config from '../../../config/aws-config'
 import path from 'path'
 import fs from 'fs'
-import multers3 from 'multer-s3'
 
 
 AWS.config.update({

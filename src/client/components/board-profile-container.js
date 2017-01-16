@@ -1,11 +1,9 @@
 
 import React from 'react'
-import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import Profile from './profile'
 import { submitOink } from '../actions/profile-actions'
-import AddOinkInput from './add-oink-input'
 import BoardProfileSignUp from './board-profile-sign-up'
 
 export class BoardProfileContainer extends React.Component {
@@ -19,7 +17,7 @@ export class BoardProfileContainer extends React.Component {
 
     if (this.props.auth.authenticated){
       avatar = this.props.auth.user.avatar || 'images/profile-pic-pig.jpg';
-      fullName = this.props.auth.user.firstname + ' ' + this.props.auth.user.lastname; 
+      fullName = this.props.auth.user.firstName + ' ' + this.props.auth.user.lastName;
       username = this.props.auth.user.username;
       profileBottom = (
         <p>
@@ -50,10 +48,4 @@ function mapStateToProps(state){
   return state;
 }
 
-function mapDispatchToProps(dispatch){
-  return {
-    submitOink: bindActionCreators(submitOink, dispatch)
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(BoardProfileContainer)
+export default connect(mapStateToProps)(BoardProfileContainer)

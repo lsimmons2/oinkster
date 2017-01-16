@@ -14,7 +14,9 @@ let boardReducer = function(board = initialState.board, action){
     case 'SUBMIT_OINK_SUCCESS':
       return { ...board,
         isFetching: false,
-        oinks: action.oinks
+        oinks: [ ...board.oinks,
+          action.oink
+        ]
       };
 
     case 'SUBMIT_OINK_ERROR':
@@ -37,7 +39,7 @@ let boardReducer = function(board = initialState.board, action){
     case 'FETCH_OINKS_ERROR':
       return { ...board,
         isFetching: false,
-        error: action.error
+        fetchingError: true
       }
 
     default:

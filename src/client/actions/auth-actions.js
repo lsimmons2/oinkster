@@ -2,9 +2,10 @@
 require('es6-promise').polyfill();
 import 'whatwg-fetch'
 
-if (process.env.NODE_ENV !== 'test'){
-  let history = require('../history');
-}
+// if (process.env.NODE_ENV !== 'test'){
+  // let history = require('../history');
+  import history from '../history'
+// }
 
 function redirectToLogin(user){
   return {
@@ -13,7 +14,12 @@ function redirectToLogin(user){
   }
 }
 
-function loggedIn(user){
+function loggedIn(user, jwt){
+  if (typeof user !== 'string'){
+    user = JSON.stringify(user);
+  }
+  localStorage.setItem('user', user);
+  localStorage.setItem('jwt', jwt);
   return {
     type: 'LOGGED_IN',
     user
@@ -61,8 +67,8 @@ function signUp(userInfo){
           console.log(resp.data);
         }
         if (resp.status === 200){
-          localStorage.setItem('jwt', resp.data.token);
-          return dispatch(loggedIn())
+          history.push('/board');
+          return dispatch(loggedIn(resp.data.user, resp.data.token));
         }
       })
       .catch( err => {
@@ -92,10 +98,8 @@ function logIn(userInfo){
       .then(parseStream)
       .then( resp => {
         if (resp.status === 200){
-          localStorage.setItem('jwt', resp.data.token);
-          localStorage.setItem('user', JSON.stringify(resp.data.user));
-          dispatch(loggedIn(resp.data.user));
           history.push('/board');
+          dispatch(loggedIn(resp.data.user, resp.data.token));
         }
       })
 

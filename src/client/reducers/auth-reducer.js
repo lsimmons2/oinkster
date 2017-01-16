@@ -14,7 +14,7 @@ let authReducer = function(auth = initialState.auth, action){
     case 'LOGGED_IN':
       return { ...auth,
         authenticated: true,
-        user: action.user
+        user: JSON.parse(action.user)
       }
 
     case 'LOG_OUT':

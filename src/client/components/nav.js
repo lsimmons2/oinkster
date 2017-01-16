@@ -10,19 +10,20 @@ class Nav extends React.Component {
 
   componentWillMount(){
     if (localStorage.jwt && localStorage.user){
-      this.props.actions.loggedIn(JSON.parse(localStorage.user));
+      this.props.actions.loggedIn(localStorage.user, localStorage.jwt);
     } else {
       this.props.actions.logOut();
     }
   }
 
-  logOut(){
-    localStorage.removeItem('jwt');
-    localStorage.removeItem('user');
+  logOut(e){
+    e.preventDefault();
     this.props.actions.logOut();
   }
 
   render(){
+
+    let userId = '1ee8de56-7668-4ded-939c-92642ca24a3a';
 
     let navItems = [
 
@@ -99,7 +100,7 @@ class Nav extends React.Component {
           key='profile'
           activeClassName='active-nav-item'
           className='nav-item nav-auth'
-          to={'/user/' + JSON.parse(localStorage.getItem('user')).id}
+          to={'/user/' + userId}
         >
           PROFILE
         </Link>
@@ -109,7 +110,7 @@ class Nav extends React.Component {
           key='settings'
           activeClassName='active-nav-item'
           className='nav-item nav-auth'
-          to={'/settings/' + JSON.parse(localStorage.getItem('user')).id}
+          to={'/settings/' + userId}
         >
           SETTINGS
         </Link>

@@ -29,9 +29,6 @@ class App extends React.Component {
           history={history}
         >
           <Route path='/' component={Nav}>
-            {/* <IndexRedirect to='/user/1ee8de56-7668-4ded-939c-92642ca24a3a' /> */}
-            {/* <IndexRedirect to='/settings/1ee8de56-7668-4ded-939c-92642ca24a3a' /> */}
-            <IndexRedirect to='/board'/>
             <Route name='home' path='/home' component={Home}/>
             <Route name='about' path='/about' component={About}/>
             <Route name='board' path='/board' component={Board}/>
@@ -39,7 +36,8 @@ class App extends React.Component {
             <Route name='login' path='/login' component={LogIn}/>
             <Route name='profile' path='/user/:id' component={UserProfile}/>
             <Route name='settings' path='/settings/:id' component={Settings}/>
-            <Redirect from='*' to='/home'/>
+            <IndexRedirect to='/board'/>
+            <Redirect from='*' to='/board'/>
           </Route>
         </Router>
       </div>

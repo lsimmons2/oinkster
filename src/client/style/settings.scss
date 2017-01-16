@@ -1,13 +1,30 @@
 #settings {
 
+  width: 300px;
+  margin: 0 auto;
+
   .settings-picture {
     height: 200px;
     width: 200px;
+    margin: 0 auto 20px;
     border-radius: 4px;
     img {
       height: 100%;
       border-radius: 4px;
     }
+  }
+
+  #reset-picture {
+    cursor: pointer;
+    text-align: center;
+    margin-top: -10;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  #save-button {
+    margin-bottom: 20px;
   }
 
 }

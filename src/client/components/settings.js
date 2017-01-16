@@ -74,7 +74,7 @@ class Settings extends React.Component {
     let savingStatus = null;
     if (this.props.settings.modified || this.props.settings.pictureModified){
       savingStatus = (
-        <div className='form-group'>
+        <div className='form-group' id='save-button'>
           <input
             type='submit'
             className='form-control'
@@ -96,40 +96,25 @@ class Settings extends React.Component {
       );
     }
 
-    let picture = null;
+    let picture;
     if (this.props.settings.current.picture){
       let base = 'https://s3.amazonaws.com/oinkster/'
       picture = base + this.props.settings.current.picture;
+    } else {
+      picture = 'https://s3.amazonaws.com/oinkster/profile-pic-pig.jpg'
     }
 
     let resetImage = null;
     if (this.props.settings.pictureModified){
       resetImage = (
-        <div className='form-group'>
-          <input
-            type='submit'
-            className='form-control'
-            value='Reset picture'
-            onClick={this.resetPicture.bind(this)}/>
-        </div>
+          <p id ='reset-picture' onClick={this.resetPicture.bind(this)}>
+            Reset picture
+          </p>
       )
     }
 
     return (
       <div id='settings'>
-
-        <h1>Settings</h1>
-
-        <Dropzone
-          ref={(node) => { this.dropzone = node; }}
-          onDrop={this.onDrop.bind(this)}
-          className='settings-picture'
-          multiple={false}
-        >
-          <img src={picture}/>
-        </Dropzone>
-
-        {resetImage}
 
         <form>
 
@@ -189,10 +174,23 @@ class Settings extends React.Component {
             </textarea>
           </div>
 
-          {fetchingStatus}
-          {savingStatus}
-
         </form>
+
+
+        <label>Picture</label>
+        <Dropzone
+          ref={(node) => { this.dropzone = node; }}
+          onDrop={this.onDrop.bind(this)}
+          className='settings-picture'
+          multiple={false}
+        >
+          <img src={picture}/>
+        </Dropzone>
+
+        {resetImage}
+        {fetchingStatus}
+        {savingStatus}
+
       </div>
     )
   }

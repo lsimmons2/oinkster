@@ -5,36 +5,20 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
 import Oink from './oink'
+import SubmitOinkInput from './submit-oink-input'
 import { submitOink } from '../actions/board-actions'
 
 class OinksContainer extends React.Component {
-
-  submitOinka(e){
-    e.preventDefault();
-    let oink = {
-      text: this.refs.text.value
-    };
-    this.props.submitOink(oink);
-  }
 
   render(){
 
     let submitOinkInput = null;
     if (this.props.auth.authenticated){
       submitOinkInput = (
-        <div id='submit-oink'>
-
-          <div className="form-group" id='submit-oink-input'>
-            <textarea className="form-control" ref='text' placeholder="What's poppin?"></textarea>
-            <div className='submit-oink-button-wrapper'>
-              <input id='upload-image-button' type='submit' className='form-control' value='Upload Image'/>
-            </div>
-            <div className='submit-oink-button-wrapper'>
-              <input id='submit-oink-button' type='submit' onClick={this.submitOinka.bind(this)} className='form-control' value='Oink!'/>
-            </div>
-          </div>
-        </div>
-      )
+        <SubmitOinkInput
+          submitOink={this.props.submitOink}
+        />
+      );
     }
 
     let oinksFeed;

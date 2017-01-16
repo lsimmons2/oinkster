@@ -6,6 +6,7 @@ import morgan from 'morgan'
 
 import routes from './routes'
 import feedback from './feedback'
+import morganConfig from '../../config/morgan'
 
 const port = process.env.PORT || 3000;
 const env = process.env.NODE_ENV || 'dev';
@@ -15,9 +16,11 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
 if (env !== 'test'){
-  let morganFormat = env === 'dev' ? 'dev' : 'combined';
-  app.use(morgan(morganFormat));
+  let morganFormat = morganConfig.format;
+  let morganOptions = morganConfig.options;
+  app.use(morgan(morganFormat, morganOptions));
 }
 
 if (env !== 'production'){

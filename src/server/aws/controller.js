@@ -4,6 +4,7 @@ import AWS from 'aws-sdk'
 import config from '../../../config/aws-config'
 import path from 'path'
 import fs from 'fs'
+import logger from '../loggers/logger'
 
 
 AWS.config.update({
@@ -24,6 +25,7 @@ function upload(req, res){
   buffer(req, res, (err) => {
 
     if (err){
+      logger.error('Error creating file bugger', {error: err.message});
       return res.status(500).send(err);
     }
 
@@ -38,9 +40,10 @@ function upload(req, res){
 
     s3.putObject(params, (err, data) => {
       if(err){
-        console.error(err);
+        logger.error('Error uploading file', {error: err.message});
         return res.status(500).send(err);
       }
+      logger.info('Image successfully uploaded to S3', {key})
       res.status(200).json({
         message: 'Image successfully uploaded to S3',
         key

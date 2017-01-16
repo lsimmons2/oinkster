@@ -16,8 +16,8 @@ if(!fs.existsSync(logDir)){
 }
 
 
-const dbInfoFileLog = new winston.transports.DailyRotateFile({
-  name: 'dbInfoFileLog',
+const infoFileLog = new winston.transports.DailyRotateFile({
+  name: 'infoFileLog',
   level: 'info',
   filename: logDir + 'info.log',
   timestamp: tsFormat,
@@ -26,8 +26,8 @@ const dbInfoFileLog = new winston.transports.DailyRotateFile({
 })
 
 
-const dbErrorFileLog = new winston.transports.DailyRotateFile({
-  name: 'dbErrorFileLog',
+const errorFileLog = new winston.transports.DailyRotateFile({
+  name: 'errorFileLog',
   level: 'error',
   filename: logDir + 'error.log',
   timestamp: tsFormat,
@@ -46,20 +46,20 @@ const consoleLogFormat = (options) => {
 }
 
 
-const dbConsoleLog = new (winston.transports.Console)({
+const consoleLog = new (winston.transports.Console)({
   timestamp: tsFormat,
   silent: env !== 'dev',
   formatter: consoleLogFormat
 })
 
 
-const dbLogger = new (winston.Logger)({
+const logger = new (winston.Logger)({
   transports: [
-    dbInfoFileLog,
-    dbErrorFileLog,
-    dbConsoleLog
+    infoFileLog,
+    errorFileLog,
+    consoleLog
   ]
 })
 
 
-export default dbLogger
+export default logger

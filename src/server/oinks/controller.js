@@ -1,7 +1,7 @@
 
 import express from 'express'
 import util from 'util'
-import dbLogger from '../loggers/db-logger'
+import logger from '../loggers/logger'
 import db from '../db'
 
 
@@ -9,11 +9,11 @@ function getOinks(req, res){
   let queryString = 'SELECT * FROM "Oinks";';
   db.any(queryString)
     .then( oinks => {
-      dbLogger.info('Oinks retrieved', {oinks: oinks});
+      logger.info('Oinks retrieved', {oinks: oinks});
       res.status(200).send(oinks);
     })
     .catch( err => {
-      dbLogger.error('Error retrieving oinks', {error: err.message})
+      logger.error('Error retrieving oinks', {error: err.message})
       res.status(500).send(err)
     })
 }
@@ -31,7 +31,7 @@ function insertOink(req, res){
   };
   db.one(query)
     .then( data => {
-      dbLogger.info('Oink saved', {oink: data});
+      logger.info('Oink saved', {oink: data});
       res.status(200).send(data);
     })
     .catch( err => {
@@ -40,7 +40,7 @@ function insertOink(req, res){
         text: req.body.text,
         asset: asset
       };
-      dbLogger.error('Error saving oink', {error: err.message, oink: failedOink})
+      logger.error('Error saving oink', {error: err.message, oink: failedOink})
       res.status(500).send(err);
     })
 }

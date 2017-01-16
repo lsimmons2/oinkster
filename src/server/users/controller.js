@@ -1,7 +1,7 @@
 
 import express from 'express'
 import util from 'util'
-import dbLogger from '../loggers/db-logger'
+import logger from '../loggers/logger'
 import db from '../db'
 
 
@@ -10,13 +10,14 @@ function getUser(req, res){
   db.oneOrNone(queryString)
     .then( user => {
       if (!user){
+        logger.info('User not found', {query:queryString});
         return res.status(404).json({message: 'User not found'});
       }
-      dbLogger.info('User retrieved', {user});
+      logger.info('User retrieved', {user});
       res.status(200).send(user);
     })
     .catch( err => {
-      dbLogger.error('Error retrieving user', {error: err.message})
+      logger.error('Error retrieving user', {error: err.message})
       res.status(500).send(err);
     })
 }
@@ -27,16 +28,18 @@ function getUserSettings(req, res){
   FROM "Users"
   WHERE id='${req.params.id}'
   `;
+  console.log('got here');
   db.oneOrNone(queryString)
     .then( user => {
       if (!user){
+        logger.info('User not found', {query:queryString});
         return res.status(404).json({message: 'User not found'});
       }
-      dbLogger.info('User retrieved', {user});
+      logger.info('User retrieved', {user});
       res.status(200).send(user);
     })
     .catch( err => {
-      dbLogger.error('Error retrieving user', {error: err.message})
+      logger.error('Error retrieving user', {error: err.message})
       res.status(500).send(err);
     })
 }
@@ -57,13 +60,14 @@ function getUserSummary(req, res){
       let oinks = data[0];
       let user = data[1];
       if (!user){
+        logger.info('User not found', {query:userQuery});
         return res.status(404).json({message: 'User summary not found'});
       }
-      dbLogger.info('User summary retrieved', {user, oinks});
+      logger.info('User summary retrieved', {user, oinks});
       res.status(200).json({user, oinks});
     })
     .catch( err => {
-      dbLogger.error('Error retrieving user summary', {error: err.message})
+      logger.error('Error retrieving user summary', {oinksQuery, userQuery, error: err.message})
       res.status(500).json(
         {
           message: 'Error retrieving user summary',
@@ -82,9 +86,11 @@ function updateUserSettings(req, res){
   `;
   db.none(queryString)
     .then( () => {
+      logger.info('User found', {query:userQuery});
       res.status(200).json({});
     })
     .catch( err => {
+      logger.error('Error updating user settings', {query: queryString, error:err});
       res.status(500).json({});
     })
 }

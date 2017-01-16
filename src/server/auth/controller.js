@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs'
 const pgp = require('pg-promise')();
 import jwt from 'jsonwebtoken'
 import db from '../db'
+import logger from '../loggers/logger'
 
 
 
@@ -11,10 +12,12 @@ function hashPass(password){
   return new Promise((resolve, reject) => {
     bcrypt.genSalt(10, (err, salt) => {
       if (err){
+        logger.error('Error generating salt', {error:err.message})
         return reject(err);
       }
       bcrypt.hash(password, salt, (err, hash) => {
         if (err){
+          logger.error('Error hashing password', {error:err.message})
           return reject(err);
         }
         return resolve({ salt, hash });
@@ -28,6 +31,7 @@ function comparePass(password, correctHash, salt){
   return new Promise((resolve, reject) => {
     bcrypt.compare(password, correctHash, (err, res) => {
       if (err){
+        logger.error('Error comparing password', {error:err.message})
         return reject(err);
       }
       return resolve(res);
@@ -47,7 +51,7 @@ function findUser(username, email){
           return resolve(user);
         })
         .catch( err => {
-          console.error(err);
+          logger.error('Error finding user', {query: queryString, error:err})
           return reject(err);
         });
     } else {
@@ -71,7 +75,7 @@ function findUser(username, email){
           }
         })
         .catch( err => {
-          console.error(err);
+          logger.error('Error finding user', {error:err.message})
           return reject(err);
         });
     }
@@ -105,7 +109,7 @@ function createUser(req, res){
     });
   })
   .catch( err => {
-    console.error(err);
+    logger.error('Error creating user', {error:err.message})
     return res.status(500).send({err});
   })
 }
@@ -160,7 +164,7 @@ function signUp(req, res, next){
       return createUser(req, res);
     })
     .catch( err => {
-      console.error(err);
+      logger.error('Error signing up', {error:err.message})
       res.status(500).send(err);
     })
 }
@@ -172,6 +176,7 @@ function logIn(req, res, next){
   let password = req.body.password;
 
   if (typeof usernameEmail !== 'string' || typeof password !== 'string'){
+    logger.error('Missing required field for logging in', {user:usernameEmail})
     return res.status(400).json({
       message: 'Missing required field for logging in'
     });
@@ -209,7 +214,7 @@ function logIn(req, res, next){
       }
     })
     .catch( err => {
-      console.error(err);
+      logger.error('Error logging in', {error:err.message});
       return res.status(500).send();
     })
 

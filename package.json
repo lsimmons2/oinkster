@@ -15,6 +15,7 @@
     "body-parser": "^1.15.2",
     "es6-promise": "^4.0.5",
     "express": "^4.14.0",
+    "file-stream-rotator": "0.0.7",
     "jsonwebtoken": "^7.2.1",
     "morgan": "^1.7.0",
     "multer": "^1.2.1",

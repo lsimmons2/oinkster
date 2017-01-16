@@ -98,10 +98,9 @@ class Settings extends React.Component {
 
     let picture;
     if (this.props.settings.current.picture){
-      let base = 'https://s3.amazonaws.com/oinkster/'
-      picture = base + this.props.settings.current.picture;
+      picture = this.props.settings.current.picture;
     } else {
-      picture = 'https://s3.amazonaws.com/oinkster/profile-pic-pig.jpg'
+      picture = 'profile-pic-pig.jpg'
     }
 
     let resetImage = null;
@@ -184,7 +183,7 @@ class Settings extends React.Component {
           className='settings-picture'
           multiple={false}
         >
-          <img src={picture}/>
+          <img src={'https://s3.amazonaws.com/oinkster/' + picture}/>
         </Dropzone>
 
         {resetImage}

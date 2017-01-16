@@ -10,29 +10,29 @@ export class BoardProfileContainer extends React.Component {
 
   render(){
 
-    let avatar;
+    let picture;
     let fullName;
     let username;
     let profileBottom;
 
     if (this.props.auth.authenticated){
-      avatar = this.props.auth.user.avatar || 'images/profile-pic-pig.jpg';
+      picture = this.props.auth.user.picture || 'profile-pic-pig.jpg';
       fullName = this.props.auth.user.firstName + ' ' + this.props.auth.user.lastName;
       username = this.props.auth.user.username;
       profileBottom = (
         <p>
-          User info
+          {this.props.auth.user.bio}
         </p>
       );
     } else {
-      avatar = 'images/pig.jpg';
+      picture = 'pig.jpg';
       username = 'Really Cool User';
       profileBottom = <BoardProfileSignUp/>;
     }
 
     return (
       < Profile
-        avatar={avatar}
+        picture={picture}
         fullName={fullName}
         username={username}
         profileBottom={profileBottom}

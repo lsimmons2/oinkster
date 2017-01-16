@@ -23,25 +23,21 @@ class OinksContainer extends React.Component {
 
     let oinksFeed;
     let id;
-    let avatar;
+    let picture;
     let user;
     let text;
 
     if (this.props.board.oinks.length){
       oinksFeed = (
           this.props.board.oinks.map( oink => {
-            if (oink.avatar){
-              avatar = oink.avatar;
-            } else {
-              avatar = 'images/generic-avatar.png'
-            }
+            picture = 'pig.jpg'
             id = oink.id;
             user = oink.user;
             text = oink.text;
 
             return (
               < Oink
-                avatar={avatar}
+                picture={picture}
                 key={id}
                 user={user}
                 text={text}

@@ -39,6 +39,7 @@ function upload(req, res){
 
     s3.putObject(params, (err, data) => {
       if(err){
+        console.error(err);
         return res.status(500).send(err);
       }
       res.status(200).json({

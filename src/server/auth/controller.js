@@ -47,6 +47,7 @@ function findUser(username, email){
           return resolve(user);
         })
         .catch( err => {
+          console.error(err);
           return reject(err);
         });
     } else {
@@ -70,6 +71,7 @@ function findUser(username, email){
           }
         })
         .catch( err => {
+          console.error(err);
           return reject(err);
         });
     }
@@ -103,6 +105,7 @@ function createUser(req, res){
     });
   })
   .catch( err => {
+    console.error(err);
     return res.status(500).send({err});
   })
 }
@@ -157,6 +160,7 @@ function signUp(req, res, next){
       return createUser(req, res);
     })
     .catch( err => {
+      console.error(err);
       res.status(500).send(err);
     })
 }
@@ -205,6 +209,7 @@ function logIn(req, res, next){
       }
     })
     .catch( err => {
+      console.error(err);
       return res.status(500).send();
     })
 

@@ -54,14 +54,14 @@ export class About extends React.Component {
             About Oinkster
           </h2>
           <p className='about-description-text'>
-            This is a portfolio project I've made to demonstrate good web development practices. The app is meant to mock Twitter's basic functionality. Currently the app's features include creating and editing user accounts, uploading user pictures, and "oinking" (like tweeting). I will be adding features and improvements to the app as they come.
+            This is a portfolio project I'm making to demonstrate good web development practices. The app is meant to mock Twitter's basic functionality. Currently the app's features include creating and editing user accounts, uploading user pictures, and "oinking" (like tweeting). I will be adding new features and improvements as they come.
           </p>
           <p className='about-description-text'>
             The app's stack includes a <a target='_blank' href='https://facebook.github.io/react/'>React.js</a>/<a target='_blank' href='http://redux.js.org/'>Redux</a> front end, authentication with <a target='_blank' href='https://jwt.io/'>JSON web tokens</a>, and a <a target='_blank' href='https://nodejs.org/en/'>Node.js</a> back end with an <a target='_blank' href='http://expressjs.com'>Express</a> RESTful API and a <a target='_blank' href='https://www.postgresql.org/'>PostgreSQL</a> database.
             The app is hosted on Ubuntu <a target='_blank' href='https://aws.amazon.com'>AWS</a> EC2s and I am using <a target='_blank' href='http://pm2.keymetrics.io/'>pm2</a> for deployment.
           </p>
           <p className='about-description-text'>
-            Source code <a target='_blank' href='https://github.com/lsimmons2/oinkster'>here</a>, my personal website <a target='_blank' href='http://leosimmons.me'>here</a>.
+            Source code is <a target='_blank' href='https://github.com/lsimmons2/oinkster'>here</a> and my personal website is <a target='_blank' href='http://leosimmons.me'>here</a>.
           </p>
         </div>
 

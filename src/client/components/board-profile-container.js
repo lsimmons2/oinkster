@@ -26,7 +26,8 @@ export class BoardProfileContainer extends React.Component {
       );
     } else {
       picture = 'pig.jpg';
-      username = 'Really Cool User';
+      username = 'reallyCoolPerson';
+      fullName = 'You!'
       profileBottom = <BoardProfileSignUp/>;
     }
 

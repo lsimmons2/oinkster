@@ -10,7 +10,7 @@ class Profile extends React.Component {
         <div className='profile'>
           <div className='profile-top'>
             <div className='profile-avatar-wrapper'>
-              <img src={this.props.avatar}/>
+              <img src={'https://s3.amazonaws.com/oinkster/' + this.props.picture}/>
             </div>
             <div className='profile-username-wrapper'>
               <h3>{this.props.fullName}</h3>

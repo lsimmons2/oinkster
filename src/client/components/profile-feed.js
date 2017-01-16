@@ -16,7 +16,7 @@ class ProfileFeed extends React.Component {
         return (
           < Oink
             key={oink.id}
-            avatar = '/images/pig.jpg'
+            picture = 'pig.jpg'
             user = {this.props.profile.summary.user.username}
             text = {oink.text}
           />
@@ -24,7 +24,7 @@ class ProfileFeed extends React.Component {
       })
     }
     return (
-      <div id='profile-feed'>
+      <div id='profile-feed' className='col-xs-12 col-sm-7'>
         {userOinks}
       </div>
     )

@@ -76,7 +76,7 @@ function getUserSummary(req, res){
 function updateUserSettings(req, res){
   let queryString = `
   UPDATE "Users"
-  SET firstName='${req.body.firstName}', lastName='${req.body.lastName}', username='${req.body.username}', email='${req.body.email}', bio='${req.body.bio}',
+  SET "firstName"='${req.body.firstName}', "lastName"='${req.body.lastName}', username='${req.body.username}', email='${req.body.email}', bio='${req.body.bio}',
   picture='${req.body.picture}'
   WHERE id='${req.params.id}'
   `;

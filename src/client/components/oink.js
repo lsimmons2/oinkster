@@ -8,7 +8,7 @@ class Oink extends React.Component {
       <div className='oink'>
 
         <div className='avatar-container'>
-          <img className='avatar' src={this.props.avatar}/>
+          <img className='avatar' src={'https://s3.amazonaws.com/oinkster/' + this.props.picture}/>
         </div>
 
         <div className='right-container'>

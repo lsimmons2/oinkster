@@ -12,9 +12,14 @@ export default {
     fetchingError: false,
     summary: {
       user: {
+        firstName: '',
+        lastName: '',
         username: '',
-        bio: ''
-      }
+        email: '',
+        bio: '',
+        picture: ''
+      },
+      oinks: []
     }
   },
   settings: {

@@ -23,8 +23,6 @@ class Nav extends React.Component {
 
   render(){
 
-    let userId = '1ee8de56-7668-4ded-939c-92642ca24a3a';
-
     let navItems = [
 
       <Link
@@ -85,6 +83,7 @@ class Nav extends React.Component {
         </Link>
       );
     } else {
+      let userId = JSON.parse(localStorage.getItem('user')).id
       navItems.push(
         <Link
           key='logout'

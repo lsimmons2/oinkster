@@ -20,7 +20,7 @@ class LogIn extends React.Component {
 
   render(){
     return (
-      <div id='log-in'>
+      <div id='log-in' className='view'>
         <h3>Log In</h3>
         <form onSubmit={this.logIn.bind(this)}>
           <div className='form-group'>

@@ -50,7 +50,7 @@ export class SignUp extends React.Component {
     }
 
     return (
-      <div id='sign-up'>
+      <div id='sign-up' className='view'>
 
         {signUpConflict}
 

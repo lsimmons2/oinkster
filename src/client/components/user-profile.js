@@ -8,7 +8,7 @@ class UserProfile extends React.Component {
 
   render(){
     return (
-      <div id='user-profile' className='row'>
+      <div id='user-profile' className='row view'>
         < UserProfileContainer />
         < ProfileFeed />
       </div>

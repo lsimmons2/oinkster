@@ -114,7 +114,7 @@ class Settings extends React.Component {
     }
 
     return (
-      <div id='settings'>
+      <div id='settings' className='view'>
 
         <form>
 

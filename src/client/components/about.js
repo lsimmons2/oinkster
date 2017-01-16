@@ -47,7 +47,7 @@ export class About extends React.Component {
 
 
     return (
-      <div id='about'>
+      <div id='about' className='view'>
 
         <div id='about-description'>
           <h2>

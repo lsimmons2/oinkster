@@ -12,6 +12,7 @@ const env = process.env.NODE_ENV || 'dev';
 const app = express();
 
 
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 if (env !== 'test'){
@@ -25,16 +26,14 @@ if (env !== 'production'){
 }
 
 app.use('/feedback', feedback);
-
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../../src/client/index.html'));
-});
-
-
 app.use('/', routes);
 
+app.get('/bundle.js', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/bundle.js'));
+});
+
 app.all('*', (req, res) => {
-  res.redirect('/');
+  res.sendFile(path.join(__dirname, '../../src/client/index.html'));
 })
 
 if (env !== 'test'){

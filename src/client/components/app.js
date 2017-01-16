@@ -29,6 +29,7 @@ class App extends React.Component {
           history={history}
         >
           <Route path='/' component={Nav}>
+            <IndexRedirect to='/home'/>
             <Route name='home' path='/home' component={Home}/>
             <Route name='about' path='/about' component={About}/>
             <Route name='board' path='/board' component={Board}/>
@@ -36,8 +37,7 @@ class App extends React.Component {
             <Route name='login' path='/login' component={LogIn}/>
             <Route name='profile' path='/user/:id' component={UserProfile}/>
             <Route name='settings' path='/settings/:id' component={Settings}/>
-            <IndexRedirect to='/board'/>
-            <Redirect from='*' to='/board'/>
+            <Redirect from='*' to='/home'/>
           </Route>
         </Router>
       </div>

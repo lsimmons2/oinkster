@@ -4,7 +4,7 @@ import nodemon from 'gulp-nodemon'
 import babel from 'gulp-babel'
 import mocha from 'gulp-mocha'
 import gutil from 'gulp-util'
-
+import webpack from 'webpack-stream'
 
 
 // ============ TEST ============
@@ -56,6 +56,17 @@ gulp.task('test:server:watch', () => {
 
 // ============ BUILD ============
 
+gulp.task('webpack', () => {
+	return gulp.src('src/client/index.js')
+		.pipe(webpack(require('./webpack.production.config.js')))
+		.pipe(gulp.dest('dist/client'))
+});
+
+gulp.task('copy-html', () => {
+	gulp.src('src/client/index.html')
+		.pipe(gulp.dest('dist/client'));
+});
+
 gulp.task('build', () => {
   return gulp.src('src/server/**/*')
     .pipe(babel())
@@ -90,5 +101,7 @@ gulp.task('server:debug', ['build:watch'], () => {
     exec: 'node --inspect'
   })
 });
+
+gulp.task('production', ['copy-html', 'build', 'webpack']);
 
 gulp.task('default', ['server']);

@@ -2,6 +2,7 @@
 import express from 'express'
 import path from 'path'
 import bodyParser from 'body-parser'
+import morgan from 'morgan'
 
 import routes from './routes'
 import feedback from './feedback'
@@ -13,12 +14,10 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use((req, res, next) => {
-  if (env === 'dev'){
-    console.log(req.method, req.url);
-  }
-  next();
-});
+if (env !== 'test'){
+  let morganFormat = env === 'dev' ? 'dev' : 'combined';
+  app.use(morgan(morganFormat));
+}
 
 if (env !== 'production'){
   let imagesPath = path.join(__dirname, '../../images');

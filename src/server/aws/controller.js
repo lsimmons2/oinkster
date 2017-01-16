@@ -27,8 +27,7 @@ function upload(req, res){
       return res.status(500).send(err);
     }
 
-    let now = new Date();
-    let key = req.params.id + '_' + now.getTime();
+    let key = req.params.id;
 
     let params = {
       Bucket: 'oinkster',

@@ -72,7 +72,7 @@ class Settings extends React.Component {
     }
 
     let savingStatus = null;
-    if (this.props.settings.modified || this.props.settings.pictureModified){
+    if (this.props.settings.modified){
       savingStatus = (
         <div className='form-group' id='save-button'>
           <input
@@ -96,21 +96,10 @@ class Settings extends React.Component {
       );
     }
 
-    let picture;
-    if (this.props.settings.current.picture){
-      picture = this.props.settings.current.picture;
-    } else {
-      picture = 'profile-pic-pig.jpg'
-    }
+    let user = JSON.parse(localStorage.getItem('user'));
+    let id = user.id;
 
     let resetImage = null;
-    if (this.props.settings.pictureModified){
-      resetImage = (
-          <p id ='reset-picture' onClick={this.resetPicture.bind(this)}>
-            Reset picture
-          </p>
-      )
-    }
 
     return (
       <div id='settings' className='view'>
@@ -183,7 +172,7 @@ class Settings extends React.Component {
           className='settings-picture'
           multiple={false}
         >
-          <img src={'https://s3.amazonaws.com/oinkster/' + picture}/>
+          <img src={'https://s3.amazonaws.com/oinkster/' + id}/>
         </Dropzone>
 
         {resetImage}

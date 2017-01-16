@@ -65,13 +65,18 @@
       margin: 0px 20px 20px 0;
       width: 85%;
       height: 80px;
+      padding-top: 1px;
       .avatar-container {
         padding: 4px;
         float: left;
         .avatar {
           height: 65px;
           border-radius: 4px;
+          margin-right: 10px;
         }
+      }
+      .oink-username-link {
+        color: $primary-grey;
       }
     }
 

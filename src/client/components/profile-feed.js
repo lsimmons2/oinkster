@@ -18,6 +18,7 @@ class ProfileFeed extends React.Component {
             key={oink.id}
             picture = 'pig.jpg'
             user = {this.props.profile.summary.user.username}
+            userId = {this.props.profile.summary.user.id}
             text = {oink.text}
           />
         )

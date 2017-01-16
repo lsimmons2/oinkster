@@ -1,5 +1,6 @@
 
 import React from 'react'
+import { Link } from 'react-router'
 
 class Oink extends React.Component {
 
@@ -8,11 +9,15 @@ class Oink extends React.Component {
       <div className='oink'>
 
         <div className='avatar-container'>
-          <img className='avatar' src={'https://s3.amazonaws.com/oinkster/' + this.props.picture}/>
+          <Link to={'/user/'+this.props.userId}>
+            <img className='avatar' src={'https://s3.amazonaws.com/oinkster/' + this.props.userId}/>
+          </Link>
         </div>
 
         <div className='right-container'>
-          <h4>{this.props.user}</h4>
+          <Link to={'/user/'+this.props.userId} className='oink-username-link'>
+            <h4>{this.props.user}</h4>
+          </Link>
           <div className="oink-field">
             <span>{this.props.text}</span>
           </div>

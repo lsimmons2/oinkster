@@ -20,13 +20,14 @@ function getOinks(req, res){
 
 
 function insertOink(req, res){
-  let queryString = 'INSERT INTO "Oinks"("text", "asset", "user") values($1, $2, $3) returning id, text, asset, "user";';
+  let queryString = 'INSERT INTO "Oinks"("text", "asset", "user", "username") values($1, $2, $3, $4) returning id, text, asset, "user", username;';
   let text = req.body.text;
   let asset = req.body.asset || null;
   let user = req.user.id;
+  let username = req.user.username;
   let query = {
     text: queryString,
-    values: [text, asset, user]
+    values: [text, asset, user, username]
   };
   db.one(query)
     .then( data => {

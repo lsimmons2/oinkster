@@ -23,7 +23,7 @@ function insertOink(req, res){
   let queryString = 'INSERT INTO "Oinks"("text", "asset", "user") values($1, $2, $3) returning id, text, asset, "user";';
   let text = req.body.text;
   let asset = req.body.asset || null;
-  let user = req.user.username;
+  let user = req.user.id;
   let query = {
     text: queryString,
     values: [text, asset, user]
@@ -40,7 +40,7 @@ function insertOink(req, res){
         asset: asset
       };
       dbLogger.error('Error saving oink', {error: err.message, oink: failedOink})
-      res.status(500).send(err)
+      res.status(500).send(err);
     })
 }
 

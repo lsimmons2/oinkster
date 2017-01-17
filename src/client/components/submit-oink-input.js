@@ -20,9 +20,6 @@ class SubmitOinkInput extends React.Component {
         <div className="form-group" id='submit-oink-input'>
           <textarea className="form-control" ref='text' placeholder="What's poppin?"></textarea>
           <div className='submit-oink-button-wrapper'>
-            <input id='upload-image-button' type='submit' className='form-control' value='Upload Image'/>
-          </div>
-          <div className='submit-oink-button-wrapper'>
             <input id='submit-oink-button' type='submit' onClick={this.submitOink.bind(this)} className='form-control' value='Oink!'/>
           </div>
         </div>

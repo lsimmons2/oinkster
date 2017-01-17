@@ -4,6 +4,26 @@
   margin-left: auto;
   margin-right: auto;
 
+  input, textarea {
+    border-color: #9e9e9e;
+    background-color: #d4d2d2;
+  }
+
+  ::-webkit-input-placeholder {
+    color: $primary-grey;
+  }
+  :-moz-placeholder {
+     color: $primary-grey;
+     opacity: 1;
+  }
+  ::-moz-placeholder {
+     color: $primary-grey;
+     opacity: 1;
+  }
+  :-ms-input-placeholder {
+    color: $primary-grey;
+  }
+
   .settings-picture {
     height: 200px;
     width: 200px;

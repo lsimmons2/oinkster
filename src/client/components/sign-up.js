@@ -17,7 +17,7 @@ export class SignUp extends React.Component {
       username: this.refs.signUpUsername.value,
       email: this.refs.signUpEmail.value,
       password: this.refs.signUpPassword.value,
-      bio: this.refs.signUpBio.value,
+      bio: '',
       picture: 'profile-pic-pig.jpg'
     };
     this.props.actions.signUp(userInfo);
@@ -75,11 +75,7 @@ export class SignUp extends React.Component {
           </div>
 
           <div className='form-group'>
-            <input className='form-control' name='sign-up-password' ref='signUpPassword' type='text' placeholder='Password'/>
-          </div>
-
-          <div className='form-group'>
-            <textarea className='form-control' name='sign-up-bio' ref='signUpBio' placeholder='Bio (optional)'></textarea>
+            <input className='form-control' name='sign-up-password' ref='signUpPassword' type='password' placeholder='Password'/>
           </div>
 
           <div className='form-group'>

@@ -10,7 +10,7 @@ class Oink extends React.Component {
 
         <div className='avatar-container'>
           <Link to={'/user/'+this.props.userId}>
-            <img className='avatar' src={'https://s3.amazonaws.com/oinkster/' + this.props.userId}/>
+            <img className='avatar' src={'https://s3.amazonaws.com/oinkster/' + this.props.userId} onError={(e)=>{e.target.src='https://s3.amazonaws.com/oinkster/generic-avatar.png'}}/>
           </Link>
         </div>
 

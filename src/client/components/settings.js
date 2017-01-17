@@ -170,7 +170,7 @@ class Settings extends React.Component {
           className='settings-picture'
           multiple={false}
         >
-          <img src={'https://s3.amazonaws.com/oinkster/' + id}/>
+          <img src={'https://s3.amazonaws.com/oinkster/' + id} onError={(e)=>{e.target.src='https://s3.amazonaws.com/oinkster/generic-avatar.png'}}/>
         </Dropzone>
 
         {resetImage}

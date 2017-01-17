@@ -2,7 +2,7 @@
 import React from 'react'
 
 class Profile extends React.Component {
-
+  
   render(){
 
     return (
@@ -10,7 +10,7 @@ class Profile extends React.Component {
         <div className='profile'>
           <div className='profile-top'>
             <div className='profile-avatar-wrapper'>
-              <img src={'https://s3.amazonaws.com/oinkster/' + this.props.picture}/>
+              <img src={'https://s3.amazonaws.com/oinkster/' + this.props.picture} onError={(e)=>{e.target.src='https://s3.amazonaws.com/oinkster/generic-avatar.png'}}/>
             </div>
             <div className='profile-username-wrapper'>
               <h3>{this.props.fullName}</h3>

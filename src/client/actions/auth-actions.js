@@ -64,8 +64,7 @@ function signUp(userInfo){
           console.log(resp.data);
         }
         if (resp.status === 200){
-          history.push('/board');
-          return dispatch(loggedIn(resp.data.user, resp.data.token));
+          return dispatch(loggedIn(resp.data.userId, resp.data.token));
         }
       })
       .catch( err => {

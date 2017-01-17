@@ -33,9 +33,8 @@ class Settings extends React.Component {
       bio: this.refs.bio.value,
       picture: this.props.settings.current.picture
     };
-    let user = JSON.parse(localStorage.getItem('user'));
-    let id = user.id;
-    this.props.actions.saveSettings(id, settings);
+    let userId = localStorage.getItem('userId');
+    this.props.actions.saveSettings(userId, settings);
   }
 
   onDrop(files){
@@ -50,8 +49,8 @@ class Settings extends React.Component {
       alert('Only JPEGs or PNGs please.');
       return;
     }
-    let id = JSON.parse(localStorage.getItem('user')).id;
-    this.props.actions.uploadPicture(picture, id);
+    let userId = localStorage.getItem('userId');
+    this.props.actions.uploadPicture(picture, userId);
   }
 
   resetPicture(){
@@ -96,8 +95,7 @@ class Settings extends React.Component {
       );
     }
 
-    let user = JSON.parse(localStorage.getItem('user'));
-    let id = user.id;
+    let id = localStorage.getItem('userId');
 
     let resetImage = null;
 

@@ -19,4 +19,9 @@ router.route('/:id/summary')
     return ctrl.getUserSummary(req, res);
   })
 
+router.route('/:id/board')
+  .get((req, res) => {
+    return ctrl.getUserBoardProfile(req, res);
+  })
+
 export default router

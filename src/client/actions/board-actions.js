@@ -23,7 +23,6 @@ function fetchOinksError(error) {
 }
 
 function fetchOinks(){
-
   return function(dispatch){
 
     dispatch(fetchOinksRequest());
@@ -48,7 +47,6 @@ function fetchOinks(){
       })
 
   }
-
 }
 
 function submitOinkRequest(oink) {
@@ -112,11 +110,59 @@ function submitOink(oink){
 
 }
 
+function fetchBoardRequest() {
+  return {
+    type: 'FETCH_BOARD_REQUEST'
+  }
+}
+
+function fetchBoardSuccess(profile) {
+  return {
+    type: 'FETCH_BOARD_SUCCESS',
+    profile
+  }
+}
+
+function fetchBoardError(error) {
+  return {
+    type: 'FETCH_BOARD_ERROR',
+    error
+  }
+}
+
+function fetchBoardProfile(userId){
+  return function(dispatch){
+
+    dispatch(fetchBoardRequest());
+
+    let url = `/users/${userId}/board`;
+    if(process.env.NODE_ENV === 'test'){
+      url = 'http://localhost:8080' + url;
+    }
+
+    return fetch(url)
+      .then( resp => {
+          if(!resp.ok){
+            throw new Error(resp.statusText)
+          }
+          return resp.json();
+      })
+      .then( profile => {
+        dispatch(fetchBoardSuccess(profile));
+      })
+      .catch( error => {
+        dispatch(fetchBoardError(error));
+      })
+
+  }
+}
+
 export {
   fetchOinksRequest,
   fetchOinksSuccess,
   fetchOinksError,
   fetchOinks,
+  fetchBoardProfile,
   submitOinkRequest,
   submitOinkSuccess,
   submitOinkError,

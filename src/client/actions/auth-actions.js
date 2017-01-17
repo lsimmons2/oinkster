@@ -3,7 +3,6 @@ require('es6-promise').polyfill();
 import 'whatwg-fetch'
 
 // if (process.env.NODE_ENV !== 'test'){
-  // let history = require('../history');
   import history from '../history'
 // }
 
@@ -14,21 +13,19 @@ function redirectToLogin(user){
   }
 }
 
-function loggedIn(user, jwt){
-  if (typeof user !== 'string'){
-    user = JSON.stringify(user);
-  }
-  localStorage.setItem('user', user);
+function loggedIn(userId, jwt){
   localStorage.setItem('jwt', jwt);
+  localStorage.setItem('userId', userId);
+  history.push('/board');
   return {
     type: 'LOGGED_IN',
-    user
+    userId
   }
 }
 
 function logOut(){
   localStorage.removeItem('jwt');
-  localStorage.removeItem('user');
+  localStorage.removeItem('userId');
   history.push('/home');
   return {
     type: 'LOG_OUT'
@@ -98,14 +95,59 @@ function logIn(userInfo){
       .then(parseStream)
       .then( resp => {
         if (resp.status === 200){
-          history.push('/board');
-          dispatch(loggedIn(resp.data.user, resp.data.token));
+          dispatch(loggedIn(resp.data.userId, resp.data.token));
         }
       })
 
+  }
+}
+
+function verified(userId){
+  localStorage.setItem('userId', userId);
+  return {
+    type: 'VERIFIED',
+    userId
+  }
+}
+
+function notVerified(){
+  return {
+    type: 'NOT_VERIFIED'
+  }
+}
+
+function verify(jwt){
+  return function(dispatch){
+
+    let url = `/auth/verify`;
+    if(process.env.NODE_ENV === 'test'){
+      url = 'http://localhost:8080' + url;
+    }
+
+    let token = 'Bearer ' + jwt;
+
+    let req = {
+      method: 'GET',
+      headers: {
+        'Authorization': token
+      }
+    };
+
+    fetch(url, req)
+      .then(parseStream)
+      .then( resp => {
+        if (resp.status !== 200){
+          return dispatch(notVerified());
+        }
+        dispatch(verified(resp.data.userId));
+      })
+      .catch( err => {
+        return dispatch(notVerified());
+      })
 
   }
 }
+
 
 export {
   redirectToLogin,
@@ -113,5 +155,8 @@ export {
   logOut,
   parseStream,
   signUp,
-  logIn
+  logIn,
+  verify,
+  verified,
+  notVerified
 }

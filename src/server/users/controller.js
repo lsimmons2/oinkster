@@ -28,7 +28,6 @@ function getUserSettings(req, res){
   FROM "Users"
   WHERE id='${req.params.id}'
   `;
-  console.log('got here');
   db.oneOrNone(queryString)
     .then( user => {
       if (!user){
@@ -95,4 +94,21 @@ function updateUserSettings(req, res){
     })
 }
 
-export { getUser, getUserSettings, getUserSummary, updateUserSettings }
+function getUserBoardProfile(req, res){
+  let queryString = `SELECT "firstName", "lastName", "username", "bio" FROM "Users" WHERE id='${req.params.id}'`;
+  db.oneOrNone(queryString)
+    .then( user => {
+      if (!user){
+        logger.info('User not found', {query:queryString});
+        return res.status(404).json({message: 'User not found'});
+      }
+      logger.info('User retrieved', {user});
+      res.status(200).send(user);
+    })
+    .catch( err => {
+      logger.error('Error retrieving user', {error: err.message})
+      res.status(500).send(err);
+    })
+}
+
+export { getUser, getUserSettings, getUserSummary, updateUserSettings, getUserBoardProfile }

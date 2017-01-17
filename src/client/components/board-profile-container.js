@@ -4,7 +4,9 @@ import { connect } from 'react-redux'
 
 import Profile from './profile'
 import { submitOink } from '../actions/profile-actions'
+import { fetchBoardProfile } from '../actions/board-actions'
 import BoardProfileSignUp from './board-profile-sign-up'
+
 
 export class BoardProfileContainer extends React.Component {
 
@@ -16,12 +18,12 @@ export class BoardProfileContainer extends React.Component {
     let profileBottom;
 
     if (this.props.auth.authenticated){
-      picture = this.props.auth.user.picture || 'profile-pic-pig.jpg';
-      fullName = this.props.auth.user.firstName + ' ' + this.props.auth.user.lastName;
-      username = this.props.auth.user.username;
+      picture = this.props.auth.userId || '';
+      fullName = this.props.board.profile.firstName + ' ' + this.props.board.profile.lastName || '';
+      username = this.props.board.profile.username || '';
       profileBottom = (
         <p>
-          {this.props.auth.user.bio}
+          {this.props.board.profile.bio}
         </p>
       );
     } else {

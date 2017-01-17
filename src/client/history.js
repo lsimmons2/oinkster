@@ -2,7 +2,7 @@
 import { browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 
-import { fetchOinks } from './actions/board-actions'
+import { fetchOinks, fetchBoardProfile } from './actions/board-actions'
 import { fetchUserSummary } from './actions/profile-actions'
 import { fetchSettings } from './actions/settings-actions'
 import store from './store'
@@ -11,6 +11,9 @@ import store from './store'
 function listenToLocation(location){
   let path = location.pathname;
   if (path === '/board'){
+    if (localStorage.getItem('userId')){
+      store.dispatch(fetchBoardProfile(localStorage.getItem('userId')));      
+    }
     return store.dispatch(fetchOinks());
   }
   if (path.slice(0,6) === '/user/'){

@@ -42,6 +42,23 @@ let boardReducer = function(board = initialState.board, action){
         fetchingError: true
       }
 
+    case 'FETCH_BOARD_REQUEST':
+      return { ...board,
+        isFetching: true
+      }
+
+    case 'FETCH_BOARD_SUCCESS':
+      return { ...board,
+        isFetching: false,
+        profile: action.profile
+      };
+
+    case 'FETCH_BOARD_ERROR':
+      return { ...board,
+        isFetching: false,
+        fetchingError: true
+      }
+
     default:
       return board;
   }

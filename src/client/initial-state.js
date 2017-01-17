@@ -4,7 +4,7 @@ export default {
     showSignUp: true,
     signUpUsernameConflict: false,
     signUpEmailConflict: false,
-    user: undefined
+    userId: ''
   },
   profile: {
     isFetching: false,
@@ -52,6 +52,12 @@ export default {
   },
   board: {
     oinks: [],
+    profile: {
+      firstName: '',
+      lastName: '',
+      username: '',
+      bio: ''
+    },
     isFetching: false,
     fetchingError: false,
     count: 0

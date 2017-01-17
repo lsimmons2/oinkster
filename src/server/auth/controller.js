@@ -204,7 +204,7 @@ function logIn(req, res, next){
         let token = jwt.sign(user, 'sah');
         return res.status(200).json({
           'message': 'User successfully authenticated',
-          user,
+          userId: user.id,
           token
         });
       } else {

@@ -9,10 +9,11 @@ import * as actions from '../actions/auth-actions'
 class Nav extends React.Component {
 
   componentWillMount(){
-    if (localStorage.jwt && localStorage.user){
-      this.props.actions.loggedIn(localStorage.user, localStorage.jwt);
+    let jwt = localStorage.getItem('jwt');
+    if (jwt){
+      this.props.actions.verify(jwt);
     } else {
-      this.props.actions.logOut();
+      this.props.actions.notVerified();
     }
   }
 
@@ -83,7 +84,7 @@ class Nav extends React.Component {
         </Link>
       );
     } else {
-      let userId = JSON.parse(localStorage.getItem('user')).id
+      let userId = this.props.auth.userId;
       navItems.push(
         <Link
           key='logout'

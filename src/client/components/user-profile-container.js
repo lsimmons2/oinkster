@@ -11,9 +11,9 @@ class UserProfileContainer extends React.Component {
   render(){
 
     let user = this.props.profile.summary.user;
-    let fullName = user.firstName + user.lastName;
+    let fullName = user.firstName + ' ' + user.lastName;
     let username = user.username;
-    let picture = user.picture || 'profile-pic-pig.jpg';
+    let picture = user.id || 'profile-pic-pig.jpg';
     let profileBottom = (
       <p>{user.bio}</p>
     );

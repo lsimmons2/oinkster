@@ -111,6 +111,8 @@ function verified(userId){
 }
 
 function notVerified(){
+  localStorage.removeItem('jwt');
+  localStorage.removeItem('userId');
   return {
     type: 'NOT_VERIFIED'
   }

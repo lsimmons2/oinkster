@@ -164,8 +164,14 @@
           margin-right: 10px;
         }
       }
-      .oink-username-link {
-        color: $primary-grey;
+      .right-container {
+        h4 {
+          font-weight: bold;
+          margin-bottom: 0;
+        }
+        .oink-username-link {
+          color: $primary-grey;
+        }
       }
     }
 

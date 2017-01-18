@@ -85,7 +85,7 @@ function updateUserSettings(req, res){
   `;
   db.none(queryString)
     .then( () => {
-      logger.info('User found', {query:userQuery});
+      logger.info('User found', {query:queryString});
       res.status(200).json({});
     })
     .catch( err => {

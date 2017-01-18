@@ -2,36 +2,53 @@
 #user-profile {
 
   .profile {
-
     border: solid 2px $primary-pink;
     border-radius: 4px;
     width: 85%;
     height: 200px;
-    margin: 0 0 0 40px;
     padding: 15px;
     box-shadow: 0px 5px 10px #b7b7b7;
     color: $primary-grey;
 
+    @media only screen and (min-width: 768px){
+      margin: 0 0 0 40px;
+    }
+
+    @media only screen and (max-width: 767px){
+      margin: 0 auto;
+    }
+
     .profile-top {
 
       height: 50%;
+      margin-bottom: 20px;
 
       .profile-avatar-wrapper {
         display: inline-block;
-        width: 35%;
-
+        width: 40%;
+        height: 100%;
+        @media only screen and (max-width: 767px){
+          margin: 0 auto;
+        }
         img {
           max-width: 100%;
-          vertical-align: bottom;
+          max-height: 100%;
           border-radius: 4px;
+          display: block;
+          margin: 0 auto;
         }
       }
 
       .profile-username-wrapper {
         display: inline-block;
-        width: 65%;
+        width: 55%;
         position: relative;
         bottom: 15px;
+        word-wrap: break-word;
+        margin-left: 5%;
+        @media only screen and (max-width: 767px){
+          margin: 0 auto;
+        }
         h3, h4 {
           text-align: center;
         }
@@ -49,23 +66,92 @@
       }
     }
 
+    // border: solid 2px $primary-pink;
+    // border-radius: 4px;
+    // width: 85%;
+    // height: 200px;
+    // // margin: 0 0 0 40px;
+    // padding: 15px;
+    // box-shadow: 0px 5px 10px #b7b7b7;
+    // color: $primary-grey;
+    //
+    // @media only screen and (min-width: 768px){
+    //   margin: 0 0 0 40px;
+    // }
+    //
+    // @media only screen and (max-width: 767px){
+    //   margin: 0 auto;
+    // }
+    //
+    // .profile-top {
+    //
+    //   height: 50%;
+    //
+    //   .profile-avatar-wrapper {
+    //     display: inline-block;
+    //     width: 40%;
+    //     height: 100%;
+    //     @media only screen and (max-width: 767px){
+    //       margin: 0 auto;
+    //     }
+    //
+    //     img {
+    //       max-width: 100%;
+    //       max-height: 100%;
+    //       // vertical-align: bottom;
+    //       border-radius: 4px;
+    //       display: block;
+    //       margin: 0 auto;
+    //     }
+    //   }
+    //
+    //   .profile-username-wrapper {
+    //     display: inline-block;
+    //     width: 65%;
+    //     position: relative;
+    //     bottom: 15px;
+    //     @media only screen and (max-width: 767px){
+    //       margin: 0 auto;
+    //     }
+    //     h3, h4 {
+    //       text-align: center;
+    //     }
+    //   }
+    //
+    // }
+    //
+    // .profile-bottom {
+    //   margin-top: 15px;
+    //   p {
+    //     text-align: center;
+    //   }
+    //   h5 {
+    //     text-align: center;
+    //   }
+    // }
+
   }
 
   #profile-feed {
 
-    width: 70%;
-    max-width: 600px;
-    margin: 0 auto;
+    // width: 70%;
+    // max-width: 600px;
+    // margin: 0 auto;
 
     .oink {
       box-shadow: 0px 5px 10px #b7b7b7;
       color: $primary-grey;
       border: 2px solid $primary-pink;
       border-radius: 4px;
-      margin: 0px 20px 20px 0;
       width: 85%;
       height: 80px;
       padding-top: 1px;
+      @media only screen and (min-width: 768px){
+        margin: 0px 20px 20px 0px;
+      }
+      @media only screen and (max-width: 767px){
+        margin: 20px auto;
+      }
       .avatar-container {
         padding: 4px;
         float: left;
@@ -75,9 +161,41 @@
           margin-right: 10px;
         }
       }
-      .oink-username-link {
-        color: $primary-grey;
+      .right-container {
+        h4 {
+          font-weight: bold;
+          margin-bottom: 0;
+        }
+        .oink-username-link {
+          color: $primary-grey;
+        }
       }
+      // box-shadow: 0px 5px 10px #b7b7b7;
+      // color: $primary-grey;
+      // border: 2px solid $primary-pink;
+      // border-radius: 4px;
+      // // margin: 0px 20px 20px 0;
+      // width: 85%;
+      // height: 80px;
+      // padding-top: 1px;
+      // @media only screen and (min-width: 768px){
+      //   margin: 0px 20px 20px 0px;
+      // }
+      // @media only screen and (max-width: 767px){
+      //   margin: 20px auto;
+      // }
+      // .avatar-container {
+      //   padding: 4px;
+      //   float: left;
+      //   .avatar {
+      //     height: 65px;
+      //     border-radius: 4px;
+      //     margin-right: 10px;
+      //   }
+      // }
+      // .oink-username-link {
+      //   color: $primary-grey;
+      // }
     }
 
   }

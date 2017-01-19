@@ -5,7 +5,8 @@ import logger from '../loggers/logger'
 import db from '../db'
 import jwt from 'jsonwebtoken'
 import { hashPass } from '../auth/controller'
-
+import jwtConfig from '../../../config/jwt'
+const jwtSecret = jwtConfig.secret;
 
 
 // =============================================
@@ -113,7 +114,7 @@ function createUser(req, res){
       return db.one(queryString, [firstName, lastName, username, email, salt, hash])
     })
     .then( user => {
-      let token = jwt.sign(user, 'sah', {
+      let token = jwt.sign(user, jwtSecret, {
         expiresIn: '48h'
       });
       res.status(200).json({

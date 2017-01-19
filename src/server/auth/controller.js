@@ -5,6 +5,8 @@ const pgp = require('pg-promise')();
 import jwt from 'jsonwebtoken'
 import db from '../db'
 import logger from '../loggers/logger'
+import jwtConfig from '../../../config/jwt'
+const jwtSecret = jwtConfig.secret;
 
 
 function authenticate(req, res, next){
@@ -14,7 +16,7 @@ function authenticate(req, res, next){
     });
   }
   let token = req.headers['authorization'].replace('Bearer ', '');
-  jwt.verify(token, 'sah', (err, user) => {
+  jwt.verify(token, jwtSecret, (err, user) => {
     if (err){
       return res.status(403).json({
         message: 'Invalid JWT',
@@ -104,7 +106,7 @@ function logIn(req, res, next){
         })
       }
       if (validated){
-        let token = jwt.sign(user, 'sah');
+        let token = jwt.sign(user, jwtSecret);
         return res.status(200).json({
           message: 'User successfully authenticated',
           userId: user.id,

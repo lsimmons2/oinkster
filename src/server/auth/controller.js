@@ -7,6 +7,24 @@ import db from '../db'
 import logger from '../loggers/logger'
 
 
+function authenticate(req, res, next){
+  if (req.headers['authorization'] === undefined){
+    return res.status(400).json({
+      message: 'nah'
+    });
+  }
+  let token = req.headers['authorization'].replace('Bearer ', '');
+  jwt.verify(token, 'sah', (err, user) => {
+    if (err){
+      return res.status(403).json({
+        message: 'Invalid JWT',
+        err
+      });
+    }
+    req.user = user;
+    next();
+  })
+}
 
 function hashPass(password){
   return new Promise((resolve, reject) => {
@@ -107,6 +125,7 @@ function logIn(req, res, next){
 
 
 export {
+  authenticate,
   hashPass,
   comparePass,
   findUser,

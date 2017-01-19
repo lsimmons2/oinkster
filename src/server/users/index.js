@@ -6,11 +6,16 @@ import authenticate from '../auth/authenticate'
 const router = express.Router();
 
 
+router.route('/')
+  .post((req, res) => {
+    return ctrl.createUser(req, res);
+  })
+
 router.route('/:id/settings')
-  .get((req, res) => {
+  .get(authenticate, (req, res) => {
     return ctrl.getUserSettings(req, res);
   })
-  .post((req, res) => {
+  .put(authenticate, (req, res) => {
     return ctrl.updateUserSettings(req, res);
   })
 

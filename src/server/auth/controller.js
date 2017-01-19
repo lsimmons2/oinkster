@@ -83,63 +83,6 @@ function findUser(username, email){
 }
 
 
-function createUser(req, res){
-  let firstName = req.body.firstName;
-  let lastName = req.body.lastName;
-  let username = req.body.username;
-  let email = req.body.email;
-  let password = req.body.password;
-  let bio = req.body.bio;
-  let picture = req.body.picture;
-  hashPass(password)
-  .then( passData => {
-    let salt = passData.salt;
-    let hash = passData.hash;
-    let queryString = 'INSERT INTO "Users"("firstName", "lastName", username, email, bio, picture, salt, password) values($1, $2, $3, $4, $5, $6, $7, $8) returning id, "firstName", "lastName", username, email, bio, picture';
-    return db.one(queryString, [firstName, lastName, username, email, bio, picture, salt, hash])
-  })
-  .then( user => {
-    let token = jwt.sign(user, 'sah', {
-      expiresIn: 864
-    });
-    return res.status(200).json({
-      message: 'User created',
-      userId: user.id,
-      token
-    });
-  })
-  .catch( err => {
-    logger.error('Error creating user', {error:err.message})
-    return res.status(500).send({err});
-  })
-}
-
-function checkSignUpData(data){
-  if (typeof data.firstName !== 'string'){
-    return false;
-  }
-  if (typeof data.lastName !== 'string'){
-    return false;
-  }
-  if (typeof data.username !== 'string'){
-    return false;
-  }
-  if (typeof data.email !== 'string'){
-    return false;
-  }
-  if (typeof data.bio !== 'string'){
-    return false;
-  }
-  if (typeof data.password !== 'string'){
-    return false;
-  }
-  if (typeof data.picture !== 'string'){
-    return false;
-  }
-  return true;
-}
-
-
 function signUp(req, res, next){
 
   if (!checkSignUpData(req.body)){
@@ -225,8 +168,8 @@ export {
   hashPass,
   comparePass,
   findUser,
-  createUser,
-  checkSignUpData,
+  // createUser,
+  // checkSignUpData,
   signUp,
   logIn
 }

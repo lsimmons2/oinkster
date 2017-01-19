@@ -3,45 +3,136 @@ import express from 'express'
 import util from 'util'
 import logger from '../loggers/logger'
 import db from '../db'
+import jwt from 'jsonwebtoken'
+import { hashPass } from '../auth/controller'
 
 
-function getUser(req, res){
-  let queryString = `SELECT * FROM "Users" WHERE id='${req.params.id}'`;
-  db.oneOrNone(queryString)
-    .then( user => {
-      if (!user){
-        logger.info('User not found', {query:queryString});
-        return res.status(404).json({message: 'User not found'});
-      }
-      logger.info('User retrieved', {user});
-      res.status(200).send(user);
-    })
-    .catch( err => {
-      logger.error('Error retrieving user', {error: err.message})
-      res.status(500).send(err);
-    })
+
+// =============================================
+// ============ HELPER FUNCTIONS ===============
+// =============================================
+
+function findUser(username, email){
+  return new Promise((resolve, reject) => {
+    if (!email){
+      // only one identifier passed in, so don't know if it's username or email
+      let usernameEmail = username;
+      let queryString = 'SELECT * from "Users" WHERE username=$1 OR email=$1';
+      db.oneOrNone(queryString, [usernameEmail])
+        .then( user => {
+          return resolve(user);
+        })
+        .catch( err => {
+          logger.error('Error finding user', {query: queryString, error:err})
+          return reject(err);
+        });
+    } else {
+      let queryString = 'SELECT * from "Users" WHERE username=$1 OR email=$2';
+      db.oneOrNone(queryString, [username, email])
+        .then( user => {
+          if (!user){
+            return resolve(null);
+          }
+          if (user.username === username){
+            return resolve({
+              conflictType: 'username',
+              username
+            });
+          }
+          if (user.email === email){
+            return resolve({
+              conflictType: 'email',
+              email
+            });
+          }
+        })
+        .catch( err => {
+          logger.error('Error finding user', {error:err.message})
+          return reject(err);
+        });
+    }
+  })
 }
 
-function getUserSettings(req, res){
-  let queryString = `
-  SELECT "firstName", "lastName", username, email, bio, picture
-  FROM "Users"
-  WHERE id='${req.params.id}'
-  `;
-  db.oneOrNone(queryString)
+function checkSignUpData(data){
+  if (typeof data.firstName !== 'string'){
+    return false;
+  }
+  if (typeof data.lastName !== 'string'){
+    return false;
+  }
+  if (typeof data.username !== 'string'){
+    return false;
+  }
+  if (typeof data.email !== 'string'){
+    return false;
+  }
+  if (typeof data.password !== 'string'){
+    return false;
+  }
+  return true;
+}
+
+
+
+// =============================================
+// ============ POST /users ====================
+// =============================================
+
+function createUser(req, res){
+
+
+  if (!checkSignUpData(req.body)){
+    return res.status(400).json({
+      message: 'Missing required field for signing up.'
+    });
+  }
+
+  const newUser = req.body;
+  let username = req.body.username;
+  let email = req.body.email;
+
+  findUser(username, email)
     .then( user => {
-      if (!user){
-        logger.info('User not found', {query:queryString});
-        return res.status(404).json({message: 'User not found'});
+      if (user){
+        return res.status(409).json({
+          message: 'User already exists',
+          user
+        });
       }
-      logger.info('User retrieved', {user});
-      res.status(200).send(user);
+      return hashPass(req.body.password);
+    })
+    .then( passData => {
+      let salt = passData.salt;
+      let hash = passData.hash;
+      let firstName = req.body.firstName;
+      let lastName = req.body.lastName;
+      let username = req.body.username;
+      let email = req.body.email;
+      let queryString = 'INSERT INTO "Users"("firstName", "lastName", username, email, salt, password) values($1, $2, $3, $4, $5, $6) returning id';
+      return db.one(queryString, [firstName, lastName, username, email, salt, hash])
+    })
+    .then( user => {
+      let token = jwt.sign(user, 'sah', {
+        expiresIn: '48h'
+      });
+      res.status(200).json({
+        message: 'User created',
+        userId: user.id,
+        token
+      });
     })
     .catch( err => {
-      logger.error('Error retrieving user', {error: err.message})
-      res.status(500).send(err);
+      logger.error('Error creating user', {error:err.message})
+      return res.status(500).send({err:err.message});
     })
+
 }
+
+
+// =============================================
+// ============ GET /users/:id/summary =========
+// =============================================
 
 function getUserSummary(req, res){
   let oinksQuery = `
@@ -49,11 +140,11 @@ function getUserSummary(req, res){
   FROM "Oinks"
   WHERE "user"='${req.params.id}'`;
   let userQuery = `
-  SELECT *
+  SELECT "firstName", "lastName", "username", "bio"
   FROM "Users"
   WHERE id='${req.params.id}'`;
   let oinksProm = db.any(oinksQuery);
-  let userProm = db.one(userQuery);
+  let userProm = db.oneOrNone(userQuery);
   Promise.all([oinksProm, userProm])
     .then( data => {
       let oinks = data[0];
@@ -62,8 +153,9 @@ function getUserSummary(req, res){
         logger.info('User not found', {query:userQuery});
         return res.status(404).json({message: 'User summary not found'});
       }
-      logger.info('User summary retrieved', {user, oinks});
-      res.status(200).json({user, oinks});
+      // need to set oinks property because it could be null
+      logger.info('User summary retrieved', {user: user, oinks: oinks});
+      res.status(200).json({user: user, oinks: oinks});
     })
     .catch( err => {
       logger.error('Error retrieving user summary', {oinksQuery, userQuery, error: err.message})
@@ -75,6 +167,57 @@ function getUserSummary(req, res){
       );
     })
 }
+
+// =============================================
+// ============ GET /users/:id/board ===========
+// =============================================
+
+function getUserBoardProfile(req, res){
+  let queryString = `SELECT "firstName", "lastName", "username", "bio" FROM "Users" WHERE id='${req.params.id}'`;
+  db.oneOrNone(queryString)
+    .then( user => {
+      if (!user){
+        logger.info('User not found', {query:queryString});
+        return res.status(404).json({message: 'User not found'});
+      }
+      logger.info('User retrieved', {user: user});
+      res.status(200).json({user: user});
+    })
+    .catch( err => {
+      logger.error('Error retrieving user', {error: err.message})
+      res.status(500).send(err);
+    })
+}
+
+// =============================================
+// ============ GET /users/:id/settings ========
+// =============================================
+
+
+function getUserSettings(req, res){
+  let queryString = `
+  SELECT "firstName", "lastName", username, email, bio
+  FROM "Users"
+  WHERE id='${req.params.id}'
+  `;
+  db.oneOrNone(queryString)
+    .then( user => {
+      if (!user){
+        logger.info('User not found', {query:queryString});
+        return res.status(404).json({message: 'User not found'});
+      }
+      logger.info('User retrieved', {user: user});
+      res.status(200).send(user);
+    })
+    .catch( err => {
+      logger.error('Error retrieving user', {error: err.message})
+      res.status(500).send(err);
+    })
+}
+
+// =============================================
+// ============ PUT /users/:id/settings ========
+// =============================================
 
 function updateUserSettings(req, res){
   let queryString = `
@@ -94,21 +237,7 @@ function updateUserSettings(req, res){
     })
 }
 
-function getUserBoardProfile(req, res){
-  let queryString = `SELECT "firstName", "lastName", "username", "bio" FROM "Users" WHERE id='${req.params.id}'`;
-  db.oneOrNone(queryString)
-    .then( user => {
-      if (!user){
-        logger.info('User not found', {query:queryString});
-        return res.status(404).json({message: 'User not found'});
-      }
-      logger.info('User retrieved', {user});
-      res.status(200).send(user);
-    })
-    .catch( err => {
-      logger.error('Error retrieving user', {error: err.message})
-      res.status(500).send(err);
-    })
-}
-
-export { getUser, getUserSettings, getUserSummary, updateUserSettings, getUserBoardProfile }
+export {
+  checkSignUpData,
+  createUser,
+  getUserSettings, getUserSummary, updateUserSettings, getUserBoardProfile }

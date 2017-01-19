@@ -80,109 +80,17 @@ describe('comparePass()', function() {
 })
 
 
-describe('POST /signup', function(){
-
-  beforeEach( function(done) {
-    knex.seed.run({
-      directory: './db/seeds/auth/signUp'
-    })
-      .then( function() {
-        done();
-      })
-  })
-
-  it('should return 200 if user using a new username and email', function(done){
-    agent
-      .post('/auth/signup')
-      .send({
-        firstName: 'name',
-        lastName: 'lastName',
-        username: 'username',
-        email: 'email',
-        bio: 'bob',
-        password: 'password',
-        picture: 'picture'
-      })
-      .end(function(err, res){
-        if (err) {
-          return done(err);
-        }
-        res.status.should.equal(200);
-        res.body.message.should.equal('User created');
-        res.body.user.should.be.an('object');
-        // make sure jwt has header, payload, and signature
-        res.body.token.split('.').length.should.equal(3);
-        done();
-      })
-  })
-
-  it('should return 409 if user using an email that already exists', function(done){
-    agent
-      .post('/auth/signup')
-      .send({
-        firstName: 'name',
-        lastName: 'lastName',
-        username: 'username',
-        email: 'bob@bob.com',
-        bio: 'bio',
-        password: 'password',
-        picture: 'picture'
-      })
-      .end(function(err, res){
-        if (err) {
-          return done(err);
-        }
-        res.status.should.equal(409);
-        res.body.message.should.equal('User already exists')
-        done();
-      })
-  })
-
-  it('should return 409 if user using an email that already exists', function(done){
-    agent
-      .post('/auth/signup')
-      .send({
-        firstName: 'name',
-        lastName: 'lastName',
-        username: 'username',
-        email: 'bob@bob.com',
-        bio: 'bio',
-        password: 'password',
-        picture: 'picture'
-      })
-      .end(function(err, res){
-        if (err) {
-          return done(err);
-        }
-        res.status.should.equal(409);
-        res.body.message.should.equal('User already exists')
-        done();
-      })
-  })
-
-  afterEach( function(done) {
-    knex('Users').truncate()
-      .then( function() {
-        done();
-      })
-  })
-
-})
-
-
 describe('POST /login', function(){
 
   before( function(done) {
     agent
-      .post('/auth/signup')
+      .post('/users')
       .send({
         firstName: 'firstName',
         lastName: 'lastName',
         username: 'username',
         email: 'email',
-        bio: 'bio',
-        password: 'password',
-        picture: 'picture'
+        password: 'password'
       })
       .end(function(err, res){
         if (err) {
@@ -203,9 +111,10 @@ describe('POST /login', function(){
         if (err) {
           return done(err);
         }
+        Object.keys(res.body).length.should.equal(3);
         res.status.should.equal(200);
         res.body.message.should.equal('User successfully authenticated');
-        res.body.user.should.be.an('object');
+        res.body.userId.should.be.a('string');
         // make sure jwt has header, payload, and signature
         res.body.token.split('.').length.should.equal(3);
         done();
@@ -225,7 +134,7 @@ describe('POST /login', function(){
         }
         res.status.should.equal(200);
         res.body.message.should.equal('User successfully authenticated');
-        res.body.user.should.be.an('object');
+        res.body.userId.should.be.a('string');
         // make sure jwt has header, payload, and signature
         res.body.token.split('.').length.should.equal(3);
         done();

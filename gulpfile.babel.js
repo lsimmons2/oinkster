@@ -5,6 +5,7 @@ import babel from 'gulp-babel'
 import mocha from 'gulp-mocha'
 import gutil from 'gulp-util'
 import webpack from 'webpack-stream'
+import runSequence from 'run-sequence'
 
 
 // ============ TEST ============
@@ -39,6 +40,66 @@ gulp.task('test:client:watch', () => {
   gulp.watch(['test/client/**/*.js', 'src/client/**/*.js'], ['test:client']);
 });
 
+gulp.task('build:users', () => {
+  gulp.src('src/server/users/**/*.js')
+    .pipe(babel())
+    .pipe(gulp.dest('dist/server/users'));
+});
+
+gulp.task('test:users', () => {
+process.env.NODE_ENV = 'test';
+  gulp.src('test/server/users/**/*.js')
+    .pipe(babel())
+    .pipe(mocha())
+    .on('error', gutil.log)
+});
+
+gulp.task('users', (done) => {
+  runSequence('build:users', 'test:users', () => {
+    done();
+  })
+});
+
+gulp.task('build:oinks', () => {
+  gulp.src('src/server/oinks/**/*.js')
+    .pipe(babel())
+    .pipe(gulp.dest('dist/server/oinks'));
+});
+
+gulp.task('test:oinks', () => {
+process.env.NODE_ENV = 'test';
+  gulp.src('test/server/oinks/**/*.js')
+    .pipe(babel())
+    .pipe(mocha())
+    .on('error', gutil.log)
+});
+
+gulp.task('oinks', (done) => {
+  runSequence('build:oinks', 'test:oinks', () => {
+    done();
+  })
+});
+
+gulp.task('build:auth', () => {
+  gulp.src('src/server/auth/**/*.js')
+    .pipe(babel())
+    .pipe(gulp.dest('dist/server/auth'));
+});
+
+gulp.task('test:auth', () => {
+process.env.NODE_ENV = 'test';
+  gulp.src('test/server/auth/**/*.js')
+    .pipe(babel())
+    .pipe(mocha())
+    .on('error', gutil.log)
+});
+
+gulp.task('auth', (done) => {
+  runSequence('build:auth', 'test:auth', () => {
+    done();
+  })
+});
+
 gulp.task('test:server', ['build'], () => {
   process.env.NODE_ENV = 'test';
   gulp.src('test/server/**/*.js')
@@ -48,7 +109,9 @@ gulp.task('test:server', ['build'], () => {
 });
 
 gulp.task('test:server:watch', () => {
-  gulp.watch(['test/server/**/*.js', 'src/server/**/*.js'], ['test:server']);
+  gulp.watch(['test/server/users/**/*.js', 'src/server/users/**/*.js'], ['users']);
+  gulp.watch(['test/server/oinks/**/*.js', 'src/server/oinks/**/*.js'], ['oinks']);
+  gulp.watch(['test/server/auth/**/*.js', 'src/server/auth/**/*.js'], ['auth']);
 });
 
 

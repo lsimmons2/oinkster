@@ -179,7 +179,7 @@ describe('POST /users', function() {
         })
     })
 
-    it('email already exists', function(done){
+    it('username already exists', function(done){
       agent
         .post('/users')
         .send({
@@ -344,7 +344,7 @@ describe('GET /users/:id/summary', function() {
             }
             res.body.should.have.property('oinks');
             let user = res.body.user;
-            Object.keys(user).length.should.equal(4);
+            Object.keys(user).length.should.equal(5);
             user.firstName.should.equal('bob');
             user.lastName.should.equal('bobb');
             user.username.should.equal('bobbb');
@@ -465,7 +465,6 @@ describe('GET /users/:id/board', function() {
 
 })
 
-
 describe('GET /users/:id/settings', function() {
 
   beforeEach( function(done) {
@@ -537,7 +536,6 @@ describe('GET /users/:id/settings', function() {
   })
 
 })
-
 
 describe('PUT /users/:id/settings', function() {
 

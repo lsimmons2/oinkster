@@ -26,6 +26,7 @@ To be implemented:
   - `nvm use` if using `nvm`
 - make sure `postgres` is running on port `5432` with database name `oinkster-dev`
 - `npm install`
+- `gulp`
 - `node webpack-dev-server.js`
 - app will run at `localhost:8080`
 - need following `config` directory:

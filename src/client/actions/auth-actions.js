@@ -43,7 +43,7 @@ function parseStream(resp){
 function signUp(userInfo){
   return function(dispatch){
 
-    let url = `/auth/signup`;
+    let url = `/users`;
     if(process.env.NODE_ENV === 'test'){
       url = 'http://localhost:8080' + url;
     }

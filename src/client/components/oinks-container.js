@@ -27,6 +27,7 @@ class OinksContainer extends React.Component {
     let username;
     let userId;
     let text;
+    let created = null;
 
     if (this.props.board.oinks.length){
       oinksFeed = (
@@ -37,7 +38,35 @@ class OinksContainer extends React.Component {
             username = oink.username;
             userId = oink.user;
             text = oink.text;
+            if (oink.created) {
 
+              let now = new Date();
+              let oinkCreated = new Date(oink.created);
+
+              let time = oinkCreated.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});
+              let date;
+
+              let day = ((now.getTime() - oinkCreated.getTime()) / (24*60*60*1000));
+              if ( day > 7 ) {
+                date = oinkCreated.toDateString().slice(0, oinkCreated.toDateString().length - 5);
+              } else if (1 > day){
+                date = 'today';
+              } else if (2 > day > 1){
+                date = 'yesterday';
+              } else {
+                let days = [
+                  'Sunday',
+                  'Monday',
+                  'Tuesday',
+                  'Wednesday',
+                  'Thursday',
+                  'Friday',
+                  'Saturday'
+                ];
+                date = 'on ' + days[oinkCreated.getDay()];
+              }
+              created = `at ${time} ${date}`;
+            }
             return (
               < Oink
                 picture={picture}
@@ -45,6 +74,7 @@ class OinksContainer extends React.Component {
                 user={username}
                 userId={userId}
                 text={text}
+                created={created}
               />
             )
           })

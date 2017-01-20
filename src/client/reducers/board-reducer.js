@@ -12,11 +12,9 @@ let boardReducer = function(board = initialState.board, action){
       }
 
     case 'SUBMIT_OINK_SUCCESS':
+      board.oinks.unshift(action.oink)
       return { ...board,
-        isFetching: false,
-        oinks: [ ...board.oinks,
-          action.oink
-        ]
+        isFetching: false
       };
 
     case 'SUBMIT_OINK_ERROR':

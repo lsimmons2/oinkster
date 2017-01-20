@@ -10,9 +10,43 @@ import Oink from './oink'
 class ProfileFeed extends React.Component {
 
   render(){
+
     let userOinks = null;
+
     if (this.props.profile.summary.oinks){
+      
+      let created = null;
+
       userOinks = this.props.profile.summary.oinks.map( oink => {
+
+        if (oink.created) {
+
+          let now = new Date();
+          let oinkCreated = new Date(oink.created);
+
+          let time = oinkCreated.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});
+          let date;
+
+          let day = ((now.getTime() - oinkCreated.getTime()) / (24*60*60*1000));
+          if ( day > 7 ) {
+            date = oinkCreated.toDateString().slice(0, oinkCreated.toDateString().length - 5);
+          } else if (1 > day){
+            date = 'today'
+          } else {
+            let days = [
+              'Sunday',
+              'Monday',
+              'Tuesday',
+              'Wednesday',
+              'Thursday',
+              'Friday',
+              'Saturday'
+            ];
+            date = 'on ' + days[oinkCreated.getDay()];
+          }
+          created = `at ${time} ${date}`;
+        }
+
         return (
           < Oink
             key={oink.id}
@@ -20,6 +54,7 @@ class ProfileFeed extends React.Component {
             user = {this.props.profile.summary.user.username}
             userId = {this.props.profile.summary.user.id}
             text = {oink.text}
+            created = {created}
           />
         )
       })

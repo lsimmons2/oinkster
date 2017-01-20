@@ -137,11 +137,12 @@ function createUser(req, res){
 
 function getUserSummary(req, res){
   let oinksQuery = `
-  SELECT id, text, asset
+  SELECT id, text, asset, created
   FROM "Oinks"
-  WHERE "user"='${req.params.id}'`;
+  WHERE "user"='${req.params.id}'
+  ORDER BY "created"`;
   let userQuery = `
-  SELECT "firstName", "lastName", "username", "bio"
+  SELECT "id", "firstName", "lastName", "username", "bio"
   FROM "Users"
   WHERE id='${req.params.id}'`;
   let oinksProm = db.any(oinksQuery);
@@ -223,8 +224,7 @@ function getUserSettings(req, res){
 function updateUserSettings(req, res){
   let queryString = `
   UPDATE "Users"
-  SET "firstName"='${req.body.firstName}', "lastName"='${req.body.lastName}', username='${req.body.username}', email='${req.body.email}', bio='${req.body.bio}',
-  picture='${req.body.picture}'
+  SET "firstName"='${req.body.firstName}', "lastName"='${req.body.lastName}', username='${req.body.username}', email='${req.body.email}', bio='${req.body.bio}'
   WHERE id='${req.params.id}'
   `;
   db.none(queryString)

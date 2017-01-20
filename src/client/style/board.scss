@@ -168,9 +168,13 @@
         h4 {
           font-weight: bold;
           margin-bottom: 0;
+          display: inline-block;
         }
         .oink-username-link {
           color: $primary-grey;
+        }
+        .date-time {
+          margin-left: 4px;
         }
       }
     }

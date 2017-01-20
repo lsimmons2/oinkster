@@ -1,14 +1,13 @@
 
 import express from 'express'
-import * as ctrl from './controller'
-import authenticate from './authenticate'
+import { authenticate, logIn} from './controller'
 
 const router = express.Router();
 
 
 router.route('/login')
   .post((req, res, next) => {
-    return ctrl.logIn(req, res, next);
+    return logIn(req, res, next);
   })
 
 router.route('/verify')

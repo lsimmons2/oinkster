@@ -59,6 +59,8 @@ class Settings extends React.Component {
 
   render(){
 
+    let id = localStorage.getItem('userId');
+
     let fetchingStatus = null;
     if (this.props.settings.isFetching){
       fetchingStatus = (
@@ -68,6 +70,21 @@ class Settings extends React.Component {
       fetchingStatus = (
         <p>Woops! There was an error fetching your settings.</p>
       );
+    }
+
+    let picture = 'https://s3.amazonaws.com/oinkster/' + id;
+
+    let imageStatus;
+    if (this.props.settings.isUploadingPicture){
+      imageStatus = (
+        <p>Uploading image...</p>
+      );
+    } else if (this.props.settings.uploadingPictureError){
+      imageStatus = (
+        <p>Woops! There was an error uploading your picture.</p>
+      );
+    } else {
+      picture = 'https://s3.amazonaws.com/oinkster/' + id + '?v=' + Math.random();
     }
 
     let savingStatus = null;
@@ -95,7 +112,6 @@ class Settings extends React.Component {
       );
     }
 
-    let id = localStorage.getItem('userId');
 
     let resetImage = null;
 
@@ -170,10 +186,11 @@ class Settings extends React.Component {
           className='settings-picture'
           multiple={false}
         >
-          <img src={'https://s3.amazonaws.com/oinkster/' + id} onError={(e)=>{e.target.src='https://s3.amazonaws.com/oinkster/generic-avatar.png'}}/>
+          <img src={picture} onError={(e)=>{e.target.src='https://s3.amazonaws.com/oinkster/generic-avatar.png'}}/>
         </Dropzone>
 
         {resetImage}
+        {imageStatus}
         {fetchingStatus}
         {savingStatus}
 

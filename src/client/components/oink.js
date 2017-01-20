@@ -5,6 +5,7 @@ import { Link } from 'react-router'
 class Oink extends React.Component {
 
   render(){
+
     return (
       <div className='oink'>
 
@@ -18,6 +19,7 @@ class Oink extends React.Component {
           <Link to={'/user/'+this.props.userId} className='oink-username-link'>
             <h4>{this.props.user}</h4>
           </Link>
+          <span className='date-time'>{this.props.created}</span>
           <div className="oink-field">
             <span>{this.props.text}</span>
           </div>

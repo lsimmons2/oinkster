@@ -1,10 +1,6 @@
 
-const pgp = require('pg-promise')();
-import config from '../../../config/db-config'
-
-
-const cn = config.connection;
-const db = pgp(cn);
-
+import Sequelize from 'sequelize'
+import dbConfig from '../../../config/db/'
+const db = new Sequelize(dbConfig);
 
 export default db

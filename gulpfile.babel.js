@@ -6,6 +6,7 @@ import mocha from 'gulp-mocha'
 import gutil from 'gulp-util'
 import webpack from 'webpack-stream'
 import runSequence from 'run-sequence'
+import changed from 'gulp-changed'
 
 
 // ============ TEST ============
@@ -132,6 +133,7 @@ gulp.task('copy-html', () => {
 
 gulp.task('build', () => {
   return gulp.src('src/server/**/*')
+    .pipe(changed('dist/server'))
     .pipe(babel())
     .pipe(gulp.dest('dist/server'));
 });

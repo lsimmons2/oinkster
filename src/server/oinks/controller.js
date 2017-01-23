@@ -4,11 +4,16 @@ import util from 'util'
 import logger from '../loggers/logger'
 import db from '../db/'
 
-const Oink = db.import('./model')
 
 function getOinks(req, res){
-  Oink
-    .findAll()
+  db.oinks
+    .findAll({
+      include: [
+        { model: db.users,
+          attributes: ['id', 'picture']
+        }
+      ]
+    })
     .then( oinks => {
       logger.info('Oinks retrieved', {oinks: oinks});
       res.status(200).send(oinks);
@@ -21,14 +26,14 @@ function getOinks(req, res){
 
 
 function insertOink(req, res){
-  Oink
+  db.oinks
     .create({
-      user: req.body.user,
+      userId: req.user.id,
       text: req.body.text,
       asset: req.body.asset
     })
     .then( oink => {
-      return res.status(200).send(oink)
+      return res.status(200).send(oink);
     })
     .catch( err => {
       return res.status(500).send(err);

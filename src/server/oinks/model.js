@@ -1,7 +1,5 @@
 
-import db from '../db/'
-
-export default function(sequelize, Sequelize){
+module.exports = function(sequelize, Sequelize){
   return sequelize.define('oink',
     {
       id: {
@@ -9,18 +7,14 @@ export default function(sequelize, Sequelize){
         defaultValue: Sequelize.UUIDV1,
         primaryKey: true
       },
-      user: {
-        type: Sequelize.STRING
-        // model: User,
-        // deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
+      userId: {
+        type: Sequelize.UUID
       },
       text: {
-        type: Sequelize.STRING,
-        field: 'text',
+        type: Sequelize.STRING
       },
       asset: {
         type: Sequelize.STRING,
-        field: 'asset',
         allowNull: true
       }
     }

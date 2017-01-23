@@ -2,58 +2,16 @@
 import express from 'express'
 import util from 'util'
 import logger from '../loggers/logger'
-import db from '../db'
 import jwt from 'jsonwebtoken'
 import { hashPass } from '../auth/controller'
 import jwtConfig from '../../../config/jwt'
 const jwtSecret = jwtConfig.secret;
+import db from '../db/'
 
 
 // =============================================
 // ============ HELPER FUNCTIONS ===============
 // =============================================
-
-function findUser(username, email){
-  return new Promise((resolve, reject) => {
-    if (!email){
-      // only one identifier passed in, so don't know if it's username or email
-      let usernameEmail = username;
-      let queryString = 'SELECT * from "Users" WHERE username=$1 OR email=$1';
-      db.oneOrNone(queryString, [usernameEmail])
-        .then( user => {
-          return resolve(user);
-        })
-        .catch( err => {
-          logger.error('Error finding user', {query: queryString, error:err})
-          return reject(err);
-        });
-    } else {
-      let queryString = 'SELECT * from "Users" WHERE username=$1 OR email=$2';
-      db.oneOrNone(queryString, [username, email])
-        .then( user => {
-          if (!user){
-            return resolve(null);
-          }
-          if (user.username === username){
-            return resolve({
-              conflictType: 'username',
-              username
-            });
-          }
-          if (user.email === email){
-            return resolve({
-              conflictType: 'email',
-              email
-            });
-          }
-        })
-        .catch( err => {
-          logger.error('Error finding user', {error:err.message})
-          return reject(err);
-        });
-    }
-  })
-}
 
 function checkSignUpData(data){
   if (typeof data.firstName !== 'string'){
@@ -82,24 +40,39 @@ function checkSignUpData(data){
 
 function createUser(req, res){
 
-
   if (!checkSignUpData(req.body)){
     return res.status(400).json({
       message: 'Missing required field for signing up.'
     });
   }
 
-  const newUser = req.body;
-  let username = req.body.username;
-  let email = req.body.email;
-
-  findUser(username, email)
+  db.users
+    .findOne({
+      where: {
+        $or: [ { username: req.body.username }, { email: req.body.email } ]
+      }
+    })
     .then( user => {
-      if (user){
-        return res.status(409).json({
+      if (user) {
+        let conflict;
+        if (user.email === req.body.email){
+          conflict = {
+            conflictType: 'email',
+            email: user.email
+          };
+        } else {
+          conflict = {
+            conflictType: 'username',
+            username: user.username
+          };
+        }
+        res.status(409).json({
           message: 'User already exists',
-          user
+          user: conflict
         });
+        // would rather throw this specific error to break promise chain
+        // than make nested promise chain
+        throw new Error('User created');
       }
       return hashPass(req.body.password);
     })
@@ -110,20 +83,31 @@ function createUser(req, res){
       let lastName = req.body.lastName;
       let username = req.body.username;
       let email = req.body.email;
-      let queryString = 'INSERT INTO "Users"("firstName", "lastName", username, email, salt, password) values($1, $2, $3, $4, $5, $6) returning id';
-      return db.one(queryString, [firstName, lastName, username, email, salt, hash])
+      return db.users
+        .create({
+          firstName: firstName,
+          lastName: lastName,
+          username: username,
+          email: email,
+          salt: salt,
+          password: hash
+        })
     })
     .then( user => {
-      let token = jwt.sign(user, jwtSecret, {
+      let newUser = user.get();
+      let token = jwt.sign(newUser, jwtSecret, {
         expiresIn: '48h'
       });
       res.status(200).json({
         message: 'User created',
-        userId: user.id,
-        token
+        userId: newUser.id,
+        token: token
       });
     })
     .catch( err => {
+      if (err.message === 'User created'){
+        return;
+      }
       logger.error('Error creating user', {error:err.message})
       return res.status(500).send({err:err.message});
     })
@@ -136,37 +120,30 @@ function createUser(req, res){
 // =============================================
 
 function getUserSummary(req, res){
-  let oinksQuery = `
-  SELECT id, text, asset, created
-  FROM "Oinks"
-  WHERE "user"='${req.params.id}'
-  ORDER BY "created"`;
-  let userQuery = `
-  SELECT "id", "firstName", "lastName", "username", "bio"
-  FROM "Users"
-  WHERE id='${req.params.id}'`;
-  let oinksProm = db.any(oinksQuery);
-  let userProm = db.oneOrNone(userQuery);
-  Promise.all([oinksProm, userProm])
-    .then( data => {
-      let oinks = data[0];
-      let user = data[1];
+  db.users
+    .findById(req.params.id, {
+      attributes: ['id', 'firstName', 'lastName', 'username', 'bio'],
+      include: [
+        { model: db.oinks }
+      ]
+    })
+    .then( user => {
       if (!user){
-        logger.info('User not found', {query:userQuery});
-        return res.status(404).json({message: 'User summary not found'});
+        return res.status(404).json({
+          message: 'User not found'
+        })
       }
-      // need to set oinks property because it could be null
-      logger.info('User summary retrieved', {user: user, oinks: oinks});
-      res.status(200).json({user: user, oinks: oinks});
+      logger.info('User summary retrieved', {user: user.get()});
+      res.status(200).json({
+        user: user
+      })
     })
     .catch( err => {
-      logger.error('Error retrieving user summary', {oinksQuery, userQuery, error: err.message})
-      res.status(500).json(
-        {
-          message: 'Error retrieving user summary',
-          error: err.message
-        }
-      );
+      logger.error('Error retrieving user summary', {error: err.message});
+      res.status(500).json({
+        message: 'Error retrieving user summary',
+        error: err.message
+      })
     })
 }
 
@@ -175,18 +152,20 @@ function getUserSummary(req, res){
 // =============================================
 
 function getUserBoardProfile(req, res){
-  let queryString = `SELECT "firstName", "lastName", "username", "bio" FROM "Users" WHERE id='${req.params.id}'`;
-  db.oneOrNone(queryString)
+  db.users
+    .findById(req.params.id, {
+      attributes: ['firstName', 'lastName', 'username', 'bio']
+    })
     .then( user => {
       if (!user){
         logger.info('User not found', {query:queryString});
         return res.status(404).json({message: 'User not found'});
       }
-      logger.info('User retrieved', {user: user});
-      res.status(200).json({user: user});
+      logger.info('User retrieved', {user: user.get()});
+      return res.status(200).json({user: user.get()});
     })
     .catch( err => {
-      logger.error('Error retrieving user', {error: err.message})
+      logger.error('Error retrieving user', {error: err.message});
       res.status(500).send(err);
     })
 }
@@ -197,22 +176,20 @@ function getUserBoardProfile(req, res){
 
 
 function getUserSettings(req, res){
-  let queryString = `
-  SELECT "firstName", "lastName", username, email, bio
-  FROM "Users"
-  WHERE id='${req.params.id}'
-  `;
-  db.oneOrNone(queryString)
+  db.users
+    .findById(req.params.id, {
+      attributes: ['firstName', 'lastName', 'username', 'email', 'bio']
+    })
     .then( user => {
       if (!user){
         logger.info('User not found', {query:queryString});
         return res.status(404).json({message: 'User not found'});
       }
-      logger.info('User retrieved', {user: user});
-      res.status(200).send(user);
+      logger.info('User retrieved', {user: user.get()});
+      return res.status(200).json({user: user.get()});
     })
     .catch( err => {
-      logger.error('Error retrieving user', {error: err.message})
+      logger.error('Error retrieving user', {error: err.message});
       res.status(500).send(err);
     })
 }
@@ -222,14 +199,20 @@ function getUserSettings(req, res){
 // =============================================
 
 function updateUserSettings(req, res){
-  let queryString = `
-  UPDATE "Users"
-  SET "firstName"='${req.body.firstName}', "lastName"='${req.body.lastName}', username='${req.body.username}', email='${req.body.email}', bio='${req.body.bio}'
-  WHERE id='${req.params.id}'
-  `;
-  db.none(queryString)
-    .then( () => {
-      logger.info('User found', {query:queryString});
+  db.users
+    .update({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      username: req.body.username,
+      email: req.body.email,
+      bio: req.body.bio
+    }, {
+      where: {
+        id: req.params.id
+      }
+    })
+    .then( user => {
+      logger.info('User found', {user: user});
       res.status(200).json({});
     })
     .catch( err => {
@@ -237,6 +220,8 @@ function updateUserSettings(req, res){
       res.status(500).json({});
     })
 }
+
+
 
 export {
   checkSignUpData,

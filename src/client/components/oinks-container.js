@@ -47,8 +47,8 @@ class OinksContainer extends React.Component {
               let date;
 
               let day = ((now.getTime() - oinkCreated.getTime()) / (24*60*60*1000));
-              if ( day > 7 ) {
-                date = oinkCreated.toDateString().slice(0, oinkCreated.toDateString().length - 5);
+              if ( day > 6 ) {
+                date = 'on ' + oinkCreated.toDateString().slice(0, oinkCreated.toDateString().length - 5);
               } else if (1 > day){
                 date = 'today';
               } else if (2 > day > 1){

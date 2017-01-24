@@ -157,7 +157,7 @@ function getUserBoardProfile(req, res){
     })
     .then( user => {
       if (!user){
-        logger.info('User not found', {query:queryString});
+        logger.info('User not found', {id: req.params.id});
         return res.status(404).json({message: 'User not found'});
       }
       logger.info('User retrieved', {user: user.get()});
@@ -181,7 +181,7 @@ function getUserSettings(req, res){
     })
     .then( user => {
       if (!user){
-        logger.info('User not found', {query:queryString});
+        logger.info('User not found', {id:req.params.id});
         return res.status(404).json({message: 'User not found'});
       }
       logger.info('User retrieved', {user: user.get()});
@@ -215,7 +215,7 @@ function updateUserSettings(req, res){
       res.status(200).json({});
     })
     .catch( err => {
-      logger.error('Error updating user settings', {query: queryString, error:err});
+      logger.error('Error updating user settings', {error:err.message});
       res.status(500).json({});
     })
 }

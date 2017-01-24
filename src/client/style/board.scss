@@ -158,6 +158,7 @@
       .avatar-container {
         padding: 4px;
         float: left;
+        display: inline-block;
         .avatar {
           height: 65px;
           border-radius: 4px;
@@ -165,6 +166,7 @@
         }
       }
       .right-container {
+        padding-right: 10px;
         h4 {
           font-weight: bold;
           margin-bottom: 0;

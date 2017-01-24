@@ -99,8 +99,8 @@ function submitOink(oink){
           }
           return resp.json();
       })
-      .then( oink => {
-        dispatch(submitOinkSuccess(oink));
+      .then( stampedOink => {
+        dispatch(submitOinkSuccess(stampedOink));
       })
       .catch( error => {
         dispatch(submitOinkError(error));
@@ -148,7 +148,7 @@ function fetchBoardProfile(userId){
           return resp.json();
       })
       .then( profile => {
-        dispatch(fetchBoardSuccess(profile));
+        dispatch(fetchBoardSuccess(profile.user));
       })
       .catch( error => {
         dispatch(fetchBoardError(error));

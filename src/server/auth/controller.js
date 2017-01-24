@@ -5,8 +5,28 @@ const pgp = require('pg-promise')();
 import jwt from 'jsonwebtoken'
 import db from '../db'
 import logger from '../loggers/logger'
+import jwtConfig from '../../../config/jwt'
+const jwtSecret = jwtConfig.secret;
 
 
+function authenticate(req, res, next){
+  if (req.headers['authorization'] === undefined){
+    return res.status(400).json({
+      message: 'nah'
+    });
+  }
+  let token = req.headers['authorization'].replace('Bearer ', '');
+  jwt.verify(token, jwtSecret, (err, user) => {
+    if (err){
+      return res.status(403).json({
+        message: 'Invalid JWT',
+        err
+      });
+    }
+    req.user = user;
+    next();
+  })
+}
 
 function hashPass(password){
   return new Promise((resolve, reject) => {
@@ -40,133 +60,18 @@ function comparePass(password, correctHash, salt){
 }
 
 
-function findUser(username, email){
+function findUser(usernameEmail){
   return new Promise((resolve, reject) => {
-    if (!email){
-      // only one identifier passed in, so don't know if it's username or email
-      let usernameEmail = username;
-      let queryString = 'SELECT * from "Users" WHERE username=$1 OR email=$1';
-      db.oneOrNone(queryString, [usernameEmail])
-        .then( user => {
-          return resolve(user);
-        })
-        .catch( err => {
-          logger.error('Error finding user', {query: queryString, error:err})
-          return reject(err);
-        });
-    } else {
-      let queryString = 'SELECT * from "Users" WHERE username=$1 OR email=$2';
-      db.oneOrNone(queryString, [username, email])
-        .then( user => {
-          if (!user){
-            return resolve(null);
-          }
-          if (user.username === username){
-            return resolve({
-              conflictType: 'username',
-              username
-            });
-          }
-          if (user.email === email){
-            return resolve({
-              conflictType: 'email',
-              email
-            });
-          }
-        })
-        .catch( err => {
-          logger.error('Error finding user', {error:err.message})
-          return reject(err);
-        });
-    }
+    let queryString = 'SELECT * from "Users" WHERE username=$1 OR email=$1';
+    db.oneOrNone(queryString, [usernameEmail])
+      .then( user => {
+        return resolve(user);
+      })
+      .catch( err => {
+        logger.error('Error finding user', {query: queryString, error:err})
+        return reject(err);
+      });
   })
-}
-
-
-function createUser(req, res){
-  let firstName = req.body.firstName;
-  let lastName = req.body.lastName;
-  let username = req.body.username;
-  let email = req.body.email;
-  let password = req.body.password;
-  let bio = req.body.bio;
-  let picture = req.body.picture;
-  hashPass(password)
-  .then( passData => {
-    let salt = passData.salt;
-    let hash = passData.hash;
-    let queryString = 'INSERT INTO "Users"("firstName", "lastName", username, email, bio, picture, salt, password) values($1, $2, $3, $4, $5, $6, $7, $8) returning id, "firstName", "lastName", username, email, bio, picture';
-    return db.one(queryString, [firstName, lastName, username, email, bio, picture, salt, hash])
-  })
-  .then( user => {
-    let token = jwt.sign(user, 'sah', {
-      expiresIn: 864
-    });
-    return res.status(200).json({
-      message: 'User created',
-      userId: user.id,
-      token
-    });
-  })
-  .catch( err => {
-    logger.error('Error creating user', {error:err.message})
-    return res.status(500).send({err});
-  })
-}
-
-function checkSignUpData(data){
-  if (typeof data.firstName !== 'string'){
-    return false;
-  }
-  if (typeof data.lastName !== 'string'){
-    return false;
-  }
-  if (typeof data.username !== 'string'){
-    return false;
-  }
-  if (typeof data.email !== 'string'){
-    return false;
-  }
-  if (typeof data.bio !== 'string'){
-    return false;
-  }
-  if (typeof data.password !== 'string'){
-    return false;
-  }
-  if (typeof data.picture !== 'string'){
-    return false;
-  }
-  return true;
-}
-
-
-function signUp(req, res, next){
-
-  if (!checkSignUpData(req.body)){
-    return res.status(400).json({
-      message: 'Missing required field for signing up.'
-    });
-  }
-
-  let username = req.body.username;
-  let email = req.body.email;
-
-  findUser(username, email)
-    .then( user => {
-      if (user){
-        // user already exists - check password and
-        // either log in or prompt for password again
-        return res.status(409).json({
-          message: 'User already exists',
-          user
-        });
-      }
-      return createUser(req, res);
-    })
-    .catch( err => {
-      logger.error('Error signing up', {error:err.message})
-      res.status(500).send(err);
-    })
 }
 
 
@@ -182,7 +87,47 @@ function logIn(req, res, next){
     });
   }
 
-  let userProm = findUser(usernameEmail);
+  // db.users
+  //   .findOne({
+  //     where: {
+  //       $or: [ { username: usernameEmail }, { email: usernameEmail } ]
+  //     }
+  //   })
+  //   .then( user => {
+  //     if (!user) {
+  //       return res.status(404).json({
+  //         message: 'User not found'
+  //       })
+  //     }
+  //     return comparePass(password, user.password, user.salt);
+  //   })
+  //   .then( validated => {
+  //     if (validated){
+  //       let token = jwt.sign(user, jwtSecret);
+  //       return res.status(200).json({
+  //         message: 'User successfully authenticated',
+  //         userId: user.id,
+  //         token
+  //       });
+  //     } else {
+  //       return res.status(403).json({
+  //         message: 'Authentication failed'
+  //       })
+  //     }
+  //   })
+  //   .catch( err => {
+  //     logger.error('Error logging in', {error:err.message});
+  //     return res.status(500).json({message: 'Error logging in', error: err.message});
+  //   })
+
+  let userProm = db.users.findOne(
+    {
+      where: {
+        $or: [ { username: usernameEmail }, { email: usernameEmail } ]
+      }
+    }
+  );
+
   let validatedProm = userProm
     .then( user => {
       if (!user){
@@ -193,7 +138,7 @@ function logIn(req, res, next){
 
   Promise.all([userProm, validatedProm])
     .then( data => {
-      let user = data[0];
+      let user = data[0].get();
       let validated = data[1];
       if (!user){
         return res.status(404).json({
@@ -201,11 +146,11 @@ function logIn(req, res, next){
         })
       }
       if (validated){
-        let token = jwt.sign(user, 'sah');
+        let token = jwt.sign(user, jwtSecret);
         return res.status(200).json({
-          'message': 'User successfully authenticated',
+          message: 'User successfully authenticated',
           userId: user.id,
-          token
+          token: token
         });
       } else {
         return res.status(403).json({
@@ -215,18 +160,52 @@ function logIn(req, res, next){
     })
     .catch( err => {
       logger.error('Error logging in', {error:err.message});
-      return res.status(500).send();
+      return res.status(500).json({message: 'Error logging in', error: err.message});
     })
+
+  // let userProm = findUser(usernameEmail);
+  // let validatedProm = userProm
+  //   .then( user => {
+  //     if (!user){
+  //       return new Promise(resolve => resolve(null))
+  //     }
+  //     return comparePass(password, user.password, user.salt);
+  //   });
+  //
+  // Promise.all([userProm, validatedProm])
+  //   .then( data => {
+  //     let user = data[0];
+  //     let validated = data[1];
+  //     if (!user){
+  //       return res.status(404).json({
+  //         message: 'User not found'
+  //       })
+  //     }
+  //     if (validated){
+  //       let token = jwt.sign(user, jwtSecret);
+  //       return res.status(200).json({
+  //         message: 'User successfully authenticated',
+  //         userId: user.id,
+  //         token
+  //       });
+  //     } else {
+  //       return res.status(403).json({
+  //         message: 'Authentication failed'
+  //       })
+  //     }
+  //   })
+  //   .catch( err => {
+  //     logger.error('Error logging in', {error:err.message});
+  //     return res.status(500).json({message: 'Error logging in', error: err.message});
+  //   })
 
 }
 
 
 export {
+  authenticate,
   hashPass,
   comparePass,
   findUser,
-  createUser,
-  checkSignUpData,
-  signUp,
   logIn
 }

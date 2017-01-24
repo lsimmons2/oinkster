@@ -33,7 +33,16 @@ function fetchSettings(id){
       url = 'http://localhost:8080' + url;
     }
 
-    return fetch(url)
+    let token = 'Bearer ' + localStorage.getItem('jwt');
+
+    let req = {
+      method: 'GET',
+      headers: {
+        Authorization: token
+      }
+    }
+
+    return fetch(url, req)
       .then( resp => {
           if(!resp.ok){
             throw new Error(resp.statusText)
@@ -41,7 +50,7 @@ function fetchSettings(id){
           return resp.json();
       })
       .then( settings => {
-        dispatch(fetchSettingsSuccess(settings));
+        dispatch(fetchSettingsSuccess(settings.user));
       })
       .catch( error => {
         dispatch(fetchSettingsError(error));
@@ -91,8 +100,13 @@ function uploadPicture(file, id){
     fileData.append('file', file)
     fileData.append('user', 'me')
 
+    let token = 'Bearer ' + localStorage.getItem('jwt');
+
     let req = {
       method: 'POST',
+      headers: {
+        Authorization: token
+      },
       body: fileData
     };
 
@@ -149,11 +163,15 @@ function saveSettings(id, settings){
     if(process.env.NODE_ENV === 'test'){
       url = 'http://localhost:8080' + url;
     }
+
+    let token = 'Bearer ' + localStorage.getItem('jwt');
+
     let req = {
-      method: 'POST',
+      method: 'PUT',
       body: JSON.stringify(settings),
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: token
       }
     };
 

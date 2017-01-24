@@ -13,16 +13,16 @@ class ProfileFeed extends React.Component {
 
     let userOinks = null;
 
-    if (this.props.profile.summary.oinks){
-      
+    if (this.props.profile.summary.user.oinks){
+
       let created = null;
 
-      userOinks = this.props.profile.summary.oinks.map( oink => {
+      userOinks = this.props.profile.summary.user.oinks.map( oink => {
 
-        if (oink.created) {
+        if (oink.createdAt) {
 
           let now = new Date();
-          let oinkCreated = new Date(oink.created);
+          let oinkCreated = new Date(oink.createdAt);
 
           let time = oinkCreated.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});
           let date;

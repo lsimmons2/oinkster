@@ -104,14 +104,14 @@ describe('POST /users', function() {
   describe('should return 200 and a token if user doesn\'t exist', function(){
 
     before( function(done) {
-      knex('Users').truncate()
+      knex('users').truncate()
         .then( function() {
           done();
         })
     })
 
     after( function(done) {
-      knex('Users').truncate()
+      knex('users').truncate()
         .then( function() {
           done();
         })

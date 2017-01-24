@@ -8,9 +8,13 @@ import db from '../db/'
 function getOinks(req, res){
   db.oinks
     .findAll({
+      order: [
+        ['createdAt', 'DESC']
+      ],
       include: [
-        { model: db.users,
-          attributes: ['id', 'picture']
+        {
+          model: db.users,
+          attributes: ['id', 'username', 'picture']
         }
       ]
     })
@@ -33,9 +37,15 @@ function insertOink(req, res){
       asset: req.body.asset
     })
     .then( oink => {
+      return db.oinks.findById(oink.id, {
+        include: [{ model: db.users, attributes: ['username', 'id'] }]
+      })
+    })
+    .then( oink => {
       return res.status(200).send(oink);
     })
     .catch( err => {
+      logger.error('Error inserting oink', {error: err.message});
       return res.status(500).send(err);
     })
 }

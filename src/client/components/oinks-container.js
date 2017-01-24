@@ -33,15 +33,15 @@ class OinksContainer extends React.Component {
       oinksFeed = (
           this.props.board.oinks.map( oink => {
 
-            picture = 'pig.jpg'
             id = oink.id;
-            username = oink.username;
-            userId = oink.user;
+            username = oink.user.username;
+            picture = oink.user.id;
+            userId = oink.user.id;
             text = oink.text;
-            if (oink.created) {
+            if (oink.createdAt) {
 
               let now = new Date();
-              let oinkCreated = new Date(oink.created);
+              let oinkCreated = new Date(oink.createdAt);
 
               let time = oinkCreated.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});
               let date;

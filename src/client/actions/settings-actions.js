@@ -50,7 +50,7 @@ function fetchSettings(id){
           return resp.json();
       })
       .then( settings => {
-        dispatch(fetchSettingsSuccess(settings));
+        dispatch(fetchSettingsSuccess(settings.user));
       })
       .catch( error => {
         dispatch(fetchSettingsError(error));

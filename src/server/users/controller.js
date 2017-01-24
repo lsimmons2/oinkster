@@ -123,9 +123,8 @@ function getUserSummary(req, res){
   db.users
     .findById(req.params.id, {
       attributes: ['id', 'firstName', 'lastName', 'username', 'bio'],
-      include: [
-        { model: db.oinks }
-      ]
+      order: [['createdAt', 'DESC']],
+      include: [{ model: db.oinks }]
     })
     .then( user => {
       if (!user){
@@ -186,7 +185,7 @@ function getUserSettings(req, res){
         return res.status(404).json({message: 'User not found'});
       }
       logger.info('User retrieved', {user: user.get()});
-      return res.status(200).json({user: user.get()});
+      return res.status(200).send({user: user.get()});
     })
     .catch( err => {
       logger.error('Error retrieving user', {error: err.message});

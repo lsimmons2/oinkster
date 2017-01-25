@@ -81,10 +81,15 @@ class Settings extends React.Component {
       );
     } else if (this.props.settings.uploadingPictureError){
       imageStatus = (
-        <p>Woops! There was an error uploading your picture.</p>
+        <p>Woops! There was an error uploading your profile picture.</p>
       );
-    } else {
+    } else if (this.props.settings.uploadingPictureSuccess){
+      imageStatus = (
+        <p>Successfully changed your profile picture.</p>
+      )
       picture = 'https://s3.amazonaws.com/oinkster/' + id + '?v=' + Math.random();
+    } else {
+      picture = 'https://s3.amazonaws.com/oinkster/' + id + '?v=' + Math.random();      
     }
 
     let savingStatus = null;
@@ -116,83 +121,99 @@ class Settings extends React.Component {
     let resetImage = null;
 
     return (
+
       <div id='settings' className='view'>
 
-        <form>
+        <div className='row'>
 
-          <div className='form-group'>
-            <label htmlFor='settings-first-name'>First Name</label>
-            <input
-              id='settings-first-name'
-              ref='firstName'
-              type='text'
-              className='form-control'
-              value={this.props.settings.current.firstName}
-              onChange={this.updateSettings.bind(this)}/>
+          <div className='col-xs-12 col-sm-6'>
+
+            <form>
+
+              <div className='form-group'>
+                <label htmlFor='settings-first-name'>First Name</label>
+                <input
+                  id='settings-first-name'
+                  ref='firstName'
+                  type='text'
+                  className='form-control'
+                  value={this.props.settings.current.firstName}
+                  onChange={this.updateSettings.bind(this)}/>
+              </div>
+
+              <div className='form-group'>
+                <label htmlFor='settings-last-name'>Last Name</label>
+                <input
+                  id='settings-last-name'
+                  ref='lastName'
+                  type='text'
+                  className='form-control'
+                  value={this.props.settings.current.lastName}
+                  onChange={this.updateSettings.bind(this)}/>
+              </div>
+
+              <div className='form-group'>
+                <label htmlFor='settings-username'>Username</label>
+                <input
+                  id='settings-username'
+                  ref='username'
+                  type='text'
+                  className='form-control'
+                  value={this.props.settings.current.username}
+                  onChange={this.updateSettings.bind(this)}/>
+              </div>
+
+              <div className='form-group'>
+                <label htmlFor='settings-email'>Email</label>
+                <input
+                  id='settings-email'
+                  ref='email'
+                  type='text'
+                  className='form-control'
+                  value={this.props.settings.current.email}
+                  onChange={this.updateSettings.bind(this)}/>
+              </div>
+
+              <div className='form-group'>
+                <label htmlFor='settings-bio'>Bio</label>
+                <textarea
+                  id='settings-bio'
+                  ref='bio'
+                  type='text'
+                  className='form-control'
+                  value={this.props.settings.current.bio}
+                  onChange={this.updateSettings.bind(this)}>
+                </textarea>
+              </div>
+
+            </form>
+
           </div>
 
-          <div className='form-group'>
-            <label htmlFor='settings-last-name'>Last Name</label>
-            <input
-              id='settings-last-name'
-              ref='lastName'
-              type='text'
-              className='form-control'
-              value={this.props.settings.current.lastName}
-              onChange={this.updateSettings.bind(this)}/>
+          <div className='col-xs-12 col-sm-6'>
+            <div id='picture-container'>
+              <label>Picture</label>
+              <Dropzone
+                ref={(node) => { this.dropzone = node; }}
+                onDrop={this.onDrop.bind(this)}
+                className='settings-picture'
+                multiple={false}
+              >
+                <img src={picture} onError={(e)=>{e.target.src='https://s3.amazonaws.com/oinkster/generic-avatar.png'}}/>
+              </Dropzone>
+              {resetImage}
+              {imageStatus}
+            </div>
           </div>
 
-          <div className='form-group'>
-            <label htmlFor='settings-username'>Username</label>
-            <input
-              id='settings-username'
-              ref='username'
-              type='text'
-              className='form-control'
-              value={this.props.settings.current.username}
-              onChange={this.updateSettings.bind(this)}/>
+          <div className='col-xs-12'>
+            <div id='settings-status'>
+              {fetchingStatus}
+              {savingStatus}
+            </div>
           </div>
 
-          <div className='form-group'>
-            <label htmlFor='settings-email'>Email</label>
-            <input
-              id='settings-email'
-              ref='email'
-              type='text'
-              className='form-control'
-              value={this.props.settings.current.email}
-              onChange={this.updateSettings.bind(this)}/>
-          </div>
-
-          <div className='form-group'>
-            <label htmlFor='settings-bio'>Bio</label>
-            <textarea
-              id='settings-bio'
-              ref='bio'
-              type='text'
-              className='form-control'
-              value={this.props.settings.current.bio}
-              onChange={this.updateSettings.bind(this)}>
-            </textarea>
-          </div>
-
-        </form>
-
-
-        <label>Picture</label>
-        <Dropzone
-          ref={(node) => { this.dropzone = node; }}
-          onDrop={this.onDrop.bind(this)}
-          className='settings-picture'
-          multiple={false}
-        >
-          <img src={picture} onError={(e)=>{e.target.src='https://s3.amazonaws.com/oinkster/generic-avatar.png'}}/>
-        </Dropzone>
-
-        {resetImage}
-        {imageStatus}
-        {fetchingStatus}
-        {savingStatus}
+        </div>
 
       </div>
     )

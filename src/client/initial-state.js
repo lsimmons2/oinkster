@@ -31,6 +31,7 @@ export default {
     savingError: false,
     isUploadingPicture: false,
     uploadingPictureError: false,
+    uploadingPictureSuccess: false,
     modified: false,
     pictureModified: false,
     initial: {

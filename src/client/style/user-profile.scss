@@ -70,6 +70,21 @@
 
   #profile-feed {
 
+    #profile-feed-header-container {
+      width: 85%;
+      @media only screen and (min-width: 768px){
+        margin: 0px 20px 20px 0px;
+      }
+      @media only screen and (max-width: 767px){
+        margin: 20px auto;
+      }
+      #profile-feed-header {
+        color: $primary-grey;
+        text-align: center;
+        margin-top: 0;
+      }
+    }
+
     .oink {
       box-shadow: 0px 5px 10px #b7b7b7;
       color: $primary-grey;

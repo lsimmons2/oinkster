@@ -61,6 +61,9 @@ class ProfileFeed extends React.Component {
     }
     return (
       <div id='profile-feed' className='col-xs-12 col-sm-7'>
+        <div id='profile-feed-header-container'>
+          <h2 id='profile-feed-header'>{this.props.profile.summary.user.username}'s Oinks</h2>
+        </div>
         {userOinks}
       </div>
     )

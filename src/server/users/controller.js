@@ -8,6 +8,15 @@ import jwtConfig from '../../../config/jwt'
 const jwtSecret = jwtConfig.secret;
 import db from '../db/'
 
+db.sequelize
+  .authenticate()
+  .then( () => {
+    console.log('success authing');
+  })
+  .catch( err => {
+    console.log('err authing');
+    console.log(err);
+  })
 
 // =============================================
 // ============ HELPER FUNCTIONS ===============

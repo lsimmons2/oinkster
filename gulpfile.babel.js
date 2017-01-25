@@ -42,6 +42,7 @@ gulp.task('test:client:watch', () => {
 });
 
 gulp.task('build:users', () => {
+  process.env.NODE_ENV = 'test';
   gulp.src('src/server/users/**/*.js')
     .pipe(babel())
     .pipe(gulp.dest('dist/server/users'));
@@ -111,8 +112,8 @@ gulp.task('test:server', ['build'], () => {
 
 gulp.task('test:server:watch', () => {
   gulp.watch(['test/server/users/**/*.js', 'src/server/users/**/*.js'], ['users']);
-  gulp.watch(['test/server/oinks/**/*.js', 'src/server/oinks/**/*.js'], ['oinks']);
-  gulp.watch(['test/server/auth/**/*.js', 'src/server/auth/**/*.js'], ['auth']);
+  // gulp.watch(['test/server/oinks/**/*.js', 'src/server/oinks/**/*.js'], ['oinks']);
+  // gulp.watch(['test/server/auth/**/*.js', 'src/server/auth/**/*.js'], ['auth']);
 });
 
 

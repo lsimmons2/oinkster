@@ -30,6 +30,12 @@ module.exports = function(sequelize, Sequelize){
       },
       salt: {
         type: Sequelize.STRING
+      },
+      createdAt: {
+        type: Sequelize.DATE
+      },
+      updatedAt: {
+        type: Sequelize.DATE
       }
     }
   );

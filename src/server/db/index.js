@@ -9,8 +9,8 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.users = require('../users/model')(sequelize, Sequelize);
-db.oinks = require('../oinks/model')(sequelize, Sequelize);
+db.users = require('../../../db/models/user-model')(sequelize, Sequelize);
+db.oinks = require('../../../db/models/oink-model')(sequelize, Sequelize);
 
 db.users.sync();
 db.oinks.sync();

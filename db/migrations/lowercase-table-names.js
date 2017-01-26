@@ -4,6 +4,7 @@ module.exports = {
     queryInterface.renameTable('Users', 'users');
   },
   down: function(queryInterface, Sequelize) {
-    return
+    queryInterface.renameTable('oinks', 'Oinks');
+    queryInterface.renameTable('users', 'Users');
   }
 }

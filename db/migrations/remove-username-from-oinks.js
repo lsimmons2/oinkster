@@ -1,15 +1,16 @@
+
 module.exports = {
   up: function(queryInterface, Sequelize) {
-    queryInterface.addColumn(
+    queryInterface.removeColumn(
       'oinks',
-      'createdAt',
-      Sequelize.STRING
+      'username'
     )
   },
   down: function(queryInterface, Sequelize) {
-    queryInterface.removeColumn(
+    queryInterface.addColumn(
       'oinks',
-      'createdAt'
+      'username',
+      Sequelize.STRING
     )
   }
 }

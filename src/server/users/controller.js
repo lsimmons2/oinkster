@@ -8,15 +8,7 @@ import jwtConfig from '../../../config/jwt'
 const jwtSecret = jwtConfig.secret;
 import db from '../db/'
 
-db.sequelize
-  .authenticate()
-  .then( () => {
-    console.log('success authing');
-  })
-  .catch( err => {
-    console.log('err authing');
-    console.log(err);
-  })
+
 
 // =============================================
 // ============ HELPER FUNCTIONS ===============
@@ -138,7 +130,7 @@ function getUserSummary(req, res){
     .then( user => {
       if (!user){
         return res.status(404).json({
-          message: 'User not found'
+          message: 'User summary not found'
         })
       }
       logger.info('User summary retrieved', {user: user.get()});

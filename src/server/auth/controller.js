@@ -106,13 +106,13 @@ function logIn(req, res, next){
 
   Promise.all([userProm, validatedProm])
     .then( data => {
-      let user = data[0].get();
-      let validated = data[1];
-      if (!user){
+      if (!data[0]){
         return res.status(404).json({
           message: 'User not found'
         })
       }
+      let user = data[0].get();
+      let validated = data[1];
       if (validated){
         let token = jwt.sign(user, jwtSecret);
         return res.status(200).json({

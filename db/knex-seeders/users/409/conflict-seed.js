@@ -1,8 +1,11 @@
 
+var uuid = require('uuid/v1');
+
 exports.seed = function(knex, Promise) {
-  return knex('Users').del()
+  return knex('users').del()
     .then(function() {
-      return knex('Users').insert({
+      return knex('users').insert({
+        id: uuid(),
         firstName: 'bob',
         lastName: 'bob',
         username: 'bob',

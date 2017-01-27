@@ -20,8 +20,15 @@ describe('getOinks()', function(done) {
 
   before( function(done) {
     knex.seed.run({
-      directory: './db/seeds/test'
+      directory: './db/knex-seeders/oinks'
     })
+      .then( function() {
+        done();
+      })
+  })
+
+  after( function(done) {
+    knex('oinks').truncate()
       .then( function() {
         done();
       })
@@ -33,7 +40,7 @@ describe('getOinks()', function(done) {
       .end(function(err, res) {
         let status = res.status;
         let oinks = res.body;
-        status.should.equal(200)
+        status.should.equal(200);
         oinks.length.should.equal(4);
         done();
       })
@@ -54,15 +61,8 @@ describe('getOinks()', function(done) {
           } else {
             should.equal(oink.asset, null);
           }
-          oink.user.should.be.a('string');
+          oink.userId.should.be.a('string');
         })
-        done();
-      })
-  })
-
-  after( function(done) {
-    knex('Oinks').truncate()
-      .then( function() {
         done();
       })
   })
@@ -74,7 +74,17 @@ describe('getOinks()', function(done) {
 describe('insertOink()', function() {
 
   before( function(done) {
-    knex('Oinks').truncate()
+    knex('oinks').truncate()
+      .then( function() {
+        knex('users').truncate()
+          .then(function() {
+            done();
+          })
+      })
+  })
+
+  after( function(done) {
+    knex('oinks').truncate()
       .then( function() {
         done();
       })
@@ -100,5 +110,43 @@ describe('insertOink()', function() {
         done();
       })
   })
+
+  it('should get 200 and submitted oink if token present', function(done) {
+
+    agent
+      .post('/users')
+      .send({
+        firstName: 'bob',
+        lastName: 'bobb',
+        username: 'bobbb',
+        email: 'bob@bob.com',
+        password: 'bob?'
+      })
+      .end(function(err, res){
+        if (err) {
+          return done(err);
+        }
+        let newId = res.body.userId;
+        let token = res.body.token;
+        agent
+          .post('/oinks')
+          .send({
+            text: 'yo soy bob',
+            asset: null
+          })
+          .set('Authorization', 'Bearer ' + token)
+          .end(function(err, res) {
+            res.status.should.equal(200);
+            let oink = res.body;
+            oink.userId.should.equal(newId);
+            oink.text.should.equal('yo soy bob');
+            should.equal(null, oink.asset);
+            oink.user.username.should.equal('bobbb');
+            oink.user.id.should.equal(newId);
+            done();
+          })
+      });
+
+    })
 
 })

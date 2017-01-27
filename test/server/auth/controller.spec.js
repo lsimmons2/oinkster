@@ -153,7 +153,7 @@ describe('POST /login', function(){
           return done(err);
         }
         res.status.should.equal(403);
-        res.body.message.should.equal('Authentication failed')
+        res.body.message.should.equal('Authentication failed');
         done();
       })
   })
@@ -176,7 +176,7 @@ describe('POST /login', function(){
   })
 
   after( function(done) {
-    knex('Users').truncate()
+    knex('users').truncate()
       .then( function() {
         done();
       })

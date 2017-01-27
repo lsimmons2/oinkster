@@ -15,8 +15,7 @@ db.oinks = require('../../../db/models/oink-model')(sequelize, Sequelize);
 db.users.sync();
 db.oinks.sync();
 
-db.users.hasMany(db.oinks);
-db.oinks.belongsTo(db.users);
+db.users.hasMany(db.oinks, {onDelete: 'cascade'});
+db.oinks.belongsTo(db.users, {onDelete: 'cascade'});
 
-
-export default db
+module.exports = db;

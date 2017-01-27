@@ -7,28 +7,27 @@ const should = chai.should();
 
 
 describe('authReducer()', function(){
-  
+
   let auth;
   beforeEach(function(){
-    auth = state.board;
+    auth = state.auth;
   })
 
   describe('LOGGED_IN', function(){
     it('should work', function(){
-      let someUser = {
-        name: 'javier'
-      };
+      let someUserId = 'someUserId'
       let action = {
         type: 'LOGGED_IN',
-        user: someUser
+        userId: someUserId
       };
       let returnedState = reducer(auth, action);
+      console.log(returnedState);
       returnedState.authenticated.should.equal(true);
-      returnedState.user.should.equal(someUser);
+      returnedState.userId.should.equal(someUserId);
     })
   })
 
-  describe('LOGGED_OUT', function(){
+  describe('LOG_OUT', function(){
     it('should work', function(){
       let someUser = {
         name: 'javier'
@@ -40,7 +39,7 @@ describe('authReducer()', function(){
       auth.user = someUser;
       let returnedState = reducer(auth, action);
       returnedState.authenticated.should.equal(false);
-      should.not.exist(returnedState.user);
+      returnedState.userId.should.equal('');
     })
   })
 

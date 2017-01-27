@@ -49,8 +49,8 @@ gulp.task('build:users', () => {
 });
 
 gulp.task('test:users', () => {
-process.env.NODE_ENV = 'test';
-  gulp.src('test/server/users/**/*.js')
+  process.env.NODE_ENV = 'test';
+  gulp.src('test/server/users/controller.spec.js')
     .pipe(babel())
     .pipe(mocha())
     .on('error', gutil.log)
@@ -69,8 +69,8 @@ gulp.task('build:oinks', () => {
 });
 
 gulp.task('test:oinks', () => {
-process.env.NODE_ENV = 'test';
-  gulp.src('test/server/oinks/**/*.js')
+  process.env.NODE_ENV = 'test';
+  gulp.src('test/server/oinks/controller.spec.js')
     .pipe(babel())
     .pipe(mocha())
     .on('error', gutil.log)
@@ -83,14 +83,14 @@ gulp.task('oinks', (done) => {
 });
 
 gulp.task('build:auth', () => {
-  gulp.src('src/server/auth/**/*.js')
+  gulp.src('src/server/auth/controller.js')
     .pipe(babel())
     .pipe(gulp.dest('dist/server/auth'));
 });
 
 gulp.task('test:auth', () => {
 process.env.NODE_ENV = 'test';
-  gulp.src('test/server/auth/**/*.js')
+  gulp.src('test/server/auth/controller.spec.js')
     .pipe(babel())
     .pipe(mocha())
     .on('error', gutil.log)
@@ -112,8 +112,8 @@ gulp.task('test:server', ['build'], () => {
 
 gulp.task('test:server:watch', () => {
   gulp.watch(['test/server/users/**/*.js', 'src/server/users/**/*.js'], ['users']);
-  // gulp.watch(['test/server/oinks/**/*.js', 'src/server/oinks/**/*.js'], ['oinks']);
-  // gulp.watch(['test/server/auth/**/*.js', 'src/server/auth/**/*.js'], ['auth']);
+  gulp.watch(['test/server/oinks/**/*.js', 'src/server/oinks/**/*.js'], ['oinks']);
+  gulp.watch(['test/server/auth/**/*.js', 'src/server/auth/**/*.js'], ['auth']);
 });
 
 

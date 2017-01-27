@@ -75,6 +75,21 @@
 
   #oinks-container {
 
+    #oinks-container-header-container {
+      width: 85%;
+      @media only screen and (min-width: 768px){
+        margin: 0px 20px 20px 0px;
+      }
+      @media only screen and (max-width: 767px){
+        margin: 20px auto;
+      }
+      #oinks-container-header {
+        color: $primary-grey;
+        text-align: center;
+        margin-top: 0;
+      }
+    }
+
     #submit-oink {
 
       border: 2px solid $primary-pink;

@@ -21,6 +21,17 @@ class OinksContainer extends React.Component {
       );
     }
 
+    let oinksContainerHeader = null;
+    if (!this.props.auth.authenticated){
+      oinksContainerHeader = (
+        <div id='oinks-container-header-container'>
+          <h3 id='oinks-container-header'>
+            What people are saying on Oinkster...
+          </h3>
+        </div>
+      )
+    }
+
     let oinksFeed;
     let id;
     let picture;
@@ -86,6 +97,7 @@ class OinksContainer extends React.Component {
     return (
       <div id="oinks-container" className='col-xs-12 col-sm-7'>
         {submitOinkInput}
+        {oinksContainerHeader}
         <div id='oinks-feed'>
           {oinksFeed}
         </div>

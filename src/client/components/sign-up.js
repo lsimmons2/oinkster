@@ -9,8 +9,30 @@ import * as actions from '../actions/auth-actions'
 
 export class SignUp extends React.Component {
 
+  validForm(){
+    if (!this.refs.signUpFirstName.value){
+      return false;
+    }
+    if (!this.refs.signUpLastName.value){
+      return false;
+    }
+    if (!this.refs.signUpUsername.value){
+      return false;
+    }
+    if (!this.refs.signUpEmail.value){
+      return false;
+    }
+    if (!this.refs.signUpPassword.value){
+      return false;
+    }
+    return true;
+  }
+
   signUp(e){
     e.preventDefault();
+    if (!this.validForm()){
+      return this.props.actions.invalidSignUpForm();
+    }
     let userInfo = {
       firstName: this.refs.signUpFirstName.value,
       lastName: this.refs.signUpLastName.value,
@@ -26,15 +48,15 @@ export class SignUp extends React.Component {
   renderSignUpConflict(){
     if (this.props.auth.signUpConflict.conflictType === 'username'){
       return (
-        <div>
+        <p className='sign-up-warning'>
           The username {this.props.auth.signUpConflict.username} already exists.
-        </div>
+        </p>
       )
     } else {
       return (
-        <div>
-          This email {this.props.auth.signUpConflict.email} already exists. Would you like to <Link to='/login'>log in?</Link>
-        </div>
+        <p className='sign-up-warning'>
+          The email {this.props.auth.signUpConflict.email} already exists. Would you like to <Link to='/login'>log in?</Link>
+        </p>
       )
     }
   }
@@ -43,16 +65,23 @@ export class SignUp extends React.Component {
 
   render(){
 
-    let signUpConflict = null;
-
-    if (this.props.auth.signUpConflict){
-      signUpConflict = this.renderSignUpConflict();
+    let signUpWarning = null;
+    if (this.props.auth.invalidSignUpForm){
+      signUpWarning = (
+        <p className='sign-up-warning'>All fields are required.</p>
+      );
+    } else if (this.props.auth.signUpConflict){
+      signUpWarning = this.renderSignUpConflict();
+    } else if (this.props.auth.signUpError){
+      signUpWarning = (
+        <p className='sign-up-warning'>
+          Woops! There was an error signing you up. Please try again later.
+        </p>
+      )
     }
 
     return (
       <div id='sign-up' className='view'>
-
-        {signUpConflict}
 
         <h3>Sign Up</h3>
 
@@ -81,6 +110,8 @@ export class SignUp extends React.Component {
           <div className='form-group'>
             <input className='form-control' type='submit' value='Sign Up'/>
           </div>
+
+          {signUpWarning}
 
         </form>
 

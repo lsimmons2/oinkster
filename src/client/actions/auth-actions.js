@@ -6,10 +6,46 @@ import 'whatwg-fetch'
   import history from '../history'
 // }
 
+function invalidSignUpForm(){
+  return {
+    type: 'INVALID_SIGN_UP_FORM'
+  }
+}
+
+function signUpError(){
+  return {
+    type: 'SIGN_UP_ERROR'
+  }
+}
+
 function redirectToLogin(user){
   return {
     type: 'REDIRECT_TO_LOGIN',
     user
+  }
+}
+
+function comboNotFound(){
+  return {
+    type: 'COMBO_NOT_FOUND'
+  }
+}
+
+function invalidLogInForm(){
+  return {
+    type: 'INVALID_LOG_IN_FORM'
+  }
+}
+
+function logInError(){
+  return {
+    type: 'LOG_IN_ERROR'
+  }
+}
+
+function logInError(){
+  return {
+    type: 'LOG_IN_ERROR'
   }
 }
 
@@ -60,15 +96,14 @@ function signUp(userInfo){
         if (resp.status === 409 && resp.data.message === 'User already exists'){
           return dispatch(redirectToLogin(resp.data.user));
         }
-        if (resp.status === 400){
-          console.log(resp.data);
-        }
         if (resp.status === 200){
           return dispatch(loggedIn(resp.data.userId, resp.data.token));
+        } else {
+          throw new Error();
         }
       })
       .catch( err => {
-        console.log(err);
+        dispatch(signUpError());
       })
 
   }
@@ -93,8 +128,13 @@ function logIn(userInfo){
     fetch(url, req)
       .then(parseStream)
       .then( resp => {
-        if (resp.status === 200){
+        if (resp.status === 404 || resp.status === 403){
+          dispatch(comboNotFound());
+        }
+        else if (resp.status === 200){
           dispatch(loggedIn(resp.data.userId, resp.data.token));
+        } else {
+          dispatch(logInError());
         }
       })
 
@@ -151,7 +191,9 @@ function verify(jwt){
 
 
 export {
+  invalidSignUpForm,
   redirectToLogin,
+  invalidLogInForm,
   loggedIn,
   logOut,
   parseStream,

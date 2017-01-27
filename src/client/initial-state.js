@@ -1,10 +1,14 @@
 export default {
   auth: {
     authenticated: false,
+    userId: '',
+    invalidSignUpForm: false,
+    signUpError: false,
     showSignUp: true,
     signUpUsernameConflict: false,
     signUpEmailConflict: false,
-    userId: ''
+    comboNotFound: false,
+    logInError: false
   },
   profile: {
     isFetching: false,

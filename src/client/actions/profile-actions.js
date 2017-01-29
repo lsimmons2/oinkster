@@ -57,9 +57,10 @@ function followUserRequest() {
   }
 }
 
-function followerUserSuccess() {
+function followerUserSuccess(user) {
   return {
-    type: 'FOLLOW_USER_SUCCESS'
+    type: 'FOLLOW_USER_SUCCESS',
+    user
   }
 }
 
@@ -97,8 +98,11 @@ function followUser(followeeId){
           }
           return resp.json();
       })
-      .then( () => {
-        dispatch(followerUserSuccess());
+      .then( data => {
+        dispatch(followerUserSuccess({
+          id: data.follower.id,
+          username: data.follower.username
+        }));
       })
       .catch( error => {
         dispatch(followUserError());

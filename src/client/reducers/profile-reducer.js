@@ -34,10 +34,11 @@ let profileReducer = function(profile = initialState.profile, action){
       }
 
     case 'FOLLOW_USER_SUCCESS':
+      profile.summary.user.followers.push(action.user);
       return { ...profile,
         isFetching: false,
-        fetchingSuccess: true,
-        summary: action.userSummary
+        fetchingSuccess: false,
+        fetchingError: false
       }
 
     case 'FOLLOW_USER_ERROR':

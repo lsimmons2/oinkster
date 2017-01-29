@@ -7,6 +7,8 @@ import db from '../db/'
 
 
 function createRelationship(req, res){
+  let follower;
+  let followee;
   db.users
     .findAll({
       where: {
@@ -14,8 +16,6 @@ function createRelationship(req, res){
       }
     })
     .then( users => {
-      let follower;
-      let followee;
       if (users[0].get().id === req.user.id){
         follower = users[0];
         followee = users[1];
@@ -26,7 +26,16 @@ function createRelationship(req, res){
       return follower.addFollowee(followee);
     })
     .then( () => {
-      return res.status(200).end();
+      return res.status(200).json({
+        follower: {
+          id: follower.id,
+          username: follower.username
+        },
+        followee: {
+          id: followee.id,
+          username: followee.username
+        }
+      });
     })
     .catch( err => {
       logger.error('Error creating relationship', {error: err.message});

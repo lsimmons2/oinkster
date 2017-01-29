@@ -2,6 +2,18 @@
 require('es6-promise').polyfill();
 import 'whatwg-fetch'
 
+function toggleFollowersModal(){
+  return {
+    type: 'TOGGLE_FOLLOWERS_MODAL'
+  }
+}
+
+function toggleFolloweesModal(){
+  return {
+    type: 'TOGGLE_FOLLOWEES_MODAL'
+  }
+}
+
 function fetchUserSummaryRequest() {
   return {
     type: 'FETCH_USER_SUMMARY_REQUEST'
@@ -114,6 +126,8 @@ function followUser(followeeId){
 
 
 export {
+  toggleFollowersModal,
+  toggleFolloweesModal,
   fetchUserSummaryRequest,
   fetchUserSummarySuccess,
   fetchUserSummaryError,

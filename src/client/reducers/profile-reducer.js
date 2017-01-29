@@ -6,6 +6,25 @@ let profileReducer = function(profile = initialState.profile, action){
 
   switch(action.type){
 
+    case 'TOGGLE_FOLLOWERS_MODAL':
+      return { ...profile,
+        showFollowersModal: !profile.showFollowersModal,
+        showFolloweesModal: false,
+      }
+
+    case 'TOGGLE_FOLLOWEES_MODAL':
+      return { ...profile,
+        showFollowersModal: false,
+        showFolloweesModal: !profile.showFolloweesModal,
+      }
+
+    case 'FETCH_USER_SUMMARY_REQUEST':
+      return { ...profile,
+        isFetching: true,
+        fetchingSuccess: false,
+        fetchingError: false
+      }
+
     case 'FETCH_USER_SUMMARY_REQUEST':
       return { ...profile,
         isFetching: true,

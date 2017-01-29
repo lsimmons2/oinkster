@@ -4,8 +4,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import Profile from './profile'
-import FollowContainer from './follow-container'
-import { followUser } from '../actions/profile-actions'
+import * as actions from '../actions/profile-actions'
 
 import Oink from './oink'
 
@@ -48,7 +47,11 @@ class UserProfileContainer extends React.Component {
           followers={user.followers}
           followees={user.followees}
           auth={this.props.auth}
-          followUser={this.props.followUser}
+          followUser={this.props.actions.followUser}
+          toggleFollowersModal={this.props.actions.toggleFollowersModal}
+          toggleFolloweesModal={this.props.actions.toggleFolloweesModal}
+          showFollowersModal={this.props.profile.showFollowersModal}
+          showFolloweesModal={this.props.profile.showFolloweesModal}
         />
       </div>
     )
@@ -62,7 +65,7 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch){
   return {
-    followUser: bindActionCreators(followUser, dispatch)
+    actions: bindActionCreators(actions, dispatch)
   }
 }
 

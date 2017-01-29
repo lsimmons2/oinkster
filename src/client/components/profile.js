@@ -1,6 +1,7 @@
 
 import React from 'react'
 import { Link } from 'react-router'
+import Modal from 'react-modal'
 
 class Profile extends React.Component {
 
@@ -33,7 +34,35 @@ class Profile extends React.Component {
     )
   }
 
+  toggleFollowersModal(e){
+    e.preventDefault();
+    this.props.toggleFollowersModal();
+  }
+
+  toggleFolloweesModal(e){
+    e.preventDefault();
+    this.props.toggleFolloweesModal();
+  }
+
   render(){
+
+    let followerList = null;
+    if (this.props.followers){
+      followerList = this.props.followers.map( follower => {
+        return (
+          <p key={follower.id}>{follower.username}</p>
+        )
+      })
+    }
+
+    let followeeList = null;
+    if (this.props.followees){
+      followeeList = this.props.followees.map( followee => {
+        return (
+          <p key={followee.id}>{followee.username}</p>
+        )
+      })
+    }
 
     let followBox = null;
 
@@ -43,10 +72,10 @@ class Profile extends React.Component {
     if (this.props.followers && this.props.followees){
       followBox = (
         <div>
-          <span>
+          <span onClick={this.toggleFolloweesModal.bind(this)}>
             Following {this.props.followees.length}
           </span>
-          <span>
+          <span onClick={this.toggleFollowersModal.bind(this)}>
             {this.props.followers.length} followers
           </span>
           {this.renderFollowButton()}
@@ -56,6 +85,27 @@ class Profile extends React.Component {
 
     return (
       <div className='col-xs-12 col-sm-4'>
+
+        <Modal
+          isOpen={this.props.showFollowersModal}
+          onRequestClose={this.toggleFollowersModal.bind(this)}
+          closeTimeoutMS={0}
+          contentLabel="Modal"
+        >
+          {followerList}
+          <button onClick={this.toggleFollowersModal.bind(this)}>Close modal</button>
+        </Modal>
+
+        <Modal
+          isOpen={this.props.showFolloweesModal}
+          onRequestClose={this.toggleFolloweesModal.bind(this)}
+          closeTimeoutMS={0}
+          contentLabel="Modal"
+        >
+          {followeeList}
+          <button onClick={this.toggleFolloweesModal.bind(this)}>Close modal</button>
+        </Modal>
+
         <div className='profile'>
           <div className='profile-top'>
             <div className='profile-avatar-wrapper'>

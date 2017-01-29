@@ -14,6 +14,8 @@ export default {
     isFetching: false,
     fetchingSuccess: false,
     fetchingError: false,
+    showFollowersModal: false,
+    showFolloweesModal: false,
     summary: {
       user: {
         firstName: '',

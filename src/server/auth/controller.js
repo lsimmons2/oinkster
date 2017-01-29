@@ -28,6 +28,23 @@ function authenticate(req, res, next){
   })
 }
 
+function loggedIn(req, res, next){
+  if (req.headers['authorization'] === undefined){
+    return next();
+  }
+  let token = req.headers['authorization'].replace('Bearer ', '');
+  jwt.verify(token, jwtSecret, (err, user) => {
+    if (err){
+      return res.status(403).json({
+        message: 'Invalid JWT',
+        err
+      });
+    }
+    req.user = user;
+    next();
+  })
+}
+
 function hashPass(password){
   return new Promise((resolve, reject) => {
     bcrypt.genSalt(10, (err, salt) => {

@@ -14,9 +14,16 @@ function createRelationship(req, res){
       }
     })
     .then( users => {
-      let follower = users[0];
-      let followee = users[1];
-      return followee.addFollower(follower);
+      let follower;
+      let followee;
+      if (users[0].get().id === req.user.id){
+        follower = users[0];
+        followee = users[1];
+      } else {
+        follower = users[1];
+        followee = users[0];
+      }
+      return follower.addFollowee(followee);
     })
     .then( () => {
       return res.status(200).end();

@@ -1,7 +1,7 @@
 
 import express from 'express'
 import * as ctrl from './controller'
-import { authenticate } from '../auth/controller'
+import { authenticate, loggedIn } from '../auth/controller'
 
 const router = express.Router();
 

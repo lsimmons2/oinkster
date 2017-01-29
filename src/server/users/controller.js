@@ -125,7 +125,17 @@ function getUserSummary(req, res){
     .findById(req.params.id, {
       attributes: ['id', 'firstName', 'lastName', 'username', 'bio'],
       order: [['createdAt', 'DESC']],
-      include: [{ model: db.oinks }]
+      include: [
+        { model: db.oinks },
+        { model: db.users,
+          as: 'followers',
+          attributes: ['id', 'username']
+        },
+        { model: db.users,
+          as: 'followees',
+          attributes: ['id', 'username']
+        }
+      ]
     })
     .then( user => {
       if (!user){

@@ -51,9 +51,68 @@ function fetchUserSummary(id){
 
 }
 
+function followUserRequest() {
+  return {
+    type: 'FOLLOW_USER_REQUEST'
+  }
+}
+
+function followerUserSuccess() {
+  return {
+    type: 'FOLLOW_USER_SUCCESS'
+  }
+}
+
+function followUserError() {
+  return {
+    type: 'FOLLOW_USER_ERROR'
+  }
+}
+
+function followUser(followeeId){
+  return function(dispatch){
+
+    dispatch(followUserRequest());
+
+    let url = '/relationships';
+    if(process.env.NODE_ENV === 'test'){
+      url = 'http://localhost:8080' + url;
+    }
+
+    let req = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('jwt')
+      },
+      body: JSON.stringify({
+        followeeId: followeeId
+      })
+    }
+
+    return fetch(url, req)
+      .then( resp => {
+          if(!resp.ok){
+            throw new Error(resp.statusText)
+          }
+          return resp.json();
+      })
+      .then( () => {
+        dispatch(followerUserSuccess());
+      })
+      .catch( error => {
+        dispatch(followUserError());
+      })
+
+  }
+}
+
+
+
 export {
   fetchUserSummaryRequest,
   fetchUserSummarySuccess,
   fetchUserSummaryError,
-  fetchUserSummary
+  fetchUserSummary,
+  followUser
 }

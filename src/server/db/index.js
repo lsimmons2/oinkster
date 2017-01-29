@@ -19,14 +19,14 @@ db.relationships.sync();
 
 db.users.belongsToMany(db.users, {
   as: 'followers',
-  foreignKey: 'followerId',
-  through: 'relationships'
+  foreignKey: 'followeeId',
+  through: db.relationships
 });
 
 db.users.belongsToMany(db.users, {
   as: 'followees',
-  foreignKey: 'followeeId',
-  through: 'relationships'
+  foreignKey: 'followerId',
+  through: db.relationships
 });
 
 db.users.hasMany(db.oinks,

@@ -26,6 +26,26 @@ let profileReducer = function(profile = initialState.profile, action){
         fetchingError: true
       }
 
+    case 'FOLLOW_USER_REQUEST':
+      return { ...profile,
+        isFetching: true,
+        fetchingSuccess: false,
+        fetchingError: false
+      }
+
+    case 'FOLLOW_USER_SUCCESS':
+      return { ...profile,
+        isFetching: false,
+        fetchingSuccess: true,
+        summary: action.userSummary
+      }
+
+    case 'FOLLOW_USER_ERROR':
+      return { ...profile,
+        isFetching: false,
+        fetchingError: true
+      }
+
     default:
       return profile;
   }

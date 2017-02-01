@@ -35,10 +35,7 @@ function loggedIn(req, res, next){
   let token = req.headers['authorization'].replace('Bearer ', '');
   jwt.verify(token, jwtSecret, (err, user) => {
     if (err){
-      return res.status(403).json({
-        message: 'Invalid JWT',
-        err
-      });
+      return next();
     }
     req.user = user;
     next();
@@ -153,6 +150,7 @@ function logIn(req, res, next){
 
 export {
   authenticate,
+  loggedIn,
   hashPass,
   comparePass,
   findUser,

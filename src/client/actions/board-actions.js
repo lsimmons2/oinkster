@@ -22,7 +22,7 @@ function fetchOinksError(error) {
   }
 }
 
-function fetchOinks(){
+function fetchOinks(jwt){
   return function(dispatch){
 
     dispatch(fetchOinksRequest());
@@ -32,7 +32,15 @@ function fetchOinks(){
       url = 'http://localhost:8080' + url;
     }
 
-    return fetch(url)
+    let req = {
+      method: 'GET',
+      headers: {}
+    };
+    if (jwt){
+      req.headers['Authorization'] = jwt;
+    }
+
+    return fetch(url, req)
       .then( resp => {
           if(!resp.ok){
             throw new Error(resp.statusText)

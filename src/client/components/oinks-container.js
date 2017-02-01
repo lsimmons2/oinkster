@@ -23,13 +23,23 @@ class OinksContainer extends React.Component {
 
     let oinksContainerHeader = null;
     if (!this.props.auth.authenticated){
-      oinksContainerHeader = (
-        <div id='oinks-container-header-container'>
-          <h3 id='oinks-container-header'>
-            What people are saying on Oinkster...
-          </h3>
-        </div>
-      )
+      if (this.props.board.oinks.length){
+        oinksContainerHeader = (
+          <div className='oinks-container-header-container'>
+            <h3 className='oinks-container-header'>
+              What people are saying on Oinkster...
+            </h3>
+          </div>
+        )
+      } else {
+        oinksContainerHeader = (
+          <div className='oinks-container-header-container'>
+            <h3 className='oinks-container-header'>
+              No oinks could be loaded!
+            </h3>
+          </div>
+        )
+      }
     }
 
     let oinksFeed;
@@ -91,7 +101,13 @@ class OinksContainer extends React.Component {
           })
       )
     } else {
-      oinksFeed = <div><h2>No oinks could be loaded!</h2></div>
+      oinksFeed = (
+        <div className='oinks-container-header-container'>
+          <h3 className='oinks-container-header'>
+            You're not following anyone. <Link to='/users'>See all users</Link> to follow other oinksters and receive their oinks on your board.
+          </h3>
+        </div>
+      )
     }
 
     return (

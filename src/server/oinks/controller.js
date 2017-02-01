@@ -6,26 +6,67 @@ import db from '../db/'
 
 
 function getOinks(req, res){
-  db.oinks
-    .findAll({
-      order: [
-        ['createdAt', 'DESC']
-      ],
-      include: [
-        {
-          model: db.users,
-          attributes: ['id', 'username', 'picture']
+  let query = {
+    order: [
+      ['createdAt', 'DESC']
+    ],
+    include: [
+      {
+        model: db.users,
+        attributes: ['id', 'username', 'picture']
+      }
+    ]
+  };
+  if (req.user === undefined){
+    db.oinks
+      .findAll(query)
+      .then( oinks => {
+        logger.info('Oinks retrieved', {oinks: oinks});
+        res.status(200).send(oinks);
+      })
+      .catch( err => {
+        logger.error('Error retrieving oinks', {error: err.message});
+        res.status(500).send(err);
+      })
+  } else {
+    db.relationships
+      .findAll({
+        where: {
+          followerId: req.user.id
+        },
+        attributes: ['followeeId']
+      })
+      .then( followees => {
+        let followeeIds = [];
+        for (let followee in followees){
+          followeeIds.push(followees[followee].followeeId);
         }
-      ]
-    })
-    .then( oinks => {
-      logger.info('Oinks retrieved', {oinks: oinks});
-      res.status(200).send(oinks);
-    })
-    .catch( err => {
-      logger.error('Error retrieving oinks', {error: err.message});
-      res.status(500).send(err);
-    })
+        query['where'] = {
+          userId: {
+            $in: followeeIds
+          }
+        };
+        return db.oinks.findAll(query)
+      })
+      .then( oinks => {
+        logger.info('Oinks retrieved', {oinks: oinks});
+        res.status(200).send(oinks);
+      })
+      .catch( err => {
+        logger.error('Error retrieving oinks', {error: err.message});
+        res.status(500).send(err);
+      })
+  }
+  // db.oinks
+  //   .findAll(query)
+  //   .then( oinks => {
+  //     logger.info('Oinks retrieved', {oinks: oinks});
+  //     res.status(200).send(oinks);
+  //   })
+  //   .catch( err => {
+  //     logger.error('Error retrieving oinks', {error: err.message});
+  //     res.status(500).send(err);
+  //   })
 }
 
 

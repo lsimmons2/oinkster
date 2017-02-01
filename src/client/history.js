@@ -12,7 +12,8 @@ function listenToLocation(location){
   let path = location.pathname;
   if (path === '/board'){
     if (localStorage.getItem('userId')){
-      store.dispatch(fetchBoardProfile(localStorage.getItem('userId')));      
+      store.dispatch(fetchBoardProfile(localStorage.getItem('userId')));
+      return store.dispatch(fetchOinks(localStorage.getItem('jwt')));
     }
     return store.dispatch(fetchOinks());
   }

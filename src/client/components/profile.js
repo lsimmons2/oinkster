@@ -2,6 +2,7 @@
 import React from 'react'
 import { Link } from 'react-router'
 import Modal from 'react-modal'
+import history from '../history'
 
 class Profile extends React.Component {
 
@@ -44,13 +45,35 @@ class Profile extends React.Component {
     this.props.toggleFolloweesModal();
   }
 
+  goToUserPage(id, modalType, e){
+    e.preventDefault();
+    if (modalType === 'followers'){
+      this.props.toggleFollowersModal();
+    } else {
+      this.props.toggleFolloweesModal();
+    }
+    history.push('/user/' + id);
+  }
+
   render(){
 
     let followerList = null;
     if (this.props.followers){
       followerList = this.props.followers.map( follower => {
         return (
-          <p key={follower.id}>{follower.username}</p>
+          <div onClick={this.goToUserPage.bind(this, follower.id, 'followers')} className='following-modal-block-container' key={follower.id}>
+            <div className='following-modal-block'>
+              <div className='following-modal-block-picture-container'>
+                <div className='following-modal-block-picture-wrapper'>
+                  <img src={'https://s3.amazonaws.com/oinkster/' + follower.id} onError={(e)=>{e.target.src='https://s3.amazonaws.com/oinkster/generic-avatar.png'}}/>
+                </div>
+              </div>
+              <div className='following-modal-block-info-container'>
+                <span>{follower.username}</span>
+              </div>
+            </div>
+            <div className='following-modal-block-separator'></div>
+          </div>
         )
       })
     }
@@ -59,28 +82,65 @@ class Profile extends React.Component {
     if (this.props.followees){
       followeeList = this.props.followees.map( followee => {
         return (
-          <p key={followee.id}>{followee.username}</p>
+          <div onClick={this.goToUserPage.bind(this, followee.id, 'followees')} className='following-modal-block-container' key={followee.id}>
+            <div className='following-modal-block'>
+              <div className='following-modal-block-picture-container'>
+                <div className='following-modal-block-picture-wrapper'>
+                  <img src={'https://s3.amazonaws.com/oinkster/' + followee.id} onError={(e)=>{e.target.src='https://s3.amazonaws.com/oinkster/generic-avatar.png'}}/>
+                </div>
+              </div>
+              <div className='following-modal-block-info-container'>
+                <span>{followee.username}</span>
+              </div>
+            </div>
+            <div className='following-modal-block-separator'></div>
+          </div>
         )
       })
     }
 
     let followBox = null;
-
     // if this profile component is in a user profile page and
     // not on the board - should make these different components
     // to make this less confusing
     if (this.props.followers && this.props.followees){
-      followBox = (
-        <div>
-          <span onClick={this.toggleFolloweesModal.bind(this)}>
-            Following {this.props.followees.length}
-          </span>
+
+      let followers;
+      let followees;
+      if (this.props.followers.length){
+        followers = (
           <span onClick={this.toggleFollowersModal.bind(this)}>
             {this.props.followers.length} followers
           </span>
+        )
+      } else {
+        followers = (
+          <span>
+            {this.props.username} has no followers
+          </span>
+        )
+      }
+      if (this.props.followees.length){
+        followees = (
+          <span onClick={this.toggleFolloweesModal.bind(this)}>
+            Following {this.props.followees.length}
+          </span>
+        )
+      } else {
+        followees = (
+          <span>
+            {this.props.username} is not following anyone
+          </span>
+        )
+      }
+      followBox = (
+        <div>
+          {followees}
+          {followers}
           {this.renderFollowButton()}
         </div>
       );
+
     }
 
     return (
@@ -89,21 +149,39 @@ class Profile extends React.Component {
         <Modal
           isOpen={this.props.showFollowersModal}
           onRequestClose={this.toggleFollowersModal.bind(this)}
+          // overlayClassName='modal-overlay'
+          className='following-modal'
           closeTimeoutMS={0}
           contentLabel="Modal"
         >
-          {followerList}
-          <button onClick={this.toggleFollowersModal.bind(this)}>Close modal</button>
+          <div className='following-modal-header-container'>
+            <h4>{this.props.username}'s followers</h4>
+          </div>
+          <div className='following-modal-list-container'>
+            {followerList}
+          </div>
+          <div className='modal-close-button-container'>
+            <button className='form-control modal-close-button' onClick={this.toggleFollowersModal.bind(this)}>Close</button>
+          </div>
         </Modal>
 
         <Modal
           isOpen={this.props.showFolloweesModal}
           onRequestClose={this.toggleFolloweesModal.bind(this)}
+          // overlayClassName='modal-overlay'
+          className='following-modal'
           closeTimeoutMS={0}
           contentLabel="Modal"
         >
-          {followeeList}
-          <button onClick={this.toggleFolloweesModal.bind(this)}>Close modal</button>
+          <div className='following-modal-header-container'>
+            <h4>{this.props.username} is following</h4>
+          </div>
+          <div className='following-modal-list-container'>
+            {followeeList}
+          </div>
+          <div className='modal-close-button-container'>
+            <button className='form-control modal-close-button' onClick={this.toggleFolloweesModal.bind(this)}>Close</button>
+          </div>
         </Modal>
 
         <div className='profile'>

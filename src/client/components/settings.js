@@ -89,7 +89,7 @@ class Settings extends React.Component {
       )
       picture = 'https://s3.amazonaws.com/oinkster/' + id + '?v=' + Math.random();
     } else {
-      picture = 'https://s3.amazonaws.com/oinkster/' + id + '?v=' + Math.random();      
+      picture = 'https://s3.amazonaws.com/oinkster/' + id + '?v=' + Math.random();
     }
 
     let savingStatus = null;

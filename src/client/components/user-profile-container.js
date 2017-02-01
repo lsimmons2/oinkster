@@ -22,19 +22,17 @@ class UserProfileContainer extends React.Component {
     let bio = null;
     if (user.bio) {
       bio = (
-        <p>{user.bio}</p>
+        <p>
+          {user.bio}
+        </p>
       )
     } else {
       bio = (
-        <p>{username} has not made a bio yet.</p>
+        <p>
+          {username} has not made a bio yet.
+        </p>
       )
     }
-
-    let profileBottom = (
-      <div>
-        {bio}
-      </div>
-    );
 
     return (
       <div id='user-profile'>
@@ -43,7 +41,7 @@ class UserProfileContainer extends React.Component {
           username={username}
           userId={userId}
           picture={picture}
-          profileBottom={profileBottom}
+          profileBottom={bio}
           followers={user.followers}
           followees={user.followees}
           auth={this.props.auth}

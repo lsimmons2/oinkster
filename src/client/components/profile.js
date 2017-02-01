@@ -14,24 +14,27 @@ class Profile extends React.Component {
   renderFollowButton(){
     if (!this.props.auth.authenticated){
       return (
-        <div>
-          <Link to='/signup'>Sign up to follow!</Link>
-        </div>
+        <button className='follow-button btn'>
+          <Link to='/signup' className='no-underline'>Sign up to follow!</Link>
+        </button>
       )
+    }
+    if (this.props.auth.userId === this.props.userId){
+      return null;
     }
     for (let i = 0; i < this.props.followers.length; i++) {
       if (this.props.followers[i].id === this.props.auth.userId){
         return (
-          <div>
-            Check! You're following {this.props.username}
-          </div>
+          <button className='follow-button btn not-clickable'>
+            You're following {this.props.username}
+          </button>
         )
       }
     }
     return (
-      <div onClick={this.followUser.bind(this)}>
+      <button className='follow-button btn' onClick={this.followUser.bind(this)}>
         Follow {this.props.username}
-      </div>
+      </button>
     )
   }
 
@@ -108,36 +111,46 @@ class Profile extends React.Component {
       let followers;
       let followees;
       if (this.props.followers.length){
+        let followerOrFollowers = ' followers';
+        if (this.props.followers.length === 1){
+          followerOrFollowers = ' follower'
+        }
         followers = (
-          <span onClick={this.toggleFollowersModal.bind(this)}>
-            {this.props.followers.length} followers
-          </span>
+          <b onClick={this.toggleFollowersModal.bind(this)} className='clickable'>
+            {this.props.followers.length}{followerOrFollowers}
+          </b>
         )
       } else {
         followers = (
-          <span>
+          <b>
             {this.props.username} has no followers
-          </span>
+          </b>
         )
       }
       if (this.props.followees.length){
         followees = (
-          <span onClick={this.toggleFolloweesModal.bind(this)}>
+          <b onClick={this.toggleFolloweesModal.bind(this)} className='clickable'>
             Following {this.props.followees.length}
-          </span>
+          </b>
         )
       } else {
         followees = (
-          <span>
+          <b>
             {this.props.username} is not following anyone
-          </span>
+          </b>
         )
       }
       followBox = (
-        <div>
-          {followees}
-          {followers}
-          {this.renderFollowButton()}
+        <div className='profile-following-container'>
+          <div className='profile-following-inner-container'>
+            {followers}
+          </div>
+          <div className='profile-following-inner-container'>
+            {followees}
+          </div>
+          <div className='profile-follow-button-container'>
+            {this.renderFollowButton()}
+          </div>
         </div>
       );
 
@@ -194,7 +207,7 @@ class Profile extends React.Component {
               <h4>@{this.props.username}</h4>
             </div>
           </div>
-          <div className='profile-bottom'>
+          <div className='profile-bio-container'>
             {this.props.profileBottom}
           </div>
           {followBox}

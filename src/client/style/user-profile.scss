@@ -5,7 +5,6 @@
     border: solid 2px $primary-pink;
     border-radius: 4px;
     width: 85%;
-    height: 200px;
     padding: 15px;
     box-shadow: 0px 5px 10px #b7b7b7;
     color: $primary-grey;
@@ -21,7 +20,6 @@
     .profile-top {
 
       height: 50%;
-      margin-bottom: 20px;
 
       .profile-avatar-wrapper {
         display: inline-block;
@@ -56,13 +54,32 @@
 
     }
 
-    .profile-bottom {
-      margin-top: 15px;
+    .profile-bio-container {
       p {
         text-align: center;
       }
       h5 {
         text-align: center;
+      }
+    }
+
+    .profile-following-container {
+      .profile-following-inner-container {
+        vertical-align: top;
+        display: inline-block;
+        width: 50%;
+        text-align: center;
+      }
+      .profile-follow-button-container {
+        width: 50%;
+        margin: 5px auto 0;
+        @media only screen and (min-width: 1000px){
+          margin-top: 15px;
+        }
+        .follow-button {
+          width: 100%;
+          white-space: normal;
+        }
       }
     }
 
@@ -125,6 +142,20 @@
 
   }
 
+  // component-universal classes
+  .clickable {
+    cursor: pointer;
+  }
+
+  .not-clickable {
+    cursor: default;
+    color: $primary-grey;
+  }
+
+  .no-underline {
+    text-decoration: none;
+    color: $primary-grey;
+  }
 
 }
 

@@ -61,6 +61,12 @@
 
     }
 
+    .profile-bio-container {
+      p {
+        text-align: center;
+      }
+    }
+
     .profile-bottom {
       margin-top: 15px;
       p {
@@ -186,6 +192,9 @@
           font-weight: bold;
           margin-bottom: 0;
           display: inline-block;
+          &:hover {
+            text-decoration: underline;
+          }
         }
         .oink-username-link {
           color: $primary-grey;

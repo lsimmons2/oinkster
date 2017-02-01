@@ -26,11 +26,15 @@ export class BoardProfileContainer extends React.Component {
       let bio = null;
       if (this.props.board.profile.bio) {
         bio = (
-          <p>{this.props.board.profile.bio}</p>
+          <p>
+            {this.props.board.profile.bio}
+          </p>
         );
       } else {
         bio = (
-          <p>You have not made a bio yet.</p>
+          <p>
+            You have not made a bio yet.
+          </p>
         );
       }
 

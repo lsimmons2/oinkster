@@ -11,6 +11,17 @@ class ProfileFeed extends React.Component {
 
   render(){
 
+    let feedHeader;
+    if (this.props.profile.summary.user.oinks.length){
+      feedHeader = (
+        <h2 id='profile-feed-header'>{this.props.profile.summary.user.username}'s oinks</h2>
+      );
+    } else {
+      feedHeader = (
+        <h2 id='profile-feed-header'>{this.props.profile.summary.user.username} has not oinked anything yet</h2>
+      )
+    }
+
     let userOinks = null;
 
     if (this.props.profile.summary.user.oinks){
@@ -62,7 +73,7 @@ class ProfileFeed extends React.Component {
     return (
       <div id='profile-feed' className='col-xs-12 col-sm-7'>
         <div id='profile-feed-header-container'>
-          <h2 id='profile-feed-header'>{this.props.profile.summary.user.username}'s Oinks</h2>
+          {feedHeader}
         </div>
         {userOinks}
       </div>

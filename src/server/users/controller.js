@@ -34,6 +34,25 @@ function checkSignUpData(data){
 }
 
 
+// =============================================
+// ============ GET /users ====================
+// =============================================
+
+function getAllUsers(req, res){
+  db.users
+    .findAll({
+      attributes: ['firstName', 'lastName', 'username', 'id', 'createdAt']
+    })
+    .then( users => {
+      logger.info('Users retrieved', {users: users});
+      res.status(200).json({users:users});
+    })
+    .catch( err => {
+      logger.error('Error retrieving user summary', {error: err.message});
+      res.status(500).json({error:err.message});
+    })
+}
+
 
 // =============================================
 // ============ POST /users ====================
@@ -236,4 +255,9 @@ function updateUserSettings(req, res){
 export {
   checkSignUpData,
   createUser,
-  getUserSettings, getUserSummary, updateUserSettings, getUserBoardProfile }
+  getUserSettings,
+  getUserSummary,
+  updateUserSettings,
+  getUserBoardProfile,
+  getAllUsers
+}

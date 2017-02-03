@@ -69,6 +69,11 @@ export default {
     fetchingError: false,
     count: 0
   },
+  users: {
+    isFetching: false,
+    fetchingError: false,
+    users: []
+  },
   feedback: {
     isFetching: false,
     fetchingSuccess: false,

@@ -1,0 +1,57 @@
+#users {
+
+  #users-header-container {
+    width: 85%;
+    margin: 0 auto;
+    #users-header {
+      color: $primary-grey;
+      text-align: center;
+    }
+  }
+
+  .user {
+    box-shadow: 0px 5px 10px #b7b7b7;
+    color: $primary-grey;
+    cursor: pointer;
+    border: 2px solid $primary-pink;
+    border-radius: 4px;
+    width: 85%;
+    max-width: 500px;
+    height: 80px;
+    padding: 5px;
+    margin: 20px auto;
+
+    .user-link {
+      color: $primary-grey;
+    }
+
+    .picture-container {
+      display: inline-block;
+      width: 20%;
+      .picture {
+        height: 65px;
+        border-radius: 4px;
+        margin-right: 10px;
+      }
+    }
+
+    .name-container {
+      width: 30%;
+      display: inline-block;
+      vertical-align: middle;
+      p {
+        margin: 0;
+      }
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .joined-container {
+      display: inline-block;
+      width: 35%;
+    }
+
+  }
+
+}

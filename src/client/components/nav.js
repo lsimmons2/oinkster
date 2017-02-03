@@ -58,6 +58,15 @@ class Nav extends React.Component {
         className='nav-item nav-left'
       >
         BOARD
+      </Link>,
+
+      <Link
+        key='users'
+        to='/allusers'
+        activeClassName='active-nav-item'
+        className='nav-item nav-left'
+      >
+        USERS
       </Link>
 
     ];

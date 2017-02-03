@@ -7,6 +7,7 @@ import authReducer from './auth-reducer'
 import feedbackReducer from './feedback-reducer'
 import profileReducer from './profile-reducer'
 import settingsReducer from './settings-reducer'
+import usersReducer from './users-reducer'
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   routing: routerReducer,
   feedback: feedbackReducer,
   profile: profileReducer,
-  settings: settingsReducer
+  settings: settingsReducer,
+  users: usersReducer
 })
 
 

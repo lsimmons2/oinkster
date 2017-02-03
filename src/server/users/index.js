@@ -7,6 +7,9 @@ const router = express.Router();
 
 
 router.route('/')
+  .get((req, res) => {
+    ctrl.getAllUsers(req, res);
+  })
   .post((req, res) => {
     return ctrl.createUser(req, res);
   })

@@ -104,7 +104,7 @@ class OinksContainer extends React.Component {
       oinksFeed = (
         <div className='oinks-container-header-container'>
           <h3 className='oinks-container-header'>
-            You're not following anyone. <Link to='/users'>See all users</Link> to follow other oinksters and receive their oinks on your board.
+            You're not following anyone. <Link to='/allusers'>See all users</Link> to follow other oinksters and receive their oinks on your board.
           </h3>
         </div>
       )

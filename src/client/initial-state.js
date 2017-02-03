@@ -23,9 +23,9 @@ export default {
         username: '',
         email: '',
         bio: '',
-        picture: ''
-      },
-      oinks: []
+        picture: '',
+        oinks: []
+      }
     }
   },
   settings: {
